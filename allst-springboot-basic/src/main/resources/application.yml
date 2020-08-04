@@ -1,0 +1,8 @@
+person:
+  name: SpringBoot
+  age: 18
+  brith: 1990-01-01
+  maps: {key: value}
+  lists:
+    - wahaha
+    - xixi
