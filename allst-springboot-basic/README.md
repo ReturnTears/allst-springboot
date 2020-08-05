@@ -15,5 +15,10 @@
 SpringBoot推荐注解的方式
 @Configuration, 表明当前类是配置类，用于替代Spring配置文件，@Bean注解替代<bean>标签
 
-
+2、Profile
+application-{profile}.properties
+注意.properties与.yml的格式区别
+还可以在启动项目时配置环境变量(Programs arguments): --spring.profiles.active=dev
+还可以在项目打包命令行运行的时候指定环境: java -jar xxx.jar --spring.profiles.active=prod
+还可以在项目运行时配置虚拟机参数(VM options):-Dspring.profiles.active=test
 ``` 

@@ -6,3 +6,18 @@ person:
   lists:
     - wahaha
     - xixi
+---
+server:
+  port: 8026  # prod
+spring:
+  profiles: prod
+---
+server:
+  port: 8027  # beta
+spring:
+  profiles: beta
+---
+server:
+  port: 8028  # release
+spring:
+  profiles: release
