@@ -21,4 +21,14 @@ application-{profile}.properties
 还可以在启动项目时配置环境变量(Programs arguments): --spring.profiles.active=dev
 还可以在项目打包命令行运行的时候指定环境: java -jar xxx.jar --spring.profiles.active=prod
 还可以在项目运行时配置虚拟机参数(VM options):-Dspring.profiles.active=test
+
+3、配置文件加载位置
+SpringBoot启动会扫描下面位置的application.properties或application.yml文件作为Spring Boot的默认配置文件
+- file:./config/
+- file:./
+- classpath:/config/
+- classpath:/
+此顺序优先级从高到低, 所有位置的文件都会被加载，优先级高的配置内容会覆盖优先级低的配置内容，最终会形成互补配置
+也可以通过配置spring.config.location来改变默认配置,可以在项目打包好以后,通过命令行参数的形式来指定配置文件的新位置，指定配置文件会和默认配置共同起作用。
+eg: java -jar xxx.jar --spring.config.location=E:\\TestData\\application.properties
 ``` 
