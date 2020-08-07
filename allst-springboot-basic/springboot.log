@@ -1,0 +1,12 @@
+2020-08-07 22:44:54.428  INFO 1576 --- [main] a.s.AllstSpringbootBasicApplicationTests : Starting AllstSpringbootBasicApplicationTests on YIYa with PID 1576 (started by June in E:\Idea2020Projects\allst-springboot\allst-springboot-basic)
+2020-08-07 22:44:54.455 DEBUG 1576 --- [main] a.s.AllstSpringbootBasicApplicationTests : Running with Spring Boot v2.3.2.RELEASE, Spring v5.2.8.RELEASE
+2020-08-07 22:44:54.456  INFO 1576 --- [main] a.s.AllstSpringbootBasicApplicationTests : The following profiles are active: beta
+2020-08-07 22:44:57.224 ERROR 1576 --- [main] o.a.catalina.core.AprLifecycleListener   : An incompatible version [1.2.10] of the Apache Tomcat Native library is installed, while Tomcat requires version [1.2.14]
+2020-08-07 22:44:58.707  INFO 1576 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-08-07 22:45:00.389  INFO 1576 --- [main] a.s.AllstSpringbootBasicApplicationTests : Started AllstSpringbootBasicApplicationTests in 7.139 seconds (JVM running for 10.178)
+2020-08-07 22:45:02.036 TRACE 1576 --- [main] a.s.AllstSpringbootBasicApplicationTests : this is trace log.
+2020-08-07 22:45:02.037 DEBUG 1576 --- [main] a.s.AllstSpringbootBasicApplicationTests : this is debug log.
+2020-08-07 22:45:02.037  INFO 1576 --- [main] a.s.AllstSpringbootBasicApplicationTests : this is info log.
+2020-08-07 22:45:02.037  WARN 1576 --- [main] a.s.AllstSpringbootBasicApplicationTests : this is warn log.
+2020-08-07 22:45:02.037 ERROR 1576 --- [main] a.s.AllstSpringbootBasicApplicationTests : this is error log.
+2020-08-07 22:45:02.162  INFO 1576 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'

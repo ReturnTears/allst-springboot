@@ -4,6 +4,8 @@ import com.allst.springboot.entity.Human;
 import com.allst.springboot.entity.People;
 import com.allst.springboot.entity.Person;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
@@ -12,6 +14,10 @@ import javax.annotation.Resource;
 
 @SpringBootTest
 class AllstSpringbootBasicApplicationTests {
+    /**
+     * 记录器
+     */
+    Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private Person person;
@@ -65,5 +71,17 @@ class AllstSpringbootBasicApplicationTests {
     public void getStartServiceLoads() {
         boolean result = ioc.containsBean("getAnnoStartService");
         System.out.println(result);
+    }
+
+    /**
+     * 日志级别由低到高
+     */
+    @Test
+    public void logLoads() {
+        logger.trace("this is trace log.");
+        logger.debug("this is debug log.");
+        logger.info("this is info log.");
+        logger.warn("this is warn log.");
+        logger.error("this is error log.");
     }
 }

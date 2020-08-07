@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 在此未说明属性为非必须的，那就表示属性必须设置 -->
+<!-- *****************最小配置文件结构介绍******************************* -->
+<!--
+    <configuration>
+        <appender></appender>    //存在1或多个，功能指定记录输出目的地
+        <root></root>            //最多存在一个，根logger
+        <logger><logger>        //存在1或多个，普通logger
+    </configuration>
+ -->
+<!-- *************************各个标签详细介绍********************************** -->
+
+<!-- debug（非必须）属性：true表示输出logback内部的日志信息（不影响配置和级别） ;
+     scan（非必须）属性：默认为false，true表示扫描配置文件的变化并自动重新配置，默认每隔1分钟扫描一次；
+     scanPeriod（非必须）属性：搭配scan属性使用，设置扫描的间隔时间
+-->
+<configuration debug="true" scan="true" scanPeriod="1 seconds">
+    <!-- 用于指定logger上下文名称，默认为default -->
+    <contextName>logback</contextName>
+
+    <!-- 设置变量FILE_PATH，用于指定名为FILE的appender的目的文件存放的目录 -->
+    <property name="FILE_PATH" value="E:\\TestData\\"/>
+    <!--
+        **********************配置TurboFilter类型的过滤器**********************************
+        TurboFilter类型过滤器有三种：这里使用的是DuplicateMessageFilter
+            子标签<cacheSize>：表示内部缓存对旧消息引用的个数上限
+            子标签<allowedRepetitions>：表示允许消息出现的重复次数上限，超过次数上限的记录请求将被丢弃
+    -->
+    <!-- 使用自定义的TurboFilter -->
+    <turboFilter class="logback.SampleTurboFilter">
+    </turboFilter>
+    <!-- 使用DuplicateTurboFilter -->
+    <turboFilter class="ch.qos.logback.classic.turbo.DuplicateMessageFilter">
+        <allowedRepetitions>1</allowedRepetitions>
+        <cacheSize>20</cacheSize>
+    </turboFilter>
+
+    <!-- ************************常用的Appender************************************** -->
+    <!--
+        <appender>标签包含2个属性：name、class
+        name属性：指定appender名称;class属性：指定目的地类型 （比如ConsoleAppender、FileAppender等）
+        class属性的值决定了<appender>标签包含的子标签的种类。
+        -->
+    <!-- 该appender的功能是将记录信息以特定格式写到控制台 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!--encoder:将事件转换为字符串
+            默认配置为PatternLayoutEncoder类
+            encoder用于替代Layout，encoder扩展了Layout功能
+            Layout功能：只负责把事件转换为字符串，但是不能指定何时将记录写入到指定目的地
+            encoder功能：即负责把事件转换为字符串，也可以指定何时将记录写入到指定目的地
+         -->
+        <encoder>
+            <!-- 指定输出格式
+                %d{} :表示时间
+                %thread:请求记录所在的线程名
+                %-5level：用5位显示请求级别
+                %logger{36}：输出logger名，{36}表示logger名最大占用的字符位数，{0}表示最简短logger名（不包含包名）。
+             -->
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{0} -%msg%n</pattern>
+        </encoder>
+    </appender>
+    <!-- 该appender的功能是将记录信息以特定格式写到文件 -->
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <!-- $使用变量FILE_PATH的格式,类似Linux中使用的格式：${FILE_PATH} -->
+        <file>${FILE_PATH}/file.log</file>
+        <encoder>
+            <!-- 指定输出格式 -->
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{0} -%msg%n</pattern>
+        </encoder>
+    </appender>
+    <!--
+        ***********************以最小窗体为指定的滚动规则的appender*****************************
+        RollingFileAppender类型的appender中必须包含4个子标签：<file>、<rollingPolicy>、<triggerPolicy>、<encoder>
+        <rollingPolicy>标签用于指定滚动规则，该标签有一个属性class：用于指定实现具体的滚动规则的类。
+        <triggerPolicy>标签用于指定发生滚动的条件，该标签有一个属性class：用于指定具体滚动条件的类。
+        <rollingPolicy>和<triggerPolicy>中具体包含哪些子标签是由class属性指定的类来决定的，因为不同的类有不同的参数，从而需要不同的标签来传参
+     -->
+    <!-- 该appender的功能是将记录信息以特定格式写到文件,当文件达到20MB时，创建以特定规则新的 文件，之后的记录会写到新文件-->
+    <appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 在第一次触发滚动之前记录将会写到该文件中 -->
+        <file>${FILE_PATH}/rolling.log</file>
+        <!--
+            前提条件：class的值为FixedWindowRollingPolicy，表示以最小窗体为指定的滚动规则
+            RollingPolicy标签必须子标签：<fileNamePattern>、<minIndex>、<maxIndex>
+            <fileNamePattern>:表示滚动条件达到后，创建文件名的规则，其中"%i"代表数字1~5。第一次触发条件，创建文件rolling1.log，并且记录开始写到这个文件中
+             <minIndex>与<maxIndex>共同决定了文件的个数
+         -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>${FILE_PATH}/rolling%i.log</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>5</maxIndex>
+        </rollingPolicy>
+        <!--
+            <triggeringPolicy>功能：用于限制文件大小
+            前提条件：class的值为SizeBasedTriggeringPolicy，表示以文件大小为触发条件
+            只有一个子标签<maxFileSize>用于指定触发条件
+         -->
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>20MB</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{0} -%msg%n</pattern>
+        </encoder>
+    </appender>
+    <!--
+    *****************************根据时间滚动 为滚动规则和条件的appender(最常用)***********************
+    -->
+    <!-- 该appender的功能：将记录信息以特定格式写到文件,当文件达到20MB时，创建以时间为特定规则新的 文件，之后的记录会写到新文件，
+    文件个数最多维持10个，文件达到10个 后删除旧的文件-->
+    <appender name="time_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- TimeBasedRollingPolicy实现了RollingPolicy与TriggeringPolicy，
+            因此只需要<rollingPolicy>标签，不需要<TriggeringPolicy>标签
+            <rollingPolicy>标签有两个子标签：<fileNamePattern>、<maxHistory>
+            <fileNamePattern>：用于指定文件名命名规则
+            <maxHistory>：保留文件的个数，超过了就删除创建时间最久的文件
+         -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 文件名 -->
+            <fileNamePattern>${FILE_PATH}/java_log/test%d{yyyy-MM-dd_HH-mm}.log</fileNamePattern>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{0} -%msg%n</pattern>
+        </encoder>
+    </appender>
+    <!--
+        ***********************常规级别过滤器的使用****************************************
+        本配置功能：过滤并接受请求级别为debug的请求，对于其他级别请求一律丢弃。
+     -->
+    <appender name="level_console" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>debug</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{0} -%msg%n</pattern>
+        </encoder>
+    </appender>
+    <!--
+        ***********************常规临界值滤器的使用****************************************
+        本配置功能：请求级别高于或等于info的请求响应NEUTRAL（进入下一个环节），低于info的级别请求响应DENY(表示丢弃)。
+     -->
+    <appender name="threshold_console" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>info</level>
+        </filter>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{0} -%msg%n</pattern>
+        </encoder>
+    </appender>
+    <!-- appender的目的地为mysql数据库 -->
+    <appender name="jdbc" class="ch.qos.logback.classic.db.DBAppender">
+        <!-- 这里只使用jdbc中的DriverManager获得连接，不使用任何数据源 -->
+        <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
+            <driverClass>com.mysql.jdbc.Driver</driverClass>
+            <url>jdbc:mysql://localhost:3306/logback?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=UTC</url>
+            <user>root</user>
+            <password>123456</password>
+        </connectionSource>
+    </appender>
+    <!-- ******以下DBAppender类型的appender的目的地为mysql数据库******** -->
+    <appender name="c3p0_datasource" class="ch.qos.logback.classic.db.DBAppender">
+        <!-- 这里使用DataSource获得连接-->
+        <connectionSource class="ch.qos.logback.core.db.DataSourceConnectionSource">
+            <!-- 实现DataSource的数据库连接池有很多，比如DBCP、c3p0、Druid等
+                这里使用的是c3p0
+             -->
+            <dataSource class="com.mchange.v2.c3p0.ComboPooledDataSource">
+                <user>root</user>
+                <password>123456</password>
+                <driverClass>com.mysql.jdbc.Driver</driverClass>
+                <jdbcUrl>jdbc:mysql://localhost:3306/logback?useUnicode=true&amp;characterEncoding=utf8</jdbcUrl>
+            </dataSource>
+        </connectionSource>
+    </appender>
+    <appender name="Druid_datasource" class="ch.qos.logback.classic.db.DBAppender">
+        <!-- 这里使用DataSource获得连接-->
+        <connectionSource class="ch.qos.logback.core.db.DataSourceConnectionSource">
+            <!-- 实现DataSource的数据库连接池有很多，比如DBCP、c3p0、Druid等
+                这里使用的是Druid
+             -->
+            <dataSource class="com.alibaba.druid.pool.DruidDataSource">
+                <username>root</username>
+                <password>123456</password>
+                <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                <url>jdbc:mysql://localhost:3306/logback?useUnicode=true&amp;characterEncoding=utf8</url>
+            </dataSource>
+        </connectionSource>
+    </appender>
+    <appender name="dbcp_datasource" class="ch.qos.logback.classic.db.DBAppender">
+        <!-- 这里使用DataSource获得连接-->
+        <connectionSource class="ch.qos.logback.core.db.DataSourceConnectionSource">
+            <!-- 实现DataSource的数据库连接池有很多，比如DBCP、c3p0、Druid等
+                这里使用的是dbcp
+             -->
+            <dataSource class="org.apache.commons.dbcp.BasicDataSource">
+                <username>root</username>
+                <password>123456</password>
+                <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                <url>jdbc:mysql://localhost:3306/logback?useUnicode=true&amp;characterEncoding=utf8</url>
+            </dataSource>
+        </connectionSource>
+    </appender>
+    <!-- level属性：指定根logger的分配级别 -->
+    <root level="debug">
+        <!-- ref属性：指定根logger关联的appender -->
+        <appender-ref ref="STDOUT"/>
+    </root>
+    <!-- name:指定logger名称；level：指定logger的分配级别；additivity(非必须，默认为true)：设置appender叠加性 -->
+    <logger name="demo" level="debug" additivity="false">
+        <appender-ref ref="FILE"/>
+    </logger>
+    <logger name="demo2" level="debug">
+        <appender-ref ref="rollingFile"/>
+    </logger>
+    <logger name="demo3" level="debug">
+        <appender-ref ref="time_file"/>
+    </logger>
+    <logger name="demo4" level="debug" additivity="false">
+        <appender-ref ref="level_console"/>
+    </logger>
+    <logger name="demo5" level="debug" additivity="false">
+        <appender-ref ref="threshold_console"/>
+    </logger>
+    <logger name="demo6" level="debug"  additivity="false">
+        <appender-ref ref="jdbc"/>
+    </logger>
+    <logger name="demo7" level="debug"  additivity="false">
+        <appender-ref ref="c3p0_datasource"/>
+    </logger>
+    <logger name="demo8" level="debug"  additivity="false">
+        <appender-ref ref="Druid_datasource"/>
+    </logger>
+    <logger name="demo9" level="debug"  additivity="false">
+        <appender-ref ref="dbcp_datasource"/>
+    </logger>
+</configuration>

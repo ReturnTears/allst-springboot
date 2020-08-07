@@ -95,4 +95,52 @@ xxxAutoConfiguration自动配置类
 给容器添加组件
 xxxProperties:封装配置文件中相关属性
 
+
+6、日志框架
+日志框架有那些？
+日志门面(抽象层):”JCL(jakarta commons logging)“、Slf4j(Simple Logging Facade for Java)、”jboss-logging“
+日志实现(实现层):log4j、 ”JUL(java.util.logging)“、”Log4j2“、logback
+一般使用未带引号的框架，这三个框架出自同一作者
+SpringBoot选择Slf4j和logback
+在开发中，日志记录方法的调用，不应该直接调用日志的实现类，而是应该调用抽象层里面的方法
+如何让系统中所有的日志都统一到slf4j?
+1）、将系统中其他日志框架先排除
+2）、用中间包替换原有的日志框架
+3）、导入slf4j其他的实现
+SpringBoot底层也是使用的slf4j+logback的方式进行日志记录
+SpringBoot也把其他的日志框架替换为slf4j
+新建的SpringBoot项目，已经默认配置了日志，默认是info级别的
+默认配置:
+1）、全局常规设置(格式， 路径， 级别)
+2）、指定日志配置文件位置
+3）、切换日志框架
+
+指定配置：给类路径下放上每个日志框架自己的配置文件即可，SpringBoot就不使用自己默认的
+logback > logback-spring.xml / logback-spring.groovy / logback.xml / logback.groovy
+log4j2 > log4j2-spring.xml / log4j2.xml
+JDK > logging.properties
+官方推荐使用logback-spring.xml,因为直接使用logback.xml，该配置文件直接会被日志框架识别，
+而使用logback-spring.xml，日志框架就不直接加载日志的配置项，由springboot解析日志配置，这样可以使用springboot的高级springProfile高级功能
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ``` 
