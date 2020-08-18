@@ -123,12 +123,22 @@ JDK > logging.properties
 而使用logback-spring.xml，日志框架就不直接加载日志的配置项，由springboot解析日志配置，这样可以使用springboot的高级springProfile高级功能
 
 
+访问项目下webjars的静态资源
+https://www.webjars.org
+http://localhost:8027/webjars/jquery/3.5.1/jquery.js
+/**访问当前项目的任何资源
+classpath:/META-INF/resources/
+classpath:/resources/
+classpath:/static/
+classpath:/public/
+/ 当前项目根路径
+访问项目下自定义的js文件
+http://localhost:8027/utils.js
 
+欢迎页：静态资源文件夹下的所有的index.html页面，被“/**”映射
+http://localhost:8027
 
-
-
-
-
+所有的**/favicon.ico都在静态资源文件夹下找
 
 
 
