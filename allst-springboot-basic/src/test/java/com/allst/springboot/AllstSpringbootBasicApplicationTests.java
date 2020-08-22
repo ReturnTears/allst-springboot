@@ -9,8 +9,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.annotation.Resource;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 class AllstSpringbootBasicApplicationTests {
@@ -83,5 +89,28 @@ class AllstSpringbootBasicApplicationTests {
         logger.info("this is info log.");
         logger.warn("this is warn log.");
         logger.error("this is error log.");
+    }
+
+    @Resource
+    private DataSource dataSource;
+
+    /**
+     * jdbc
+     */
+    @Test
+    public void jdbcLoads() throws SQLException {
+        System.out.println(dataSource.getClass());
+        Connection connection = dataSource.getConnection();
+        System.out.println(connection);
+        connection.close();
+    }
+
+    @Resource
+    private JdbcTemplate jdbcTemplate;
+
+    @Test
+    public void jdbcDataLoads() throws SQLException {
+        List<Map<String, Object>> list = jdbcTemplate.queryForList("select * from sys_def");
+        list.forEach(System.out::println);
     }
 }
