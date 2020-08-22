@@ -9,6 +9,7 @@
   <version>1.0-SNAPSHOT</version>
   <modules>
     <module>allst-springboot-basic</module>
+    <module>allst-springboot-advs</module>
   </modules>
   <packaging>pom</packaging>
 
