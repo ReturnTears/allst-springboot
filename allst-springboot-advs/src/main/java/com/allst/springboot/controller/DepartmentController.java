@@ -28,4 +28,14 @@ public class DepartmentController {
         departmentMapper.insertDepartment(department);
         return department;
     }
+
+    @GetMapping("/dept/del/{id}")
+    public Integer deleteDepartment(@PathVariable("id") Integer id) {
+        return departmentMapper.deleteDepartmentById(id);
+    }
+
+    @GetMapping("/dept/update")
+    public Integer updateDepartment(Department department) {
+        return departmentMapper.updateDepartment(department);
+    }
 }

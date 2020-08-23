@@ -10,4 +10,5 @@ import lombok.Data;
 public class Department {
     private Integer id;
     private String departmentName;
+    private Integer employeeNums;
 }
