@@ -20,6 +20,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     /**
      * 为方法添加缓存
+     * key可以使用自定义的myKeyGenerator
      * @param id 参数
      * @return 结果
      */

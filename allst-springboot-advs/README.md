@@ -42,5 +42,12 @@ serialize       缓存数据value序列化策略
         unless否定缓存， 当unless指定的条件为true,方法的返回值就不会被缓存
         sync: 是否使用异步模式
         
+缓存运行流程:
+@Cacheable
+1、方法运行前，先查询cache(缓存组件)，按照cacheNames指定的名字获取，第一次获取缓存如果没有cache则会自动创建
+2、去cache中查找缓存内容，使用一个key,默认是方法的参数，key是按照某种策略生成的，默认使用keyGenerator生成的，
+3、没有查询到缓存就调用目标方法
+4、将目标方法返回的结果放进缓存中
+
 
 ```
