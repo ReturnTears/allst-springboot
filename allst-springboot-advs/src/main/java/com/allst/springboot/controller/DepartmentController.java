@@ -2,6 +2,7 @@ package com.allst.springboot.controller;
 
 import com.allst.springboot.bean.Department;
 import com.allst.springboot.mapper.DepartmentMapper;
+import com.allst.springboot.service.DepartmentService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,9 @@ public class DepartmentController {
 
     @Resource
     DepartmentMapper departmentMapper;
+
+    @Resource
+    private DepartmentService departmentService;
 
     @GetMapping("/dept/{id}")
     public Department getDepartment(@PathVariable("id") Integer id) {
@@ -37,5 +41,11 @@ public class DepartmentController {
     @GetMapping("/dept/update")
     public Integer updateDepartment(Department department) {
         return departmentMapper.updateDepartment(department);
+    }
+
+    // -------------------------------------- cache -------------------------------------
+    @GetMapping("/dept/cache/{id}")
+    public Department getDepartmentWithCache(@PathVariable("id") Integer id) {
+        return departmentService.getDepartmentWithCacheById(id);
     }
 }
