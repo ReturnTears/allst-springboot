@@ -3,6 +3,7 @@ package com.allst.springboot.service.impl;
 import com.allst.springboot.bean.Department;
 import com.allst.springboot.mapper.DepartmentMapper;
 import com.allst.springboot.service.DepartmentService;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -28,5 +29,12 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public Department getDepartmentWithCacheById(Integer id) {
         return departmentMapper.getDepartmentById(id);
+    }
+
+
+    @CacheEvict(value = "emp", key = "#id")
+    @Override
+    public void deleteDepartment(Integer id) {
+        departmentMapper.deleteDepartmentById(id);
     }
 }
