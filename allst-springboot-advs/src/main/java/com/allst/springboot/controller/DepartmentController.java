@@ -54,4 +54,10 @@ public class DepartmentController {
         departmentService.deleteDepartment(id);
         return "清除id: " + id;
     }
+
+    @GetMapping("/dept/cache/getByName/{name}")
+    public String getDepartmentByName(@PathVariable("name") String name) {
+        departmentService.getDepartmentWithCacheByName(name);
+        return "name : " + name;
+    }
 }

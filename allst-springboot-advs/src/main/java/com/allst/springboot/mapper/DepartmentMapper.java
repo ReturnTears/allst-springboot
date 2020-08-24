@@ -24,4 +24,7 @@ public interface DepartmentMapper {
 
     @Update("update department set departmentName = #{departmentName}, employee_nums = #{employeeNums} where id = #{id}")
     int updateDepartment(Department department);
+
+    @Select("select * from department where departmentName = #{name}")
+    Department getDepartmentWithCacheByName(String name);
 }

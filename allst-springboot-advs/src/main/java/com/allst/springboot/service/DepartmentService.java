@@ -11,4 +11,6 @@ public interface DepartmentService {
     Department getDepartmentWithCacheById(Integer id);
 
     void deleteDepartment(Integer id);
+
+    Department getDepartmentWithCacheByName(String name);
 }
