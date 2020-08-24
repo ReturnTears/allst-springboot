@@ -65,3 +65,8 @@ beforeInvocation = false 缓存的清除是否在方法之前执行
 @CacheConfig(cachesName = "emp") 
 抽取缓存的公共配置
 ```
+
+## 整合redis作为缓存中间件
+```text
+
+```

@@ -4,8 +4,7 @@ import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.lang.reflect.Method;
-import java.util.Collections;
+import java.util.*;
 
 /**
  * cache 配置类
@@ -22,5 +21,4 @@ public class MyCacheConfig {
     public KeyGenerator keyGenerator() {
         return (o, method, objects) -> method.getName() + "[" + Collections.singletonList(objects) + "]";
     }
-
 }

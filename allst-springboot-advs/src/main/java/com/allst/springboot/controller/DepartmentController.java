@@ -57,7 +57,7 @@ public class DepartmentController {
 
     @GetMapping("/dept/cache/getByName/{name}")
     public String getDepartmentByName(@PathVariable("name") String name) {
-        departmentService.getDepartmentWithCacheByName(name);
-        return "name : " + name;
+        Department department = departmentService.getDepartmentWithCacheByName(name);
+        return "name : " + name + " > " + department.toString();
     }
 }

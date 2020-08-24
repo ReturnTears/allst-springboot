@@ -17,6 +17,9 @@ spring:
     testOnReturn: false
     poolPreparedStatements: true
     maxPoolPreparedStatementPerConnectionSize: 20
-    #filters: stat,wall,slf4j
+    filters: stat,wall,slf4j
     useGlobalDataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  redis:
+    host: 127.0.0.1
+    port: 6379
