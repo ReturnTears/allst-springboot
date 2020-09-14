@@ -10,6 +10,7 @@
   <modules>
     <module>allst-springboot-basic</module>
     <module>allst-springboot-advs</module>
+    <module>allst-springboot-mybatis-plus</module>
   </modules>
   <packaging>pom</packaging>
 

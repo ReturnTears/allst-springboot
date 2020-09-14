@@ -7,7 +7,7 @@
         select * from employee where id = #{id}
     </select>
     <insert id="insertEmployee">
-        insert into employee (lastName, email, gender, dId)
+        insert into employee (lastName, email, gender, d_id)
                     values (#{lastName}, #{email}, #{gender}, #{dId})
     </insert>
 </mapper>

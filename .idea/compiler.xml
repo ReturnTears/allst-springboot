@@ -7,8 +7,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="allst-springboot-basic" />
+        <module name="allst-springboot-mybatis-plus" />
         <module name="allst-springboot-advs" />
+        <module name="allst-springboot-basic" />
       </profile>
     </annotationProcessing>
   </component>
@@ -16,6 +17,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="allst-springboot-advs" options="-parameters" />
       <module name="allst-springboot-basic" options="-parameters" />
+      <module name="allst-springboot-mybatis-plus" options="-parameters" />
     </option>
   </component>
 </project>
