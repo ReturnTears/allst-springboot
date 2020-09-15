@@ -27,4 +27,14 @@ class MybatisPlusApplicationTests {
         users.forEach(System.out::println);
     }
 
+    @Test
+    void contextLoads2() {
+        User user = new User();
+        user.setName("KangKang");
+        user.setAge(18);
+        user.setEmail("709844757@qq.com");
+        int insert = userMapper.insert(user);
+        System.out.println(insert);
+        System.out.println(user);
+    }
 }
