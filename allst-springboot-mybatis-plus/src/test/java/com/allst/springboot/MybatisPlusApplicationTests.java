@@ -30,11 +30,22 @@ class MybatisPlusApplicationTests {
     @Test
     void contextLoads2() {
         User user = new User();
-        user.setName("KangKang");
-        user.setAge(18);
-        user.setEmail("709844757@qq.com");
+        user.setName("XiaoHu");
+        user.setAge(22);
+        user.setEmail("XiaoHu@qq.com");
         int insert = userMapper.insert(user);
         System.out.println(insert);
         System.out.println(user);
+    }
+
+    @Test
+    void contextLoad3() {
+        User user = new User();
+        user.setId(1305890062833913858L);
+        user.setAge(18);
+        user.setName("小胡子");
+        user.setEmail("xiaohuzi@qq.com");
+        int i = userMapper.updateById(user);
+        System.out.println(i);
     }
 }
