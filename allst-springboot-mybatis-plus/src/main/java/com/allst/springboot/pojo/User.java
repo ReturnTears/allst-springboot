@@ -1,9 +1,6 @@
 package com.allst.springboot.pojo;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,6 +26,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@TableName("user")
 public class User {
     @TableId(type = IdType.AUTO)
     private Long id;
@@ -40,4 +38,14 @@ public class User {
     private Date createTime;
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
+    /**
+     * Version注解表示该字段是一个乐观锁注解
+     */
+    @Version
+    private Integer version;
+    /**
+     * TableLogic注解表示该字段是一个逻辑删除标识字段
+     */
+    @TableLogic
+    private Integer deleted;
 }
