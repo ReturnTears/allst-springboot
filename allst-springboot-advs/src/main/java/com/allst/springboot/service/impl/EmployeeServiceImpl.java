@@ -24,7 +24,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @return 结果
      */
     @Override
-    @Cacheable(cacheNames = "emps", key = "#methodName")
+    @Cacheable(cacheNames = "emps", key = "#root.methodName")
     public List<Employee> getEmployeeList() {
         return employeeMapper.getEmployeeList();
     }

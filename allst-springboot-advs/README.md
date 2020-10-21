@@ -42,7 +42,16 @@ serialize       缓存数据value序列化策略
         condition: 指定符合条件的情况才缓存
         unless否定缓存， 当unless指定的条件为true,方法的返回值就不会被缓存
         sync: 是否使用异步模式
-        
+    Cache SpEL available metadata
+    名字               位置          描述                 示例
+    methodName      root object     当前被调用的方法名   #root.methodName
+    method          root object     当前被调用的方法    #root.method.name
+    target          root object     当前被调用的目标对象      #root.target
+    targetClass     root object     当前被调用的目标对象类     #root.targetClass
+    args            root object     当前被调用的方法的参数列表   #root.args[0]
+    caches          root object     当前方法调用使用的缓存列表(如@Cacheable(value={"cache1", "cache2"})),则有两个cache  #root.caches[0].name
+    argument name   evaluation context  方法参数的名字，可以直接#参数名，也可以使用#p0或#a0的形式，0代表参数的索引   #iban   #a0 #p0
+    result          evaluation context  方法执行后的返回值(仅当方法执行之后的判断有效，如“unless”，“cache put”的表达式，“cache evict”的表达式beforeInvocation=false)  #result
 缓存运行流程:
 @Cacheable
 1、方法运行前，先查询cache(缓存组件)，按照cacheNames指定的名字获取，第一次获取缓存如果没有cache则会自动创建
