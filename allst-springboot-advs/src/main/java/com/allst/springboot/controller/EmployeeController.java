@@ -2,11 +2,14 @@ package com.allst.springboot.controller;
 
 import com.allst.springboot.bean.Employee;
 import com.allst.springboot.mapper.EmployeeMapper;
+import com.allst.springboot.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author YiYa
@@ -18,6 +21,9 @@ public class EmployeeController {
     @Resource
     EmployeeMapper employeeMapper;
 
+    @Autowired
+    private EmployeeService employeeService;
+
     @GetMapping("/emp/{id}")
     public Employee getEmployeeById(@PathVariable("id") Integer id) {
         return employeeMapper.getEmployeeById(id);
@@ -26,5 +32,10 @@ public class EmployeeController {
     @GetMapping("/emp/insert")
     public Integer insertEmployee(Employee employee) {
         return employeeMapper.insertEmployee(employee);
+    }
+
+    @GetMapping("/emps")
+    public List<Employee> getAllEmployees() {
+        return employeeService.getEmployeeList();
     }
 }

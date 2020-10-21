@@ -5,7 +5,8 @@ import org.apache.ibatis.annotations.*;
 
 /**
  * 定义操作数据库的mapper,
- * 如果有很多的*Mapper文件，那么可以在主配置类中指定注解@MapperScan(basePackage = "com.allst.springboot.mapper")
+ * 如果使用注解的方式获取数据,则需要在启动类中配置注解@MapperScan("xxx")
+ * 如果有很多的*Mapper文件，那么可以在主配置类中指定注解@MapperScan("com.allst.springboot.mapper")
  * @author YiYa
  * @since 2020-08-23 上午 01:10
  */

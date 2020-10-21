@@ -12,6 +12,7 @@ JSR107
     <artifactId>cache-api</artifactId>
 </dependency>
 
+重点::
 Spring缓存抽象
 Application > CachingProvider > CacheManager > Cache > Entry<K, V> > Expiry
 应用            缓存提供者            缓存管理器    缓存组件               过期    

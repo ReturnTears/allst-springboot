@@ -2,6 +2,9 @@ package com.allst.springboot.mapper;
 
 import com.allst.springboot.bean.Employee;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
  * @author YiYa
@@ -13,4 +16,7 @@ public interface EmployeeMapper {
     Employee getEmployeeById(Integer id);
 
     Integer insertEmployee(Employee employee);
+
+    @Select("select * from employee")
+    List<Employee> getEmployeeList();
 }
