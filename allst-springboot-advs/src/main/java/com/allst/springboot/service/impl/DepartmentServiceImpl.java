@@ -39,12 +39,18 @@ public class DepartmentServiceImpl implements DepartmentService {
         departmentMapper.deleteDepartmentById(id);
     }
 
+    /**
+     * 加了put每次都会先调用目标方法，再将结果缓存起来
+     *
+     * @param name 参数
+     * @return 结果
+     */
     @Caching(
             cacheable = {
-                    @Cacheable(/*value = "emp",*/ key = "#name")
+                    @Cacheable(value = "empName", key = "#root.args[0]")
             },
             put = {
-                    @CachePut(/*value = "emp",*/ key = "#result.id")
+                    @CachePut(value = "empName", key = "#result.id")
             }
     )
     @Override

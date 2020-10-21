@@ -42,7 +42,7 @@ serialize       缓存数据value序列化策略
         condition: 指定符合条件的情况才缓存
         unless否定缓存， 当unless指定的条件为true,方法的返回值就不会被缓存
         sync: 是否使用异步模式
-    Cache SpEL available metadata
+    Cache SpEL available metadata（key可以使用的EL表达式）
     名字               位置          描述                 示例
     methodName      root object     当前被调用的方法名   #root.methodName
     method          root object     当前被调用的方法    #root.method.name

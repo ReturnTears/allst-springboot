@@ -28,4 +28,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<Employee> getEmployeeList() {
         return employeeMapper.getEmployeeList();
     }
+
+    @Override
+    @Cacheable(cacheNames = "empBy")
+    public Employee getEmployeeBy(Integer id) {
+        return employeeMapper.getEmployeeById(id);
+    }
 }

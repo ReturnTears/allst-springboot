@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface EmployeeService {
     List<Employee> getEmployeeList();
+    Employee getEmployeeBy(Integer id);
 }

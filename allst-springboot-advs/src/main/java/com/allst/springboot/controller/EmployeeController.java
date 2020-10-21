@@ -38,4 +38,9 @@ public class EmployeeController {
     public List<Employee> getAllEmployees() {
         return employeeService.getEmployeeList();
     }
+
+    @GetMapping("/empBy/{id}")
+    public Employee getEmployeeBy(@PathVariable("id") Integer id) {
+        return employeeService.getEmployeeBy(id);
+    }
 }
