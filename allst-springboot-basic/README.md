@@ -1,4 +1,5 @@
 # Spring Boot Basic
+## Spring Boot 使用
 ```text
 1、spring-boot-configuration-processor
    配置文件处理器，配置文件进行绑定就会有提示
@@ -150,18 +151,21 @@ ${} OGNL表达式， 获取变量值，, 功能很强大， 查看官方文档
 ~{} 片段引用表达式
 %{} 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ``` 
+
+## Spring Boot 简介
+```text
+有点：
+-- 快速构建一个独立的Spring应用程序
+-- 嵌入的Tomcat、Jetty或者Undertom，无需部署WAR文件
+-- 提供starter POMs来简化Maven配置和减少版本冲突带来的问题
+-- 对Spring和第三方库提供默认配置，也可以修改默认值，简化框架配置
+-- 提供生产就绪功能，如指标，健康检查和外部配置
+-- 无需配置XML，无代码生成，开箱即用
+
+为什么是Spring Boot：
+    SpringBoot简化了基于Spring开发,这只是最直观的一个方面，还有一个方面，也更得力于各微服务组件的支持，也就是谈SpringBoot必谈微服务的原因。
+    可以说是SpringCloud带动了SpringBoot,SpringBoot成就了SpringCloud
+    Spring Cloud >> Spring Boot >> Spring Framework
+
+```
