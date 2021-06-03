@@ -25,7 +25,22 @@ application-{profile}.properties
 
 3、配置文件加载位置
 SpringBoot启动会扫描下面位置的application.properties或application.yml文件作为Spring Boot的默认配置文件
+配置文件介绍
+1)、application.properties
+    扁平的K/v格式
+2)、application.yml
+    树形结构, k:(空格)v 表示一对键值对(空格必须有)
+.properties与.yml同时存在时，系统默认的加载顺序，且这三个配置会形成互补配置
+<includes>
+  <include>**/application*.yml</include>
+  <include>**/application*.yaml</include>
+  <include>**/application*.properties</include>
+</includes>
+
+- file:./custom-config/
+- file:custom-config/
 - file:./config/
+- file:./config/*/
 - file:./
 - classpath:/config/
 - classpath:/
