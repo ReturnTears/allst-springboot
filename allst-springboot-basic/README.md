@@ -114,7 +114,20 @@ xxxAutoConfiguration自动配置类
 xxxProperties:封装配置文件中相关属性
 
 
-6、日志框架
+6、SpringBoot devtools热部署
+第一步：
+<!-- 热部署依赖 -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-devtools</artifactId>
+    <optional>true</optional>
+</dependency>
+第二步：
+IDEA中： File > Settings > Build,Execution,Deployment > Compiler > 勾选 build project Automatically
+第三步：
+IDEA中： 按住ctrl + alt + shift + / > 选择Registry  > 勾选 compiler.automake.allow.when.app.running 
+
+7、日志框架
 日志框架有那些？
 日志门面(抽象层):”JCL(jakarta commons logging)“、Slf4j(Simple Logging Facade for Java)、”jboss-logging“
 日志实现(实现层):log4j、 ”JUL(java.util.logging)“、”Log4j2“、logback

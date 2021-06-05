@@ -12,6 +12,6 @@ public class BasicController {
 
     @GetMapping(value = "/basic")
     public String basic() {
-        return "super.toString()";
+        return "springboot devtools basic";
     }
 }

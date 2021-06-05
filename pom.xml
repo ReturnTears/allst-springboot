@@ -11,6 +11,7 @@
     <module>allst-springboot-basic</module>
     <module>allst-springboot-advs</module>
     <module>allst-springboot-mybatis-plus</module>
+    <module>allst-springboot-log</module>
   </modules>
   <packaging>pom</packaging>
 
@@ -48,7 +49,7 @@
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
-<!--        <version>2.3.1.RELEASE</version>-->
+        <version>2.3.5.RELEASE</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
