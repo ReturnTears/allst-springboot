@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -112,5 +113,13 @@ class AllstSpringbootBasicApplicationTests {
     public void jdbcDataLoads() throws SQLException {
         List<Map<String, Object>> list = jdbcTemplate.queryForList("select * from sys_def");
         list.forEach(System.out::println);
+    }
+
+    @Value("${server.port}")
+    private String port;
+
+    @Test
+    public void testPort() {
+        System.out.println("port:" + port);
     }
 }

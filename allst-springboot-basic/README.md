@@ -45,7 +45,9 @@ SpringBoot启动会扫描下面位置的application.properties或application.yml
 - classpath:/config/
 - classpath:/
 此顺序优先级从高到低, 所有位置的文件都会被加载，优先级高的配置内容会覆盖优先级低的配置内容，最终会形成互补配置
-也可以通过配置spring.config.location来改变默认配置,可以在项目打包好以后,通过命令行参数的形式来指定配置文件的新位置，指定配置文件会和默认配置共同起作用。
+配置文件名称查找顺序是：.yml > .yaml > .properties
+eg: java -jar xxx.jar --spring.profile.active=dev
+也可以通过配置spring.config.location来改变默认配置,可以在项目打包好以后,通过命令行参数的形式来指定配置文件的新位置，指定配置文件会和默认配置共同起作用。但是不会和约定的配置文件进行互补
 eg: java -jar xxx.jar --spring.config.location=E:\\TestData\\application.properties
 
 4、外部配置加载顺序
