@@ -1,4 +1,4 @@
-package com.allst.springboot.entities;
+package com.allst.springboot.entity;
 
 /**
  * @author June

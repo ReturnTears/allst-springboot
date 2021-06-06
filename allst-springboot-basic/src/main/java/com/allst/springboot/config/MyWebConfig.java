@@ -28,8 +28,10 @@ public class MyWebConfig extends WebMvcConfigurerAdapter {
     /**
      * 所有的WebMvcConfigurerAdapter组件都会一起起作用
      *  将组件注入到容器中
+     *
+     *  to do 为了测试restTemplate 先注释掉登录拦截
      */
-    @Bean
+    /*@Bean
     public WebMvcConfigurerAdapter webMvcConfigurerAdapter() {
         WebMvcConfigurerAdapter adapter = new WebMvcConfigurerAdapter() {
 
@@ -50,7 +52,7 @@ public class MyWebConfig extends WebMvcConfigurerAdapter {
             }
         };
         return adapter;
-    }
+    }*/
 
     @Bean
     public LocaleResolver localeResolver() {

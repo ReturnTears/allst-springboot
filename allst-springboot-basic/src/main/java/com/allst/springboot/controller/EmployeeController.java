@@ -1,7 +1,7 @@
 package com.allst.springboot.controller;
 
 import com.allst.springboot.dao.EmployeeDao;
-import com.allst.springboot.entities.Employee;
+import com.allst.springboot.entity.Employee;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

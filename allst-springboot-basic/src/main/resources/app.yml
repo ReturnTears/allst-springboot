@@ -1,2 +1,2 @@
 server.port=8041
-server.servlet.context-path=/sb2
+server.servlet.context-path=/basic

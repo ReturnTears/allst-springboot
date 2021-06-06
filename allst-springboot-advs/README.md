@@ -1,4 +1,8 @@
 # Spring Boot Advs
+## advs调用basic服务
+```text
+User栗子
+```
 ## 整合Mybatis
 ```text
 http://localhost:8030/druid/login.html

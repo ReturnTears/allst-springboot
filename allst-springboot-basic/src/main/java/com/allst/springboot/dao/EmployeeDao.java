@@ -4,8 +4,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.allst.springboot.entities.Department;
-import com.allst.springboot.entities.Employee;
+import com.allst.springboot.entity.Department;
+import com.allst.springboot.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
