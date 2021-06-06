@@ -154,7 +154,7 @@ JDK > logging.properties
 而使用logback-spring.xml，日志框架就不直接加载日志的配置项，由springboot解析日志配置，这样可以使用springboot的高级springProfile高级功能
 
 
-访问项目下webjars的静态资源
+8、访问项目下webjars的静态资源
 https://www.webjars.org
 http://localhost:8027/webjars/jquery/3.5.1/jquery.js
 /**访问当前项目的任何资源
@@ -180,6 +180,12 @@ ${} OGNL表达式， 获取变量值，, 功能很强大， 查看官方文档
 @{} 定义url
 ~{} 片段引用表达式
 %{} 
+
+
+9、MockMvc
+MockMvc是由Spring-test包提供， 实现了对Http请求的模拟，能够直接使用网络的形式转换到Controller的调用，使得测试速度快， 不依赖网络环境， 同时提供了一套验证的工具， 结果的验证十分方便。
+在SpringBoot中测试
+
 
 ``` 
 
