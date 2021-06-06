@@ -3,7 +3,7 @@ package com.allst.springboot;
 import java.util.logging.Logger;
 
 /**
- * 采用官方日志记录
+ * 采用官方Jul日志记录: Jul（实现） + Jcl（门面）
  * 不加入任何依赖
  */
 public class JulMain {
