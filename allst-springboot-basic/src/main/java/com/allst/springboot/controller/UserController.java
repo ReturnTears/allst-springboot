@@ -33,9 +33,21 @@ public class UserController {
         return userService.getUserBy(id);
     }
 
+    @PostMapping("/add")
+    public Result<User> addUser(@RequestBody User user) {
+        userService.add(user);
+        return new Result(200, "添加成功", userService.getAllUsers());
+    }
+
+    @PutMapping("/update")
+    public Result<User> updateUser(@RequestBody User user) {
+        userService.update(user);
+        return new Result(200, "修改成功", userService.getAllUsers());
+    }
+
     @DeleteMapping("/{id}")
     public Result<User> delUser(@PathVariable("id") Integer id) {
         userService.delete(id);
-        return new Result<User>(200, "删除成功");
+        return new Result(200, "删除成功", userService.getAllUsers());
     }
 }

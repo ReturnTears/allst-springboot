@@ -77,4 +77,19 @@ public class UserCallController {
         System.out.println("Msg: " + userResponseEntity.getStatusCode());
         return Objects.requireNonNull(userResponseEntity.getBody()).toString();
     }
+
+    /**
+     * postForEntity参数介绍：
+     *      url: 请求的远程rest url
+     *      request: Post请求的参数
+     *      responseType: 响应类型
+     *      ...PathVariables: 是@PathVariables占位符的参数
+     */
+    @RequestMapping("/addUserCall")
+    public String addUserCall() {
+        User user = new User().setUsername("xiaohu").setAddress("ZhongXian");
+        ResponseEntity<Result> resultResponseEntity = restTemplate.postForEntity("http://localhost:8027/basic/user/add", user, Result.class);
+        System.out.println(resultResponseEntity.toString());
+        return Objects.requireNonNull(resultResponseEntity.getBody()).toString();
+    }
 }
