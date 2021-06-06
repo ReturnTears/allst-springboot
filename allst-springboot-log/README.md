@@ -22,5 +22,10 @@ ${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:m<n:ss.SSS}这里使用了三目运算:L
        public static final String LOG_DATEFORMAT_PATTERN = "LOG_DATEFORMAT_PATTERN";
 logging.pattern.dateformat=就是使用LOG_DATEFORMAT_PATTERN来设置系统参数
 
+```
+
+# LogBack中文网
+```text
+http://logback.cn
 
 ```

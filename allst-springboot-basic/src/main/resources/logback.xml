@@ -183,8 +183,8 @@
             <dataSource class="com.alibaba.druid.pool.DruidDataSource">
                 <username>root</username>
                 <password>123456</password>
-                <driverClassName>com.mysql.jdbc.Driver</driverClassName>
-                <url>jdbc:mysql://localhost:3306/logback?useUnicode=true&amp;characterEncoding=utf8</url>
+                <driverClassName>com.mysql.cj.jdbc.Driver</driverClassName>
+                <url>jdbc:mysql://localhost:3306/logback?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=true&amp;serverTimezone=UTC</url>
             </dataSource>
         </connectionSource>
     </appender>
