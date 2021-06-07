@@ -186,7 +186,8 @@ ${} OGNL表达式， 获取变量值，, 功能很强大， 查看官方文档
 MockMvc是由Spring-test包提供， 实现了对Http请求的模拟，能够直接使用网络的形式转换到Controller的调用，使得测试速度快， 不依赖网络环境， 同时提供了一套验证的工具， 结果的验证十分方便。
 在SpringBoot中测试
 
-
+10、定制SpringMVC的自动配置
+在大多数情况下,SpringBoot在自动配置中标记了很多@ConditionalOnMissingBean(xxx.class),我们只需要自定义其配置即可覆盖默认配置
 ``` 
 
 ## Spring Boot 简介
