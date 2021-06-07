@@ -29,3 +29,14 @@ logging.pattern.dateformat=就是使用LOG_DATEFORMAT_PATTERN来设置系统参�
 http://logback.cn
 
 ```
+
+# Swagger相关
+```text
+pom引入jar，最新的3.0.0版本会报404, 解决思路：
+1、依赖选择选择2.9.2
+2、新建SwaggerConfig配置类,访问swagger-ui.html如果报404，
+   需要配置类实现WebMvcConfigurer接口，WebMvcConfigurer接口实际上就是springBoot做拦击的一个抽象的接口，
+   在springBoot早期的版本，使用的是WebMvcConfigurerAdapter抽象父类进行管理权限。然后在SwaggerConfig类重写addResourceHandlers方法，将不拦截的路径放入。
+
+妥协了， 最后还是采用方法1解决404问题
+```
