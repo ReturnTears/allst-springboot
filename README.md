@@ -14,6 +14,10 @@
 ## Spring Boot DFS
 [Spring Boot 分布式文件存储部分](allst-springboot-dfs/README.md)
 
+## Spring Boot MinIo
+[Spring Boot 分布式文件存储部分2](allst-springboot-minio/README.md)
+
+
 ## Spring Boot 复习
 ```text
 Date: 2021-05-23

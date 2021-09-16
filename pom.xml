@@ -12,7 +12,8 @@
     <module>allst-springboot-advs</module>
     <module>allst-springboot-mybatis-plus</module>
     <module>allst-springboot-log</module>
-      <module>allst-springboot-dfs</module>
+    <module>allst-springboot-dfs</module>
+    <module>allst-springboot-minio</module>
   </modules>
   <packaging>pom</packaging>
 
