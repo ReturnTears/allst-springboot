@@ -1,0 +1,7 @@
+server:
+  port: 8899
+fdfs:
+  connect-timeout: 600
+  tracker-list:
+    - 192.168.0.100:22122
+    - 192.168.0.102:22122
