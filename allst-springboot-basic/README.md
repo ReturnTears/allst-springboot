@@ -206,3 +206,26 @@ MockMvc是由Spring-test包提供， 实现了对Http请求的模拟，能够直
     Spring Cloud >> Spring Boot >> Spring Framework
 
 ```
+
+## Spring AOP
+```text
+Spring AOP 可以帮助我们在使用Java时不修改源代码的前提下实现功能的增强，
+其底层实现就是基于Java动态代理或者CGLIB代理。
+
+以往我们可以使用execution选定具体利用AOP扩展那些类，execution(* com.xx.xx...*Service.*(..))
+这样使用非常不灵活，因为并不是Service中所有的方法都需要被增强
+这时候我们可以Spring声明式注解，利用自定义注解来实现大量的共性需求（共性需求指的是通用的功能）。
+
+应用场景：
+1、收集上报指定关键方法的入参，执行时间，返回结果等关键信息，用作后期调优。
+2、关键方法在幂等性前置校验，（基于本地消息表）
+3、类似于Spring-Retry模块，提供关键方法多次调用重试机制
+4、提供关键方法自定义的快速熔断，服务降级等职责
+5、关键方法的共性入参校验
+6、关键方法在执行后的扩展行为，例如：记录日志后，启动其他任务后等。
+
+开发流程：
+1、在SpringBoot项目中pom.xml文件引入aspectjweaver依赖
+2、新建自定义注解，利用@interface关键字注解
+3、
+```
