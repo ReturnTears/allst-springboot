@@ -1,0 +1,36 @@
+# 开发环境配置
+server:
+  # 服务器的HTTP端口
+  port: 8099
+  servlet:
+    # 应用的访问路径
+    context-path: /
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://127.0.0.1:3306/sb?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+    # HikariPool 较佳配置
+    hikari:
+      # 客户端（即您）等待来自池的连接的最大毫秒数
+      connection-timeout: 60000
+      # 控制将测试连接的活动性的最长时间
+      validation-timeout: 3000
+      # 控制允许连接在池中保持空闲状态的最长时间
+      idle-timeout: 60000
+
+      login-timeout: 5
+      # 控制池中连接的最大生存期
+      max-lifetime: 60000
+      # 控制允许池达到的最大大小，包括空闲和使用中的连接
+      maximum-pool-size: 10
+      # 控制HikariCP尝试在池中维护的最小空闲连接数
+      minimum-idle: 10
+      # 控制默认情况下从池获得的连接是否处于只读模式
+      read-only: false

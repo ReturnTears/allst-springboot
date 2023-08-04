@@ -14,6 +14,7 @@
     <module>allst-springboot-log</module>
     <module>allst-springboot-dfs</module>
     <module>allst-springboot-minio</module>
+    <module>allst-springboot-quartz</module>
   </modules>
   <packaging>pom</packaging>
 
