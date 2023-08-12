@@ -111,6 +111,13 @@
             <artifactId>aspectjweaver</artifactId>
             <version>1.9.9.1</version>
         </dependency>
+
+        <!-- guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>22.0</version>
+        </dependency>
     </dependencies>
 
     <!--  启动项目是报错：Failed to execute goal org.springframework.boot:spring-boot-maven-plugin...需要注释下面的插件配置  -->

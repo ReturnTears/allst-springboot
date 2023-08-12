@@ -1,6 +1,7 @@
 package com.allst.springboot.controller;
 
 import com.allst.springboot.annoation.MethodExporter;
+import com.google.common.collect.Maps;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,8 +26,8 @@ public class SimpleController {
      */
     @MethodExporter
     @GetMapping("/list")
-    public Map list(int page, int rows) {
-        Map result = new LinkedHashMap();
+    public Map<String, Object> list(int page, int rows) {
+        Map<String, Object> result = Maps.newLinkedHashMap();
         result.put("code", "0");
         result.put("message", "success");
 

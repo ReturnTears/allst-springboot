@@ -229,3 +229,10 @@ Spring AOP 可以帮助我们在使用Java时不修改源代码的前提下实�
 2、新建自定义注解，利用@interface关键字注解
 3、
 ```
+
+## 自定义失败分析器
+```text
+自定义失败分析器需要在META-INF/spring.factories文件中注册，首先在项目的resources目录下创建META-INF文件夹（注意大小写和短横线），
+然后在META-INF文件夹内创建spring.factories文件
+
+```
