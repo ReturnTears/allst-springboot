@@ -26,6 +26,8 @@ public class AllstSpringbootBasicApplication {
             // 输入流读取properties对象
             properties.load(is);
             springApplication.setDefaultProperties(properties);
+            // 设置启用延迟初始化
+            // springApplication.setLazyInitialization(true);
         } catch (IOException e) {
             e.printStackTrace();
         }

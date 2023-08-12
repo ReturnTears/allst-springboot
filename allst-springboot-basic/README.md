@@ -236,3 +236,15 @@ Spring AOP 可以帮助我们在使用Java时不修改源代码的前提下实�
 然后在META-INF文件夹内创建spring.factories文件
 
 ```
+
+## 延迟初始化
+```text
+spring.main.lazy-initialization=false
+启用延迟初始化之后，Spring容器将不会预初始化Bean，而是等到程序需要调用Bean的方法时才执行初始化，因此可降低Spring Boot应用的启动时间。
+一般来说，如果不是有非常特殊的原因，则不建议启用Spring Boot的延迟初始化
+```
+
+## 自定义Banner
+```text
+
+```
