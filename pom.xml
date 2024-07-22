@@ -11,6 +11,7 @@
     <module>allst-springboot-basic</module>
     <module>allst-springboot-advs</module>
     <module>allst-springboot-mybatis-plus</module>
+    <module>allst-springboot-demo</module>
     <module>allst-springboot-log</module>
     <module>allst-springboot-dfs</module>
     <module>allst-springboot-exercise</module>
