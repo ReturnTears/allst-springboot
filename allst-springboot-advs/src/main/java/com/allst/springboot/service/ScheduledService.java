@@ -17,7 +17,8 @@ public class ScheduledService {
     // @Scheduled(cron = "0 * * * * MON-FRI") // （任意月任意天的）周一到周五任意时任意分的第一秒执行
     // @Scheduled(cron = "0,1,2,3,4 * * * * MON-FRI")  // 第1,2,3,4秒执行
     // @Scheduled(cron = "0-4 * * * * MON-FRI")  // 第1-4秒执行 效果同上
-    @Scheduled(cron = "0/4 * * * * MON-FRI")  // 第0秒启动 每4秒执行一次
+    // @Scheduled(cron = "0/4 * * * * MON-FRI")  // 第0秒启动 每4秒执行一次
+    @Scheduled(cron = "0 0/10 0/1 * * ?")  // 第0秒启动 每4秒执行一次
     public void scheduledHandleTask() {
         System.out.println("-----scheduledHandleTask-----");
     }

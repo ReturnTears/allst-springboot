@@ -17,6 +17,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class AllstSpringbootAdvsApplication {
 
     public static void main(String[] args) {
+        System.out.println("AllstSpringbootAdvsApplication.main");
         SpringApplication.run(AllstSpringbootAdvsApplication.class, args);
     }
 
