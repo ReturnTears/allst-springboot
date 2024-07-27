@@ -68,7 +68,7 @@ public class InfoServiceImpl implements InfoService {
             stream = new FileInputStream(resource.getFile());
             XWPFRun run = paragraph2.createRun();
             run.addPicture(stream, Document.PICTURE_TYPE_PNG, "Generated", Units.toEMU(256), Units.toEMU(256));
-        } catch (IOException | InvalidFormatException e) {
+        } catch (IOException | InvalidFormatException ignored) {
         }
 
         return doc;
