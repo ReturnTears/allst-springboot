@@ -8,4 +8,6 @@ import com.allst.exercise.model.Customers;
  */
 public interface CustomersService {
     String save(Customers customers);
+
+    String queryOne(Integer id);
 }

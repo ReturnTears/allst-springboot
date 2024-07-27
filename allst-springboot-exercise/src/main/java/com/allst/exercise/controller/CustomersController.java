@@ -5,6 +5,7 @@ import com.allst.exercise.service.CustomersService;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,5 +23,10 @@ public class CustomersController {
     @GetMapping("/save")
     public Object save(Customers customers) {
         return customersService.save(customers);
+    }
+
+    @GetMapping("/query/{id}")
+    public Object queryOne(@PathVariable(value = "id") Integer id) {
+        return customersService.queryOne(id);
     }
 }

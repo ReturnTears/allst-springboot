@@ -113,6 +113,17 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 WebMvcConfigurer 是一个强大的工具，可以让你轻松地定制 Spring MVC 的行为，而无需编写大量的 XML 配置文件。它是 Spring Boot 中一个非常实用的功能，可以极大地提高开发效率。
 ```
 
+## 编程式事务TransactionTemplate 
+```text
+注意事项
+
+**异常处理**：在编程式事务中，你需要显式地处理异常，并在必要时调用`status.setRollbackOnly()`来回滚事务。
+**事务传播行为**：在某些情况下，你可能需要配置事务的传播行为（如`Propagation.REQUIRED`、`Propagation.REQUIRES_NEW`等），
+这可以通过`TransactionTemplate`的配置来实现。
+
+通过这种方式，你可以更灵活地控制事务的开始和结束，但同时也需要更仔细地管理事务的边界和异常处理。
+```
+
 
 ## SQL语句
 ```text
