@@ -44,7 +44,15 @@ public class CustomersController {
     }
 
     @GetMapping("/select/{id}")
-    public Object selectOne(@PathVariable(value = "id") Long id) {
-        return customersService.queryOne(id);
+    public Customers selectOne(@PathVariable(value = "id") Long id) {
+        return customersService.selectById(id);
+    }
+
+    /**
+     * <a href="http://127.0.0.1:1024/customer/select_name/Xiaohu">请求地址</a>
+     */
+    @GetMapping("/select_name/{name}")
+    public Customers selectName(@PathVariable(value = "name") String name) {
+        return customersService.selectByName(name);
     }
 }

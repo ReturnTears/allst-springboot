@@ -12,4 +12,6 @@ public interface CustomersService {
     String queryOne(Long id);
 
     Customers selectById(Long id);
+
+    Customers selectByName(String name);
 }

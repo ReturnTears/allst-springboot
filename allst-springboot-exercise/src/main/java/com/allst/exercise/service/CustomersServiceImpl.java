@@ -47,4 +47,11 @@ public class CustomersServiceImpl implements CustomersService {
     public Customers selectById(Long id) {
         return customersMapper.selectById(id);
     }
+
+    @Override
+    public Customers selectByName(String name) {
+        Customers customers = customersMapper.selectByName(name);
+        System.out.println("customers : " +customers);
+        return customers;
+    }
 }

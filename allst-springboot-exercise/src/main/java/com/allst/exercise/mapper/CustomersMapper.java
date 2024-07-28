@@ -15,4 +15,9 @@ public interface CustomersMapper extends BaseMapper<Customers>  {
      */
     @Select("select * from customers where id = #{id}")
     Customers selectById(@Param("id") Long id);
+
+    /**
+     * 使用Mybatis的原生Xml查询数据
+     */
+    Customers selectByName(@Param("name") String name);
 }
