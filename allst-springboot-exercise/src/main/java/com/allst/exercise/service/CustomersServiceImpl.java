@@ -68,6 +68,7 @@ public class CustomersServiceImpl implements CustomersService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Customers> selectCursorList() {
         QueryWrapper qw = QueryWrapper.create().where(Customers::getId).ge(0);
         List<Customers> result = List.of();
