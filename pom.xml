@@ -18,6 +18,7 @@
     <module>allst-springboot-minio</module>
     <module>allst-springboot-quartz</module>
     <module>allst-springboot-doc</module>
+    <module>allst-springboot-docker</module>
   </modules>
   <packaging>pom</packaging>
 
