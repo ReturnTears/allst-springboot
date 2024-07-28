@@ -19,6 +19,7 @@
     <module>allst-springboot-quartz</module>
     <module>allst-springboot-doc</module>
     <module>allst-springboot-docker</module>
+    <module>allst-springboot-k8s</module>
   </modules>
   <packaging>pom</packaging>
 
