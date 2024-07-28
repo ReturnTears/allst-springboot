@@ -6,6 +6,8 @@ import com.mybatisflex.core.paginate.Page;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 /**
  * @author Hutu
  * @since 2024-07-28 上午 12:02
@@ -23,4 +25,6 @@ public interface CustomersMapper extends BaseMapper<Customers>  {
     Customers selectByName(@Param("name") String name);
 
     Page<Customers> selectPageList();
+
+    //List<Customers> selectCursorList();
 }

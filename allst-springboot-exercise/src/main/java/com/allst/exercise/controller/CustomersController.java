@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * @author Hutu
  * @since 2024-07-27 下午 11:50
@@ -60,5 +62,10 @@ public class CustomersController {
     @GetMapping("/page_list/{pageSize}/{pageNumber}")
     public Page<Customers> selectPageList(@PathVariable(value = "pageSize") Integer pageSize, @PathVariable(value = "pageNumber") Integer pageNumber) {
         return customersService.selectPageList(pageSize, pageNumber);
+    }
+
+    @GetMapping("/page_cursor_list")
+    public List<Customers> selectCursorList() {
+        return customersService.selectCursorList();
     }
 }
