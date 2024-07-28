@@ -143,12 +143,14 @@ public interface AnnotationFormatterFactory<A extends Annotation> {
 ## SQL语句
 ```text
 -- oracle --
+drop table customers;
 CREATE TABLE customers (
-   id INT,
+   id number primary key ,
    name VARCHAR(50),
    email VARCHAR(50),
    address VARCHAR(100),
    city VARCHAR(50),
    country VARCHAR(50)
 );
+select * from customers a where a.id > 0;
 ```

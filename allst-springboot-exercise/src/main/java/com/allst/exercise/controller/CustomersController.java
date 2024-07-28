@@ -30,6 +30,7 @@ public class CustomersController {
     }
 
     /**
+     * 注解添加到参数上
      * <a href="http://127.0.0.1:1024/customer/save?id=7&name=Seven&email=Seven@qq.com&address=changan&city=xian&country=china">请求方式3</a>
      */
     @GetMapping("/saveBy")
