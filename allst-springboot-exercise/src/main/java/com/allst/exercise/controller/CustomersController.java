@@ -2,7 +2,6 @@ package com.allst.exercise.controller;
 
 import com.allst.exercise.model.Customers;
 import com.allst.exercise.service.CustomersService;
-import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +25,7 @@ public class CustomersController {
     }
 
     @GetMapping("/query/{id}")
-    public Object queryOne(@PathVariable(value = "id") Integer id) {
+    public Object queryOne(@PathVariable(value = "id") Long id) {
         return customersService.queryOne(id);
     }
 }

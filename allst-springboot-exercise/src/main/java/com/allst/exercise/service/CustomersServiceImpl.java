@@ -2,14 +2,13 @@ package com.allst.exercise.service;
 
 import com.allst.exercise.mapper.CustomersMapper;
 import com.allst.exercise.model.Customers;
+import com.allst.exercise.model.table.CustomersTableDef;
 import com.google.gson.Gson;
 import com.mybatisflex.core.query.QueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
-
-import static com.allst.exercise.model.table.AccountTableDef.ACCOUNT;
 
 /**
  * @author Hutu
@@ -34,10 +33,9 @@ public class CustomersServiceImpl implements CustomersService {
     }
 
     @Override
-    public String queryOne(Integer id) {
-        Customers customers = new Customers();
-        customers.setId(id);
-        customers = customersMapper.selectOneByEntityId(customers);
+    public String queryOne(Long id) {
+        QueryWrapper queryWrapper = QueryWrapper.create().select().where(CustomersTableDef.CUSTOMERS.ID.eq(id));
+        Customers customers = customersMapper.selectOneByQuery(queryWrapper);
         return new Gson().toJson(customers);
     }
 }

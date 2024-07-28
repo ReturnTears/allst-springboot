@@ -20,7 +20,7 @@ public class CustomersFormatter implements Formatter<Customers> {
             return customers;
         }
         String[] values = text.split(",");
-        customers.setId(Integer.parseInt(values[0]));
+        customers.setId(Long.parseLong(values[0]));
         customers.setName(values[1]);
         customers.setEmail(values[2]);
         customers.setAddress(values[3]);

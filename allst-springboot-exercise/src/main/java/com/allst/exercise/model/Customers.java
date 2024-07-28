@@ -1,5 +1,8 @@
 package com.allst.exercise.model;
 
+import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.KeyType;
+import com.mybatisflex.annotation.Table;
 import lombok.Data;
 
 /**
@@ -7,8 +10,10 @@ import lombok.Data;
  * @since 2024-07-27 下午 11:38
  */
 @Data
+@Table("customers")
 public class Customers {
-    private Integer id;
+    @Id(keyType = KeyType.Auto)
+    private Long id;
     private String name;
     private String email;
     private String address;
