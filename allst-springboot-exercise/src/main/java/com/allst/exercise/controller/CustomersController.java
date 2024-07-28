@@ -42,4 +42,9 @@ public class CustomersController {
     public Object queryOne(@PathVariable(value = "id") Long id) {
         return customersService.queryOne(id);
     }
+
+    @GetMapping("/select/{id}")
+    public Object selectOne(@PathVariable(value = "id") Long id) {
+        return customersService.queryOne(id);
+    }
 }

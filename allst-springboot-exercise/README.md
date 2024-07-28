@@ -32,6 +32,7 @@ edit configuration
 ## MyBatis-Flex
 ```text
 官方地址：https://mybatis-flex.com/
+使用 MyBatis-Flex 作为 MyBatis 的增强框架进行代码开发，并不会影响原有的 MyBatis 的任何功能。
 
 ```
 
@@ -123,6 +124,7 @@ WebMvcConfigurer 是一个强大的工具，可以让你轻松地定制 Spring M
 
 通过这种方式，你可以更灵活地控制事务的开始和结束，但同时也需要更仔细地管理事务的边界和异常处理。
 ```
+
 ## AnnotationFormatterFactory接口
 ```java
 /**

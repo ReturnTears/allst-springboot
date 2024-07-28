@@ -42,4 +42,9 @@ public class CustomersServiceImpl implements CustomersService {
         Customers customers = customersMapper.selectOneByQuery(queryWrapper);
         return new Gson().toJson(customers);
     }
+
+    @Override
+    public Customers selectById(Long id) {
+        return customersMapper.selectById(id);
+    }
 }

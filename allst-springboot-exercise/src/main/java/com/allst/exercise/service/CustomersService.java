@@ -10,4 +10,6 @@ public interface CustomersService {
     String save(Customers customers);
 
     String queryOne(Long id);
+
+    Customers selectById(Long id);
 }
