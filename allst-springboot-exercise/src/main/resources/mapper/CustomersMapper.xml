@@ -5,4 +5,13 @@
     <select id="selectByName" resultType="com.allst.exercise.model.Customers">
         select * from customers a where a.name = #{name}
     </select>
+    <select id="selectPageList" resultType="com.allst.exercise.model.Customers">
+        select * from customers ${qwSql}
+        <if test="pageNumber != null and pageSize != null">
+            and id between (${pageNumber} - 1) * ${pageSize} + 1 and ${pageNumber} * ${pageSize}
+        </if>
+    </select>
+    <select id="selectPageList_COUNT" resultType="long">
+        select count(1) from customers ${qwSql}
+    </select>
 </mapper>

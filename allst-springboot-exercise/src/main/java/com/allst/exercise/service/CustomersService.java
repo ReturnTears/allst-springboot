@@ -1,6 +1,7 @@
 package com.allst.exercise.service;
 
 import com.allst.exercise.model.Customers;
+import com.mybatisflex.core.paginate.Page;
 
 /**
  * @author Hutu
@@ -14,4 +15,6 @@ public interface CustomersService {
     Customers selectById(Long id);
 
     Customers selectByName(String name);
+
+    Page<Customers> selectPageList(Integer pageSize, Integer pageNumber);
 }

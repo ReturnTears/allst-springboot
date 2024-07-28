@@ -3,6 +3,7 @@ package com.allst.exercise.controller;
 import com.allst.exercise.anno.CustomersFormat;
 import com.allst.exercise.model.Customers;
 import com.allst.exercise.service.CustomersService;
+import com.mybatisflex.core.paginate.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,5 +55,10 @@ public class CustomersController {
     @GetMapping("/select_name/{name}")
     public Customers selectName(@PathVariable(value = "name") String name) {
         return customersService.selectByName(name);
+    }
+
+    @GetMapping("/page_list/{pageSize}/{pageNumber}")
+    public Page<Customers> selectPageList(@PathVariable(value = "pageSize") Integer pageSize, @PathVariable(value = "pageNumber") Integer pageNumber) {
+        return customersService.selectPageList(pageSize, pageNumber);
     }
 }

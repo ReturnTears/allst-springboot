@@ -34,6 +34,13 @@ edit configuration
 官方地址：https://mybatis-flex.com/
 使用 MyBatis-Flex 作为 MyBatis 的增强框架进行代码开发，并不会影响原有的 MyBatis 的任何功能。
 
+MyBatis-Flex XML分页功能
+XML 分页参数解释：
+${qwSql}: 传入的 QueryWrapper 生成的 where 部分的 SQL，带有 "where" 关键字
+${pageOffset}: sql offset 的值
+${pageSize}: 需要查询的数据量
+${pageNumber}: 当前的页码
+${dbType}: 当前用户配置的数据库类型，用户切换数据源也有可能造成数据库类型发生变化。我们可以通过不同的 dbType 来编写不同的 SQL，以适配不同的数据库类型。
 ```
 
 ## SpringBoot数据格式化

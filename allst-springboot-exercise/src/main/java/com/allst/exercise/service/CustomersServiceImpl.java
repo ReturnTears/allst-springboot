@@ -4,6 +4,7 @@ import com.allst.exercise.mapper.CustomersMapper;
 import com.allst.exercise.model.Customers;
 import com.allst.exercise.model.table.CustomersTableDef;
 import com.google.gson.Gson;
+import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.query.QueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -53,5 +54,11 @@ public class CustomersServiceImpl implements CustomersService {
         Customers customers = customersMapper.selectByName(name);
         System.out.println("customers : " +customers);
         return customers;
+    }
+
+    @Override
+    public Page<Customers> selectPageList(Integer pageSize, Integer pageNumber) {
+        QueryWrapper qw = QueryWrapper.create().where(Customers::getCountry).eq("china").and(Customers::getId).ge(0);
+        return customersMapper.xmlPaginate("selectPageList", Page.of(pageNumber, pageSize), qw);
     }
 }
