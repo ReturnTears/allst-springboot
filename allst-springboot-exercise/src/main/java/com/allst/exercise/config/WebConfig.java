@@ -15,6 +15,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addFormatters(FormatterRegistry registry) {
-        registry.addFormatter(new CustomersFormatter());
+        // 请求方式1
+        //registry.addFormatter(new CustomersFormatter());
+        // 请求方式2
+        // registry.addFormatterForFieldAnnotation(new EmailFormatAnnotationFormatterFactory());
+        // 请求方式3
+        registry.addFormatterForFieldAnnotation(new CustomersFormatAnnotationFormatterFactory());
     }
 }

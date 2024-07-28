@@ -24,10 +24,14 @@ public class CustomersServiceImpl implements CustomersService {
 
     @Override
     public String save(Customers customers) {
-        transactionTemplate.execute((TransactionCallback<Void>) status -> {
-            int insert = customersMapper.insert(customers);
-            System.out.println("Success num = " + insert);
-            return null;
+        transactionTemplate.execute((TransactionCallback<Customers>) status -> {
+            try {
+                int insert = customersMapper.insert(customers);
+                System.out.println("Success num = " + insert);
+            } catch (Exception e) {
+                status.setRollbackOnly() ;
+            }
+            return null ;
         });
         return new Gson().toJson(customers);
     }

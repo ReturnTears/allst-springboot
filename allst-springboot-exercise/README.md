@@ -123,7 +123,22 @@ WebMvcConfigurer 是一个强大的工具，可以让你轻松地定制 Spring M
 
 通过这种方式，你可以更灵活地控制事务的开始和结束，但同时也需要更仔细地管理事务的边界和异常处理。
 ```
+## AnnotationFormatterFactory接口
+```java
+/**
+getFieldTypes：返回可以使用注释的字段类型，那些类型的字段上可以添加自定义的注解。
+getPrinter：返回Printer以打印带注释字段的值。
+getParser：返回一个Parser来解析带注释字段的值。
+*/
+public interface AnnotationFormatterFactory<A extends Annotation> {
 
+  Set<Class<?>> getFieldTypes();
+
+  Printer<?> getPrinter(A annotation, Class<?> fieldType);
+
+  Parser<?> getParser(A annotation, Class<?> fieldType);
+}
+```
 
 ## SQL语句
 ```text

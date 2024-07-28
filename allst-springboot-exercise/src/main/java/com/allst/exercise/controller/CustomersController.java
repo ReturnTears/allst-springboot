@@ -1,5 +1,6 @@
 package com.allst.exercise.controller;
 
+import com.allst.exercise.anno.CustomersFormat;
 import com.allst.exercise.model.Customers;
 import com.allst.exercise.service.CustomersService;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +20,20 @@ public class CustomersController {
 
     private final CustomersService customersService;
 
+    /**
+     * <a href="http://127.0.0.1:1024/customer/save?customers=2,Xiaohu,xiaohu@qq.com,guangzhou,guangzhou,china">请求方式1</a>
+     * <a href="http://127.0.0.1:1024/customer/save?id=4&name=XiaoQ&email=3_xiaoshen&address=shenzhen&city=shenzhen&country=china">请求方式2</a>
+     */
     @GetMapping("/save")
     public Object save(Customers customers) {
+        return customersService.save(customers);
+    }
+
+    /**
+     * <a href="http://127.0.0.1:1024/customer/save?id=7&name=Seven&email=Seven@qq.com&address=changan&city=xian&country=china">请求方式3</a>
+     */
+    @GetMapping("/saveBy")
+    public Object saveBy(@CustomersFormat Customers customers) {
         return customersService.save(customers);
     }
 
