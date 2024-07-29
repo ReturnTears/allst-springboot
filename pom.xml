@@ -20,6 +20,7 @@
     <module>allst-springboot-doc</module>
     <module>allst-springboot-docker</module>
     <module>allst-springboot-k8s</module>
+    <module>allst-springboot-graphql</module>
   </modules>
   <packaging>pom</packaging>
 
