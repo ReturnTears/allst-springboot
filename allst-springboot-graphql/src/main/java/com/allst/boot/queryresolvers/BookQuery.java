@@ -25,8 +25,8 @@ public class BookQuery implements GraphQLQueryResolver {
         return bookRepository.findAll();
     }
 
-    public Book findByName(String name) {
-        return bookRepository.findByName(name);
+    public Book getBookByName(String name) {
+        return bookRepository.findBookByName(name);
     }
 
     public Iterable<Author> allAuthor() {

@@ -33,7 +33,7 @@ public class BookController {
 
     @GetMapping("/getByName")
     public Book getBookByName(String name) {
-        return bookQuery.findByName(name);
+        return bookQuery.getBookByName(name);
     }
 
     @GetMapping("/getByAuthor")

@@ -8,5 +8,5 @@ import org.springframework.data.repository.CrudRepository;
  * @since 2024-07-29 下午 09:19
  */
 public interface AuthorRepository extends CrudRepository<Author, Integer> {
-    Author findByName(String name);
+    Author findAuthorByBookId(Integer bookId);
 }

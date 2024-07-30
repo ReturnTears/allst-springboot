@@ -6,9 +6,8 @@ type Book {
 }
 
 type Query {
-    allBook: [Book]
-    allAuthor:[Author]
-    getBookByName(name: String): Book
+    findAll: [Book]
+    allAuthor: [Author]
 }
 
 type Mutation {
