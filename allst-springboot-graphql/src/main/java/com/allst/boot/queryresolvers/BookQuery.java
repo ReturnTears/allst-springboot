@@ -32,4 +32,8 @@ public class BookQuery implements GraphQLQueryResolver {
     public Iterable<Author> allAuthor() {
         return authorRepository.findAll();
     }
+
+    public Author getAuthorByBookId(Integer bookId) {
+        return authorRepository.findAuthorByBookId(bookId);
+    }
 }

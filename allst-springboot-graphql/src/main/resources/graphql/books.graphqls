@@ -8,11 +8,16 @@ type Book {
 type Query {
     findAll: [Book]
     allAuthor: [Author]
+    getBookByName(name: String): Book
+    getAuthorByBookId(bookId: Int): Author
+    getAuthorById(id: Int!): Author
 }
 
 type Mutation {
     newBook(name: String!, pageCount: String): Book
     deleteBook(id:Int!):Book
+    updateAuthor(id: Int!, firstName: String): Author
+    updateAuthorById(id: Int!, firstName: String, lastName: String): Author
 }
 
 type Author {

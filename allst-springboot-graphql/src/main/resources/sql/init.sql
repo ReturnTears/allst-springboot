@@ -15,6 +15,7 @@ INSERT INTO `book` (`id`, `name`, `pageCount`) VALUES (3, 'java', '500');
 INSERT INTO `book` (`id`, `name`, `pageCount`) VALUES (4, 'c++', '650');
 INSERT INTO `book` (`id`, `name`, `pageCount`) VALUES (5, 'scala', '700');
 INSERT INTO `book` (`id`, `name`, `pageCount`) VALUES (6, 'python', '800');
+INSERT INTO `book` (`id`, `name`, `pageCount`) VALUES (7, 'go', '1000');
 
 CREATE TABLE IF NOT EXISTS `Author`
 (
@@ -30,11 +31,14 @@ CREATE TABLE IF NOT EXISTS `Author`
   ENGINE = InnoDB
   AUTO_INCREMENT = 1;
 select * from `Author` ;
+delete from author where id > 0;
 INSERT INTO `Author` (`id`, `firstName`, `lastName`, `bookId`)
 values (1, 'J. R. R.', 'Tolkien', 1),
-(7, 'Joanne', 'Rowling', 1),
-(2, 'J. K.', 'Rowling', 1),
-(3, 'Stephen', 'King', 2),
-(4, 'Charles', 'Dickens', 3),
-(5, 'Jane', 'Austen', 4),
-(6, 'Leo', 'Tolstoy', 5);
+(2, 'Joanne', 'Rowling', 2),
+(3, 'J. K.', 'Rowling', 3),
+(4, 'Stephen', 'King', 4),
+(5, 'Charles', 'Dickens', 5),
+(6, 'Jane', 'Austen', 6),
+(7, 'Leo', 'Tolstoy', 7);
+
+
