@@ -149,7 +149,12 @@ public interface AnnotationFormatterFactory<A extends Annotation> {
 }
 ```
 
-## Swagger3的长远注解
+## Swagger
+```text
+http://localhost:port/swagger-ui.html
+```
+
+## Swagger2的常用注解
 ```text
 @Api()
 用于类，标识这个类是swagger的资源 ，主要用在controller类上，会在接口文档上显示当前类说明
