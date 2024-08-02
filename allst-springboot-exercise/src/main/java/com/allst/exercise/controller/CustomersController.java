@@ -4,6 +4,7 @@ import com.allst.exercise.anno.CustomersFormat;
 import com.allst.exercise.model.Customers;
 import com.allst.exercise.service.CustomersService;
 import com.mybatisflex.core.paginate.Page;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/customer")
+@Api(tags = "Customers控制器")
 public class CustomersController {
 
     private final CustomersService customersService;

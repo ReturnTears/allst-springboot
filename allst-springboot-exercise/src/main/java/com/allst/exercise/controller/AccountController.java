@@ -3,6 +3,7 @@ package com.allst.exercise.controller;
 import com.allst.exercise.model.Account;
 import com.allst.exercise.service.AccountService;
 import com.google.gson.Gson;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/account")
 @RequiredArgsConstructor
+@Api(tags = "Account控制器")
 public class AccountController {
 
     private final AccountService accountService;
