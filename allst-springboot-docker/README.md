@@ -92,3 +92,18 @@
 ◆ Docker容器是在操作系统层面上实现虚拟化，直接复用本地主机的操作系统，因此更加轻量级。
 
 ```
+
+# 将项目打包为Docker镜像
+```text
+构建镜像
+docker build -t <image_name>:<tag> .
+示例：
+docker build -t allst-springboot-docker:v1 .
+
+运行镜像
+docker run -p host-port:container-port --name container-name your-image-name:tag
+示例
+docker run -p 8099:8099 --name allst-springboot-docker allst-springboot-docker:v1
+
+
+```
