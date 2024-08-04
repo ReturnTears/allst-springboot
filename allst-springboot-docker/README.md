@@ -104,6 +104,14 @@ docker build -t allst-springboot-docker:v1 .
 docker run -p host-port:container-port --name container-name your-image-name:tag
 示例
 docker run -p 8099:8099 --name allst-springboot-docker allst-springboot-docker:v1
+docker run -d -p 8099:8099 --name allst-springboot-docker-1.0-SNAPSHOT allst-springboot-docker:v1
+
+删除镜像
+docker rmi <image_name>:<tag>
+
+
+删除容器
+docker rm -f <container_name>
 
 
 ```

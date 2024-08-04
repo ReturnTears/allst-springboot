@@ -1,5 +1,5 @@
 FROM openjdk:11-jre-slim
 EXPOSE 8099
 ARG JAR_FILE
-ADD target/${JAR_FILE} /allst-springboot-docker.jar
-ENTRYPOINT ["java", "-jar","/allst-springboot-docker.jar"]
+ADD target/*.jar  allst-springboot-docker.jar
+ENTRYPOINT ["java", "-jar","allst-springboot-docker.jar"]
