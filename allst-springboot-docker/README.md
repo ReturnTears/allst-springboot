@@ -113,5 +113,7 @@ docker rmi <image_name>:<tag>
 删除容器
 docker rm -f <container_name>
 
-
+关闭正在运行的容器
+docker stop <container_name>
+docker stop 2c531267fa0d
 ```
