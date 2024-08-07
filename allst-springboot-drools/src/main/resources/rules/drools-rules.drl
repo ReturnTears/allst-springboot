@@ -1,0 +1,43 @@
+import com.allst.boot.model.OrderBO;
+import com.allst.boot.enums.CustomerEnum;
+global com.allst.boot.model.OrderDiscount orderDiscount;
+
+dialect "mvel"
+
+// 规则1: 根据年龄判断
+rule "Age based discount"
+    when
+        // 当客户年龄在20岁以下或者50岁以上
+        OrderBO(age < 20 || age > 50)
+    then
+        // 则添加10%的折扣
+        System.out.println("==========Adding 10% discount for Kids/ senior customer=============");
+        orderDiscount.setDiscount(orderDiscount.getDiscount() + 10);
+end
+
+// 规则2： 根据客户类型的规则
+rule "Customer type based discount - Loyal customer"
+    when
+        // 当客户类型是LOYAL
+        OrderBO(customerEnum.getValue == "LOYAL")
+    then
+        // 则增加5%的折扣
+        System.out.println("==========Adding 5% discount for LOYAL customer=============");
+        orderDiscount.setDiscount(orderDiscount.getDiscount() + 5);
+end
+
+rule "Customer type based discount - others"
+    when
+    OrderBO(customerEnum.getValue != "LOYAL")
+then
+    System.out.println("==========Adding 3% discount for NEW or DISSATISFIED customer=============");
+    orderDiscount.setDiscount(orderDiscount.getDiscount() + 3);
+end
+
+rule "Amount based discount"
+    when
+        OrderBO(amount > 1000L)
+    then
+        System.out.println("==========Adding 5% discount for amount more than 1000$=============");
+    orderDiscount.setDiscount(orderDiscount.getDiscount() + 5);
+end
