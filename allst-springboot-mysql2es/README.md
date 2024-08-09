@@ -1,5 +1,26 @@
 # MySQL to ElasticSearch
 ```text
+基于binlog实现数据同步的方案有两种：
+一种是mysql-binlog-connector， 另一种是ali的canal。
+
+基于第一种方式实现将MySQL数据同步到ES
+查看binlog日志是否开启
+show variables like 'log_bin';
+OFF表示未开启ON表示开启
+开启如下：
+[mysqld]
+#开启binlog
+server_id=1
+log_bin=mysql-bin
+binlog_row_image=FULL
+binlog-format=Row
+
+查看日志文件及其大小
+show binary logs;
+
+show master status;
+
+1. 配置mysql-binlog-connector
 
 ```
 # SpringBoot 
