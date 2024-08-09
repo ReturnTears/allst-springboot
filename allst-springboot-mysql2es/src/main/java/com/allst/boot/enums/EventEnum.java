@@ -1,6 +1,5 @@
 package com.allst.boot.enums;
 
-import lombok.Data;
 import lombok.Getter;
 
 /**
