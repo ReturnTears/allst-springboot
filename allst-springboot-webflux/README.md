@@ -44,3 +44,18 @@ REST 是属于 Web 自身的一种架构风格，是在 HTTP 1.1 规范下实现
 超文本驱动（Hypertext Driven）
 
 ```
+
+## Reactive
+```text
+Spring Data Reactive Repositories 目前支持 Mongo、Cassandra、Redis、Couchbase。不支持 MySQL，
+
+Spring Data Reactive Repositories 突出点是 Reactive，即非阻塞的。区别如下：
+
+基于 JDBC 实现的 Spring Data，比如 Spring Data JPA 是阻塞的。原理是基于阻塞 IO 模型 消耗每个调用数据库的线程（Connection）。
+事务只能在一个 java.sql.Connection 使用，即一个事务一个操作。
+
+那如何异步非阻塞封装下 JDBC 的思想也不新鲜，Scala 库 Slick 3 就实现了。简单的实现原理如下：
+1、一个事务多个操作，那么共享一个 java.sql.Connection，可以使用透明事务管理，利用回调编程模型去传递。
+2、保持有限的空闲连接。
+
+```
