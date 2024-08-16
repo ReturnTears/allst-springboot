@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book</title>
+</head>
+<body>
+<div>
+    <table>
+        <legend>
+            <strong>城市列表</strong>
+        </legend>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>书名</th>
+            <th>页数</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${bookList}">
+            <td th:text="${book.id}"></td>
+            <td th:text="${book.name}"></td>
+            <td th:text="${book.pageCount}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
