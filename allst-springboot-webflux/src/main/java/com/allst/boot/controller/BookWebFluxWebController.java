@@ -1,8 +1,10 @@
 package com.allst.boot.controller;
 
 import com.allst.boot.domain.Book;
+import com.allst.boot.domain.Lagou;
 import com.allst.boot.handler.BookHandler;
 import com.allst.boot.repository.BookRepository;
+import com.allst.boot.repository.LagouRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,14 +17,14 @@ import reactor.core.publisher.Mono;
  * @since 2024-08-14 下午 11:14
  */
 @Controller
-@RequestMapping(value = "/book")
+@RequestMapping(value = "/web")
 public class BookWebFluxWebController {
-    private final BookHandler bookHandler;
+    private final LagouRepository lagouRepository;
     private final BookRepository bookRepository;
 
     @Autowired
-    public BookWebFluxWebController(BookHandler bookHandler, BookRepository bookRepository) {
-        this.bookHandler = bookHandler;
+    public BookWebFluxWebController(LagouRepository lagouRepository, BookRepository bookRepository) {
+        this.lagouRepository = lagouRepository;
         this.bookRepository = bookRepository;
     }
 
@@ -35,10 +37,17 @@ public class BookWebFluxWebController {
     }
 
     @GetMapping("/page/list")
-    public String listPage(final Model model) {
+    public String bookPage(final Model model) {
         Iterable<Book> all = bookRepository.findAll();
-        final Flux<Book> cityFluxList = Flux.fromIterable(all);
-        model.addAttribute("bookList", cityFluxList);
+        final Flux<Book> bookFluxList = Flux.fromIterable(all);
+        model.addAttribute("bookList", bookFluxList);
         return "bookList";
+    }
+
+    @GetMapping("/lagou/list")
+    public String lagouPage(final Model model) {
+        final Flux<Lagou> lagouList = lagouRepository.findAll();
+        model.addAttribute("lagouList", lagouList);
+        return "lagouList";
     }
 }
