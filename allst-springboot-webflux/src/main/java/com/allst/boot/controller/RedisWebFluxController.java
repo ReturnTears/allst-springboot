@@ -1,9 +1,9 @@
 package com.allst.boot.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 /**
  * @author Hutu
@@ -13,15 +13,13 @@ import reactor.core.publisher.Flux;
 @RequestMapping(value = "/redis")
 public class RedisWebFluxController {
     @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+    private ReactiveRedisTemplate<String, String> reactiveRedisTemplate;
+
     @GetMapping(value = "/get/{key}")
-    public Flux<String> findBy(@PathVariable("key") String key) {
-        Object object = redisTemplate.opsForValue().get(key);
-        if (object == null) {
-            redisTemplate.opsForValue().set(key, "default value");
-            return Flux.just("default value");
-        }
-        return Flux.just(object.toString());
+    public Mono<String> findBy(@PathVariable("key") String key) {
+        Mono<String> mono = reactiveRedisTemplate.opsForValue().get(key);
+        System.out.println("come in method findBy");
+        return mono;
     }
 
 }
