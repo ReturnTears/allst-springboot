@@ -33,7 +33,13 @@ public class BookWebFluxWebController {
         model.addAttribute("name", "KangKang");
         model.addAttribute("city", "hubei");
         String path = "hello";
-        return Mono.create(monoSink -> monoSink.success(path));
+        return Mono.create(x -> x.success(path));
+    }
+
+    @GetMapping("/websocket")
+    public Mono<String> websocket(final Model model) {
+        model.addAttribute("wbUrl", "ws://127.0.0.1:1314/echo");
+        return Mono.create(x -> x.success("websocket"));
     }
 
     @GetMapping("/page/list")

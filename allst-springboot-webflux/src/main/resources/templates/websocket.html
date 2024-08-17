@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket Client</title>
+</head>
+<body>
+<div class="chat"></div>
+<div th:text="${wbUrl}"></div>
+<script>
+    var clientWebSocket = new WebSocket("ws://127.0.0.1:1314/echo");
+
+    clientWebSocket.onopen = function () {
+        console.log("clientWebSocket.onopen", clientWebSocket);
+        clientWebSocket.send("Hello！");
+    }
+    clientWebSocket.onclose = function (error) {
+        console.log("clientWebSocket.onclose", clientWebSocket, error);
+        events("Chat Session Close！");
+    }
+
+    function events(responseEvent) {
+        document.querySelector(".chat").innerHTML += responseEvent + "<br>";
+    }
+</script>
+</body>
+</html>
