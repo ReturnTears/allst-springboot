@@ -1,6 +1,10 @@
 package com.allst.springboot.controller;
 
+import com.allst.springboot.service.DemoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.File;
 
 /**
  * @author Hutu
@@ -9,6 +13,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/demo")
 public class DemoController {
+
+    private final DemoService demoService;
+    @Autowired
+    public DemoController(DemoService demoService) {
+        this.demoService = demoService;
+    }
+
     @GetMapping("/hello")
     public String hello() {
         return "Hello Demo~";
@@ -57,5 +68,11 @@ public class DemoController {
         System.out.println("name = " + name);
         System.out.println("id = " + id);
         return "DynamicUrl ~ " + name + " , " + id;
+    }
+
+    @GetMapping("/aspect/{name}")
+    public String get(@PathVariable("name") String name) {
+        File file = new File("application.properties");
+        return demoService.get(name, file, 1);
     }
 }

@@ -20,3 +20,11 @@ URI一致性：保持URL路径的一致性和可预测性，例如/orders/{order
 状态码：正确使用HTTP状态码来传达请求的结果，如200 OK, 201 Created, 404 Not Found等。
 
 ```
+
+# Spring Aop
+```text
+Spring AOP（Aspect Oriented Programming）是一种面向切面编程的框架，它允许你分离关注点，将业务逻辑和应用逻辑与非业务逻辑（如日志记录、异常处理等）进行分离。
+
+```
+
+
