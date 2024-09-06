@@ -61,6 +61,6 @@ public class WrapperTest {
         // 子查询
         wrapper.inSql("id", "select id from user where id < 4");
         List<Object> objects = userMapper.selectObjs(wrapper);
-        objects.stream().forEach(System.out::println);
+        objects.forEach(System.out::println);
     }
 }
