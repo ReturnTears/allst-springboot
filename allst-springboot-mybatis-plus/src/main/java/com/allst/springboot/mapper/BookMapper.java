@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface BookMapper extends BaseMapper<Book> {
-    @Select("select a.id,a.name,a.author,a.status,a.create_time from book a where a.id = #{id}")
+    @Select("select a.id,a.name,a.author,a.status,a.create_time,a.update_time from book a where a.id = #{id}")
     Book selectBookById(Long id);
 }

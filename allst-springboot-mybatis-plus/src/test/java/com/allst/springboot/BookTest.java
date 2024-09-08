@@ -2,10 +2,14 @@ package com.allst.springboot;
 
 import com.allst.springboot.enums.BookStatusEnum;
 import com.allst.springboot.mapper.BookMapper;
+import com.allst.springboot.model.BookVo;
 import com.allst.springboot.pojo.Book;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Optional;
 
 /**
  * @author Hutu
@@ -28,7 +32,14 @@ public class BookTest {
 
     @Test
     public void test2() {
-        Book book = bookMapper.selectBookById(1L);
-        System.out.println(book);
+        Optional<Book> optional = Optional.ofNullable(bookMapper.selectBookById(3L));
+        if (optional.isPresent()) {
+            Book book = optional.get();
+            System.out.println("book : " + book);
+            BookVo vo = new BookVo();
+            BeanUtils.copyProperties(book, vo);
+            vo.setStatus(book.getStatus().getMessage());
+            System.out.println("vo : " + vo);
+        }
     }
 }
