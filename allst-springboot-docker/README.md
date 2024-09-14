@@ -106,6 +106,10 @@ docker run -p host-port:container-port --name container-name your-image-name:tag
 docker run -p 8099:8099 --name allst-springboot-docker allst-springboot-docker:v1
 docker run -d -p 8099:8099 --name allst-springboot-docker-1.0-SNAPSHOT allst-springboot-docker:v1
 
+启动镜像
+docker run + image id ：启动
+
+
 删除镜像
 docker rmi <image_name>:<tag>
 
@@ -116,4 +120,7 @@ docker rm -f <container_name>
 关闭正在运行的容器
 docker stop <container_name>
 docker stop 2c531267fa0d
+
+启动已关闭的容器
+docker start <container id>
 ```
