@@ -43,4 +43,8 @@ public class StreamApp {
         long count = words.stream().filter(word -> word.matches("[a-zA-Z]+")).count();
         System.out.println(count);
     }
+
+    protected static String getContents() throws IOException {
+        return Files.readString(Path.of("E:\\Idea2020Projects\\allst-springboot\\allst-springboot-webflux\\src\\main\\resources\\words.txt"), StandardCharsets.UTF_8);
+    }
 }
