@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/allst-springboot-exercise/allst-exercise-first.iml" filepath="$PROJECT_DIR$/allst-springboot-exercise/allst-exercise-first.iml" />
+      <module fileurl="file://$PROJECT_DIR$/allst-springboot-graphql.iml" filepath="$PROJECT_DIR$/allst-springboot-graphql.iml" />
+      <module fileurl="file://$PROJECT_DIR$/allst-springboot-webflux.iml" filepath="$PROJECT_DIR$/allst-springboot-webflux.iml" />
+    </modules>
+  </component>
+</project>

@@ -59,3 +59,17 @@ Spring Data Reactive Repositories 突出点是 Reactive，即非阻塞的。区�
 2、保持有限的空闲连接。
 
 ```
+
+# Error
+```text
+1、启动SpringBoot项目java: You aren't using a compiler supported by lombok, so lombok will not work and has been disabled.
+  Your processor is: com.sun.proxy.$Proxy17
+  Lombok supports: sun/apple javac 1.6, ECJ
+无奈之举：
+讲@Data注解还原为 Getter Setter 方法  
+
+
+2、连接MySQL报错：ERROR 2026 (HY000): SSL connection error: unknown error number
+方法 1：禁用 SSL（仅用于测试）
+mysql --ssl-mode=DISABLED -h hostname -u username -p
+```

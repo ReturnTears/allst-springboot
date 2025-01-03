@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="EntryPointsManager">
+    <writeAnnotations>
+      <writeAnnotation name="org.kohsuke.args4j.Option" />
+    </writeAnnotations>
+  </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="MavenProjectsManager">
     <option name="originalFiles">
@@ -8,6 +13,7 @@
         <option value="$PROJECT_DIR$/allst-springboot-basic/pom.xml" />
         <option value="$PROJECT_DIR$/allst-springboot-advs/pom.xml" />
         <option value="$PROJECT_DIR$/allst-springboot-mybatis-plus/pom.xml" />
+        <option value="$PROJECT_DIR$/allst-springboot-demo/pom.xml" />
       </list>
     </option>
   </component>

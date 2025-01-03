@@ -1,22 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+    <excludeFromCompile>
+      <file url="file://$PROJECT_DIR$/allst-springboot-graphql/src/main/java/com/allst/boot/queryresolvers/BookMutation.java" />
+      <file url="file://$PROJECT_DIR$/allst-springboot-graphql/src/main/java/com/allst/boot/service/AuthorService.java" />
+      <file url="file://$PROJECT_DIR$/allst-springboot-graphql/src/main/java/com/allst/boot/model/Author.java" />
+      <file url="file://$PROJECT_DIR$/allst-springboot-graphql/src/main/java/com/allst/boot/queryresolvers/AuthorMutation.java" />
+    </excludeFromCompile>
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
-      <profile name="Maven default annotation processors profile" enabled="true">
+      <profile name="Maven default annotation processors profile" enabled="true" procOnly="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="allst-springboot-mybatis-plus" />
+        <module name="allst-springboot-doc" />
+        <module name="allst-springboot-demo" />
+        <module name="allst-springboot-minio" />
         <module name="allst-springboot-advs" />
+        <module name="allst-springboot-graphql" />
+        <module name="allst-springboot-mybatis-plus" />
+        <module name="allst-springboot-mysql2es" />
+        <module name="allst-springboot-exercise" />
+        <module name="allst-springboot-log" />
+        <module name="allst-springboot-drools" />
+        <module name="allst-springboot-k8s" />
+        <module name="allst-springboot-webflux" />
+        <module name="allst-springboot-dfs" />
         <module name="allst-springboot-basic" />
+        <module name="allst-springboot-quartz" />
+        <module name="allst-springboot-docker" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel target="11" />
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="allst-springboot-advs" options="-parameters" />
       <module name="allst-springboot-basic" options="-parameters" />
+      <module name="allst-springboot-demo" options="-parameters" />
+      <module name="allst-springboot-dfs" options="-parameters" />
+      <module name="allst-springboot-exercise" options="-parameters" />
+      <module name="allst-springboot-minio" options="-parameters" />
       <module name="allst-springboot-mybatis-plus" options="-parameters" />
     </option>
   </component>
