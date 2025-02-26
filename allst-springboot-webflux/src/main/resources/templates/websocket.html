@@ -6,22 +6,49 @@
 </head>
 <body>
 <div class="chat"></div>
+<div id="response"></div>
 <div th:text="${wbUrl}"></div>
+<label for="msg">发送给服务端的消息：</label><input id="msg" type="text"/>
+<button id="sendBtn">发送消息</button>
 <script>
     var clientWebSocket = new WebSocket("ws://127.0.0.1:1314/echo");
-
+    // onopen 当连接成功建立时触发
     clientWebSocket.onopen = function () {
         console.log("clientWebSocket.onopen", clientWebSocket);
         clientWebSocket.send("Hello！");
     }
+
+    // 当接收到服务端消息时触发
+    clientWebSocket.onmessage = function (event) {
+        console.log('收到服务端消息:', event.data);
+        document.getElementById('response').innerText = '服务端返回: ' + event.data;
+    };
+
+    // 当连接关闭时触发
     clientWebSocket.onclose = function (error) {
         console.log("clientWebSocket.onclose", clientWebSocket, error);
         events("Chat Session Close！");
     }
 
+    // onerror：当发生错误时触发
+    clientWebSocket.onerror = function (error) {
+        console.log(error)
+    }
+
     function events(responseEvent) {
         document.querySelector(".chat").innerHTML += responseEvent + "<br>";
     }
+
+    // 发送消息按钮点击事件
+    document.getElementById('sendBtn').addEventListener('click', function () {
+        if (clientWebSocket.readyState === WebSocket.OPEN) {
+            const message = document.getElementById('msg').value;
+            clientWebSocket.send(message); // 向服务端发送消息
+            console.log('已发送消息:', message);
+        } else {
+            console.error('WebSocket 连接未建立，无法发送消息');
+        }
+    });
 </script>
 </body>
 </html>

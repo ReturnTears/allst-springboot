@@ -14,7 +14,7 @@ public class EchoHandler implements WebSocketHandler {
 
     @Override
     public Mono<Void> handle(final WebSocketSession session) {
-        System.out.println("EchoHandler.handle");
+        System.out.println("come in method EchoHandler.handle");
         return session.send(session.receive().map(msg ->
                 session.textMessage("Server Return ：Halo ， -> " + msg.getPayloadAsText())
         ));
