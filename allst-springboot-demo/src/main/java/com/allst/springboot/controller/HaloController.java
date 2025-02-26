@@ -3,6 +3,7 @@ package com.allst.springboot.controller;
 import com.allst.springboot.base.ApiResponse;
 import com.allst.springboot.base.BaseController;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/halo")
 public class HaloController extends BaseController {
 
-    @RequestMapping("/get")
+    @GetMapping(value = "/get", produces = {"application/json", "application/xml"})
     public ResponseEntity<ApiResponse<String>> get() {
         return success(new ApiResponse<>(200, "Success", "Halo World!"));
     }
