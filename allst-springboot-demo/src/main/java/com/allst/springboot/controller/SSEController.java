@@ -1,57 +1,57 @@
 package com.allst.springboot.controller;
 
+import cn.hutool.core.util.IdUtil;
+import com.allst.springboot.client.SseClient;
 import com.allst.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
-import com.allst.springboot.entity.User;
-
 /**
  * @author Hutu
  * @since 2025-02-26 下午 11:18
  */
-@RestController
+@Controller
 @RequestMapping("/sse")
 public class SSEController {
 
     @Autowired
     private UserService userService;
-    private final CopyOnWriteArrayList<SseEmitter> emitters = new CopyOnWriteArrayList<>();
 
-    @GetMapping(value = "/get", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter getAllUsers() {
-        SseEmitter emitter = new SseEmitter();
-        this.emitters.add(emitter);
+    @Autowired
+    private SseClient sseClient;
 
-        emitter.onCompletion(() -> this.emitters.remove(emitter));
-        emitter.onError((e) -> this.emitters.remove(emitter));
-        emitter.onTimeout(() -> this.emitters.remove(emitter));
-
-        return emitter;
+    @GetMapping("/html")
+    public String index(ModelMap model) {
+        //String uid = IdUtil.fastUUID();
+        model.put("uid", "101");
+        return "sse";
     }
 
-    @GetMapping("/set")
-    public void addUser() {
-        sendToClients();
+    @CrossOrigin
+    @GetMapping("/createSse")
+    public SseEmitter createConnect(String uid) {
+        return sseClient.createSse(uid);
     }
 
-    public void sendToClients() {
-        List<User> users = userService.selectUsers();
-        for (SseEmitter emitter : emitters) {
-            try {
-                emitter.send(users);
-            } catch (IOException e) {
-                emitter.completeWithError(e);
-            }
+    @CrossOrigin
+    @GetMapping("/sendMsg")
+    @ResponseBody
+    public String sseChat(String uid) {
+        for (int i = 0; i < 10; i++) {
+            sseClient.sendMessage(uid, "no" + i, IdUtil.fastUUID());
         }
+        return "ok";
+    }
+
+    /**
+     * 关闭连接
+     */
+    @CrossOrigin
+    @GetMapping("/closeSse")
+    public void closeConnect(String uid) {
+
+        sseClient.closeSse(uid);
     }
 }

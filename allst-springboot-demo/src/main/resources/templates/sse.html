@@ -1,24 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>SSE Example</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
-<div id="sse-data"></div>
-
+<div id="con">
+    <h1>SSE</h1>
+</div>
 <script>
-    const sseData = document.getElementById("sse-data");
-
-    const eventSource = new EventSource("http://localhost:8011/sse/get");
-
-    eventSource.onmessage = (event) => {
-        sseData.innerHTML = event.data;
-    };
-
-    eventSource.onerror = (error) => {
-        console.error("SSE Error:", error);
-    };
+    let chat = document.getElementById("con");
+    var eventSource = null;
+    //console.log(${uid})
+    if (window.EventSource) {
+        //创建sse
+        eventSource = new EventSource(`/sse/createSse?uid=101`);
+        eventSource.onopen = function (event) {
+            console.log('SSE链接成功');
+        }
+        eventSource.onmessage = function (event) {
+            if (event.data) {
+                chat.innerHTML += event.data + '<br/>';
+                console.log('后端返回的数据:', event.data);
+            }
+        }
+        eventSource.onerror = (error) => {
+            console.log('SSE链接失败');
+        };
+    } else {
+        alert("你的浏览器不支持SSE");
+    }
 </script>
 </body>
 </html>
-
