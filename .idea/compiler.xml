@@ -18,6 +18,7 @@
         <module name="allst-springboot-minio" />
         <module name="allst-springboot-advs" />
         <module name="allst-springboot-graphql" />
+        <module name="allst-springboot-satoken" />
         <module name="allst-springboot-mybatis-plus" />
         <module name="allst-springboot-mysql2es" />
         <module name="allst-springboot-exercise" />

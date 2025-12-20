@@ -8,11 +8,16 @@ package com.allst.boot.word;
 public enum WordConstants {
     fileName("E:\\TestData\\other\\WordDocument.docx"),
 
-    fileName_2("E:\\TestData\\other\\WordDocument2.docx");
+    fileName_2("E:\\TestData\\other\\WordDocument2.docx"),
+    fileName_3("E:\\TestData\\other\\Docx4jWord1.docx");
 
     private final String path;
 
     WordConstants(String path) {
         this.path = path;
+    }
+
+    public String getPath() {
+        return path;
     }
 }
