@@ -24,7 +24,8 @@
     <module>allst-springboot-drools</module>
     <module>allst-springboot-mysql2es</module>
     <module>allst-springboot-webflux</module>
-      <module>allst-springboot-satoken</module>
+    <module>allst-springboot-satoken</module>
+    <module>allst-springboot-norm</module>
   </modules>
   <packaging>pom</packaging>
 

@@ -24,6 +24,7 @@
         <module name="allst-springboot-exercise" />
         <module name="allst-springboot-log" />
         <module name="allst-springboot-drools" />
+        <module name="allst-springboot-norm" />
         <module name="allst-springboot-k8s" />
         <module name="allst-springboot-webflux" />
         <module name="allst-springboot-dfs" />
@@ -43,6 +44,7 @@
       <module name="allst-springboot-exercise" options="-parameters" />
       <module name="allst-springboot-minio" options="-parameters" />
       <module name="allst-springboot-mybatis-plus" options="-parameters" />
+      <module name="allst-springboot-norm" options="" />
     </option>
   </component>
 </project>
