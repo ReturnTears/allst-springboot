@@ -19,6 +19,7 @@
         <module name="allst-springboot-advs" />
         <module name="allst-springboot-graphql" />
         <module name="allst-springboot-satoken" />
+        <module name="allst-springboot-security" />
         <module name="allst-springboot-mybatis-plus" />
         <module name="allst-springboot-mysql2es" />
         <module name="allst-springboot-exercise" />
@@ -38,6 +39,8 @@
         <processorPath useClasspath="false">
           <entry name="$PROJECT_DIR$/../../ProgramData/.m2_sx_maven/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar" />
           <entry name="$PROJECT_DIR$/../../ProgramData/.m2_sx_maven/org/springframework/boot/spring-boot-configuration-processor/2.6.5/spring-boot-configuration-processor-2.6.5.jar" />
+          <entry name="$PROJECT_DIR$/../../ProgramData/.m2_sx_maven/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar" />
+          <entry name="$PROJECT_DIR$/../../ProgramData/.m2_sx_maven/org/springframework/boot/spring-boot-configuration-processor/2.6.5/spring-boot-configuration-processor-2.6.5.jar" />
         </processorPath>
         <module name="allst-springboot-norm" />
       </profile>
@@ -54,6 +57,7 @@
       <module name="allst-springboot-minio" options="-parameters" />
       <module name="allst-springboot-mybatis-plus" options="-parameters" />
       <module name="allst-springboot-norm" options="" />
+      <module name="allst-springboot-security" options="" />
     </option>
   </component>
 </project>

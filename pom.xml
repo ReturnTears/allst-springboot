@@ -26,6 +26,7 @@
     <module>allst-springboot-webflux</module>
     <module>allst-springboot-satoken</module>
     <module>allst-springboot-norm</module>
+    <module>allst-springboot-security</module>
   </modules>
   <packaging>pom</packaging>
 
