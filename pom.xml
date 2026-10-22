@@ -27,6 +27,7 @@
     <module>allst-springboot-satoken</module>
     <module>allst-springboot-norm</module>
     <module>allst-springboot-security</module>
+    <module>allst-springboot-redis</module>
   </modules>
   <packaging>pom</packaging>
 

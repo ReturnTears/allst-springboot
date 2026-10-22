@@ -1,0 +1,14 @@
+# 启动：--spring.profiles.active=postgres
+# 先创建库：CREATE DATABASE allst_security ENCODING 'UTF8';
+spring:
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/allst_security
+    username: postgres
+    password:
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL10Dialect

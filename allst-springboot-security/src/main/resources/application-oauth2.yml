@@ -1,0 +1,21 @@
+# 启动前把 client-id、client-secret、issuer-uri 换成真实身份提供方，再加 --spring.profiles.active=oauth2
+# 身份提供方返回的用户名必须与本地 sec_user.username 一致，成功后签发本系统 JWT。
+security:
+  oauth2:
+    enabled: true
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          demo:
+            client-id: replace-me
+            client-secret: replace-me
+            scope: openid,profile
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+        provider:
+          demo:
+            issuer-uri: https://example-idp.local/realms/allst
+            user-name-attribute: preferred_username

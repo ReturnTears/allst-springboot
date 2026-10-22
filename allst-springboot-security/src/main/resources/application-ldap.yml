@@ -1,0 +1,17 @@
+# 启动：--spring.profiles.active=ldap
+# 内嵌 LDAP 只用于本机演示绑定协议，不要暴露到生产网络。
+security:
+  ldap:
+    enabled: true
+
+spring:
+  ldap:
+    embedded:
+      base-dn: dc=allst,dc=local
+      port: 8389
+      ldif: classpath:ldap/users.ldif
+      credential:
+        username: uid=admin
+        password: secret
+      validation:
+        enabled: false

@@ -16,6 +16,7 @@
         <option value="$PROJECT_DIR$/allst-springboot-demo/pom.xml" />
         <option value="$PROJECT_DIR$/allst-springboot-norm/pom.xml" />
         <option value="$PROJECT_DIR$/allst-springboot-security/pom.xml" />
+        <option value="$PROJECT_DIR$/allst-springboot-redis/pom.xml" />
       </list>
     </option>
   </component>

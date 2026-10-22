@@ -1,0 +1,31 @@
+dn: dc=allst,dc=local
+objectClass: top
+objectClass: domain
+dc: allst
+
+dn: ou=people,dc=allst,dc=local
+objectClass: organizationalUnit
+ou: people
+
+dn: ou=groups,dc=allst,dc=local
+objectClass: organizationalUnit
+ou: groups
+
+dn: uid=admin,ou=people,dc=allst,dc=local
+objectClass: inetOrgPerson
+uid: admin
+cn: Admin
+sn: Admin
+userPassword: Admin@123
+
+dn: uid=alice,ou=people,dc=allst,dc=local
+objectClass: inetOrgPerson
+uid: alice
+cn: Alice
+sn: Alice
+userPassword: Alice@123
+
+dn: cn=ADMIN,ou=groups,dc=allst,dc=local
+objectClass: groupOfUniqueNames
+cn: ADMIN
+uniqueMember: uid=admin,ou=people,dc=allst,dc=local

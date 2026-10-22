@@ -14,12 +14,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="allst-springboot-doc" />
+        <module name="allst-springboot-redis" />
         <module name="allst-springboot-demo" />
         <module name="allst-springboot-minio" />
         <module name="allst-springboot-advs" />
         <module name="allst-springboot-graphql" />
         <module name="allst-springboot-satoken" />
-        <module name="allst-springboot-security" />
         <module name="allst-springboot-mybatis-plus" />
         <module name="allst-springboot-mysql2es" />
         <module name="allst-springboot-exercise" />
@@ -31,6 +31,15 @@
         <module name="allst-springboot-basic" />
         <module name="allst-springboot-quartz" />
         <module name="allst-springboot-docker" />
+      </profile>
+      <profile name="Annotation profile for allst-springboot-security" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$PROJECT_DIR$/../../ProgramData/.m2_sx_maven/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
+        </processorPath>
+        <module name="allst-springboot-security" />
       </profile>
       <profile name="Annotation profile for allst-boot" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -57,6 +66,7 @@
       <module name="allst-springboot-minio" options="-parameters" />
       <module name="allst-springboot-mybatis-plus" options="-parameters" />
       <module name="allst-springboot-norm" options="" />
+      <module name="allst-springboot-redis" options="" />
       <module name="allst-springboot-security" options="" />
     </option>
   </component>

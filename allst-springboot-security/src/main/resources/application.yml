@@ -1,0 +1,82 @@
+spring:
+  application:
+    name: allst-springboot-security
+  jackson:
+    time-zone: Asia/Shanghai
+    serialization:
+      write-dates-as-timestamps: false
+  datasource:
+    # 默认内嵌 H2，克隆后即可启动。MySQL / PostgreSQL 见对应 profile。
+    url: jdbc:h2:mem:securitydb;DB_CLOSE_DELAY=-1;MODE=MySQL;DATABASE_TO_LOWER=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc.time_zone: Asia/Shanghai
+    show-sql: false
+  h2:
+    console:
+      # 控制台会绕开业务授权，示例里保持关闭。
+      enabled: false
+
+server:
+  port: 1235
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+    session:
+      timeout: 30m
+      cookie:
+        http-only: true
+        same-site: lax
+  error:
+    include-message: never
+    include-stacktrace: never
+    include-binding-errors: never
+  tomcat:
+    max-http-form-post-size: 1MB
+    max-swallow-size: 2MB
+
+security:
+  maintenance: false
+  jwt:
+    issuer: allst-security
+    # HS256 至少 32 字节。生产环境换成随机密钥，并只放在环境变量里。
+    secret: allst-security-demo-key-change-in-prod-32b
+    access-token-minutes: 30
+    refresh-token-days: 7
+  login:
+    max-failures: 5
+    lock-minutes: 15
+    ip-limit-per-minute: 20
+    trust-forwarded: false
+  password:
+    history-size: 5
+    # 0 表示不检查密码有效期。
+    max-age-days: 90
+    denylist:
+      - password
+      - Password1!
+      - admin123
+      - Admin@1234
+      - qwerty123
+      - 12345678
+      - abc12345
+  session:
+    maximum: 1
+  oauth2:
+    enabled: false
+  ldap:
+    enabled: false
+
+logging:
+  level:
+    org.springframework.security: info
+    com.allst.springboot: info
