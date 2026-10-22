@@ -1,0 +1,90 @@
+spring:
+  application:
+    name: allst-springboot-norm
+  jackson:
+    time-zone: Asia/Shanghai
+    serialization:
+      write-dates-as-timestamps: false
+  datasource:
+    # 默认内嵌 H2，克隆后即可启动。切换 MySQL / PostgreSQL 见 application-mysql.yml、application-postgres.yml。
+    url: jdbc:h2:mem:normdb;DB_CLOSE_DELAY=-1;MODE=MySQL;DATABASE_TO_LOWER=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc.time_zone: Asia/Shanghai
+    show-sql: false
+
+server:
+  port: 1234
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+  error:
+    include-message: never
+    include-stacktrace: never
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+
+knife4j:
+  enable: true
+  production: false
+  setting:
+    language: zh_cn
+
+norm:
+  # 生产环境必须改为 false。开启时 /api/dev 可以用服务端密钥帮调用方计算签名。
+  dev-tools-enabled: true
+  sign:
+    enabled: true
+    expire-seconds: 300
+    apps:
+      demo-app: demo-secret
+  ip:
+    enabled: true
+    trust-forwarded: false
+    whitelist:
+      - 127.0.0.1
+      - 0:0:0:0:0:0:0:1
+      - ::1
+  crypto:
+    aes-key: 1234567890abcdef
+  page:
+    max-size: 50
+    default-size: 10
+    max-page: 1000
+  batch:
+    max-size: 100
+  idempotent:
+    processing-timeout-seconds: 120
+  access-log:
+    persist: true
+    max-body-length: 2000
+    exclude-paths:
+      - /api/health
+  http:
+    max-body-bytes: 1048576
+
+logging:
+  charset:
+    console: UTF-8
+    file: UTF-8
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%X{traceId}] %-5level %logger{40} - %msg%n"
+  level:
+    root: info
+    com.allst.springboot: info

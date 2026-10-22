@@ -1,0 +1,14 @@
+# 启动：--spring.profiles.active=mysql
+# 先创建库：CREATE DATABASE allst DEFAULT CHARACTER SET utf8mb4;
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/allst?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
