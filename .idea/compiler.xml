@@ -14,7 +14,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="allst-springboot-doc" />
-        <module name="allst-springboot-redis" />
         <module name="allst-springboot-demo" />
         <module name="allst-springboot-minio" />
         <module name="allst-springboot-advs" />
@@ -53,6 +52,15 @@
           <entry name="$PROJECT_DIR$/../../ProgramData/.m2_sx_maven/org/springframework/boot/spring-boot-configuration-processor/2.6.5/spring-boot-configuration-processor-2.6.5.jar" />
         </processorPath>
         <module name="allst-springboot-norm" />
+      </profile>
+      <profile name="Annotation profile for allst-springboot-redis" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$PROJECT_DIR$/../../ProgramData/.m2_sx_maven/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
+        </processorPath>
+        <module name="allst-springboot-redis" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="11" />

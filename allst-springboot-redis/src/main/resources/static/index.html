@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Redis 开发规范示例</title>
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<div id="app" class="app" v-cloak>
+  <aside>
+    <div class="brand">
+      <strong>Redis 规范</strong>
+      <span>数据结构与 17 个使用场景</span>
+    </div>
+    <button v-for="item in catalog" :key="item.id" class="nav-btn" :class="{active: current === item.id}" @click="current = item.id">
+      <strong>{{ item.title }}</strong>
+      <span>{{ item.summary }}</span>
+    </button>
+  </aside>
+  <main>
+    <header>
+      <div>
+        <h1>{{ active.title }}</h1>
+        <p>{{ active.summary }}</p>
+        <p class="doc">说明文档：{{ active.doc }}</p>
+      </div>
+      <div class="health" :data-state="health.redis">Redis {{ health.redis || "检测中" }} · DB {{ health.database || "检测中" }}</div>
+    </header>
+    <component :is="current"></component>
+  </main>
+</div>
+<script src="/js/vue.global.prod.js"></script>
+<script src="/js/http.js?v=2"></script>
+<script src="/js/app.js?v=2"></script>
+</body>
+</html>

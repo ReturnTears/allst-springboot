@@ -1,0 +1,16 @@
+# 本地一键拉起示例依赖。Redis 打开 AOF，并允许过期事件（Ex），供「数据过期」一章使用。
+services:
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes --notify-keyspace-events Ex
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: allst_redis
+      TZ: Asia/Shanghai
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
