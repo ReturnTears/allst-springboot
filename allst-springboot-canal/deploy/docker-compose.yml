@@ -1,0 +1,83 @@
+name: allst-canal
+
+services:
+  mysql:
+    image: mysql:8.0.33
+    container_name: allst-canal-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: demo
+      TZ: Asia/Shanghai
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --server-id=1
+      - --log-bin=mysql-bin
+      - --binlog-format=ROW
+      - --binlog-row-image=FULL
+      - --binlog-expire-logs-seconds=604800
+      - --default-authentication-plugin=mysql_native_password
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+
+  canal-server:
+    image: canal/canal-server:v1.1.7
+    container_name: allst-canal-server
+    ports:
+      - "11111:11111"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - ./canal/instance.properties:/home/admin/canal-server/conf/example/instance.properties
+      - canal-logs:/home/admin/canal-server/logs
+
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    container_name: allst-canal-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+  redis:
+    image: redis:7.2
+    container_name: allst-canal-redis
+    ports:
+      - "6379:6379"
+
+  mongodb:
+    image: mongo:6.0
+    container_name: allst-canal-mongo
+    ports:
+      - "27017:27017"
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.18
+    container_name: allst-canal-es
+    ports:
+      - "9200:9200"
+    environment:
+      discovery.type: single-node
+      xpack.security.enabled: "false"
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+      TZ: Asia/Shanghai
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+
+volumes:
+  mysql-data:
+  canal-logs:

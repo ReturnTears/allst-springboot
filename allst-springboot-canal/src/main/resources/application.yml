@@ -1,0 +1,52 @@
+server:
+  port: 1238
+
+spring:
+  application:
+    name: allst-springboot-canal
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+    listener:
+      simple:
+        missing-queues-fatal: false
+        default-requeue-rejected: false
+  redis:
+    host: 127.0.0.1
+    port: 6379
+  data:
+    mongodb:
+      uri: mongodb://127.0.0.1:27017/canal_sync
+  elasticsearch:
+    rest:
+      uris: http://127.0.0.1:9200
+      connection-timeout: 2s
+      read-timeout: 5s
+
+canal:
+  client:
+    enabled: true
+    host: 127.0.0.1
+    port: 11111
+    destination: example
+    username: ""
+    password: ""
+    # Java 正则，对应 Canal 订阅表达式 demo 库下全部表
+    subscribe: "demo\\..*"
+    batch-size: 100
+    retry-interval-ms: 3000
+
+sync:
+  redis:
+    enabled: true
+    key-prefix: canal
+  elasticsearch:
+    enabled: true
+  mongodb:
+    enabled: true
+
+logging:
+  level:
+    com.allst.springboot: INFO
