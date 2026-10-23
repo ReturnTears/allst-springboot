@@ -1,3 +1,16 @@
+# allst-springboot-docker
+
+Spring Boot 2.6.5 集成 Docker 的可复用示例。集成步骤、构建方式和以后回溯时要对齐的版本，写在 [docs/springboot-docker-integration.md](docs/springboot-docker-integration.md)。
+
+在本模块目录执行：
+
+```text
+mvn package -DskipTests
+docker compose up --build -d
+```
+
+浏览器打开 http://localhost:8099/docker/hello 。容器内诊断信息在 http://localhost:8099/docker/info ，健康检查在 http://localhost:8099/actuator/health 。
+
 # Docker技术入门与实战(第一版)
 ```text
 《Docker技术入门与实战》
@@ -94,33 +107,5 @@
 ```
 
 # 将项目打包为Docker镜像
-```text
-构建镜像
-docker build -t <image_name>:<tag> .
-示例：
-docker build -t allst-springboot-docker:v1 .
 
-运行镜像
-docker run -p host-port:container-port --name container-name your-image-name:tag
-示例
-docker run -p 8099:8099 --name allst-springboot-docker allst-springboot-docker:v1
-docker run -d -p 8099:8099 --name allst-springboot-docker-1.0-SNAPSHOT allst-springboot-docker:v1
-
-启动镜像
-docker run + image id ：启动
-
-
-删除镜像
-docker rmi <image_name>:<tag>
-
-
-删除容器
-docker rm -f <container_name>
-
-关闭正在运行的容器
-docker stop <container_name>
-docker stop 2c531267fa0d
-
-启动已关闭的容器
-docker start <container id>
-```
+当前可用命令以 [docs/springboot-docker-integration.md](docs/springboot-docker-integration.md) 为准。镜像名是 `allst/allst-springboot-docker:1.0-SNAPSHOT`，容器端口和宿主机端口都是 `8099`。

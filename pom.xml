@@ -28,6 +28,7 @@
     <module>allst-springboot-norm</module>
     <module>allst-springboot-security</module>
     <module>allst-springboot-redis</module>
+    <module>allst-springboot-canal</module>
   </modules>
   <packaging>pom</packaging>
 

@@ -1,11 +1,16 @@
 package com.allst.boot;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 /**
  * @author Hutu
- * @since 2024-07-28 下午 10:52
+ * @since 2026-10-23
  */
+@SpringBootApplication
 public class K8sApplication {
+
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        SpringApplication.run(K8sApplication.class, args);
     }
 }

@@ -1,0 +1,13 @@
+services:
+  allst-springboot-docker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: allst/allst-springboot-docker:1.0-SNAPSHOT
+    container_name: allst-springboot-docker
+    ports:
+      - "8099:8099"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      JAVA_TOOL_OPTIONS: "-XX:MaxRAMPercentage=75.0"
+    restart: unless-stopped

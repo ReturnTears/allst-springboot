@@ -1,3 +1,16 @@
+# allst-springboot-k8s
+
+Spring Boot 2.6.5 集成 Kubernetes 的可复用示例。应用可以部署到集群，也可以用 Fabric8 客户端访问 API Server。集成步骤、版本取舍和接口说明写在 [docs/springboot-k8s-integration.md](docs/springboot-k8s-integration.md)。
+
+在本模块目录执行：
+
+```text
+mvn test
+mvn spring-boot:run
+```
+
+浏览器打开 http://localhost:8100/ 。客户端状态在 http://localhost:8100/k8s/info ，健康检查在 http://localhost:8100/actuator/health 。本机有 kubeconfig 时，http://localhost:8100/k8s/cluster 会返回集群版本。
+
 # Kubernetes进阶实战
 ```text
 《Kubernetes进阶实战》

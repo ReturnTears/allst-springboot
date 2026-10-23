@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: allst-k8s
+  namespace: allst-demo
+  labels:
+    app: allst-springboot-k8s
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: allst-k8s
+  namespace: allst-demo
+  labels:
+    app: allst-springboot-k8s
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "pods/log", "services", "configmaps"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["create", "update", "patch", "delete"]
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: allst-k8s
+  namespace: allst-demo
+  labels:
+    app: allst-springboot-k8s
+subjects:
+  - kind: ServiceAccount
+    name: allst-k8s
+    namespace: allst-demo
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: allst-k8s
+---
+# Namespace 是集群级资源，Role 管不到，所以单独给一个只读 ClusterRole。
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: allst-k8s-namespaces
+  labels:
+    app: allst-springboot-k8s
+rules:
+  - apiGroups: [""]
+    resources: ["namespaces"]
+    verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: allst-k8s-namespaces
+  labels:
+    app: allst-springboot-k8s
+subjects:
+  - kind: ServiceAccount
+    name: allst-k8s
+    namespace: allst-demo
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: allst-k8s-namespaces

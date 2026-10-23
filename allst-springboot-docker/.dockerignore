@@ -1,0 +1,9 @@
+.git
+.idea
+*.iml
+*.md
+pic
+docs
+src/main/resources/docker.dockerfile
+target/*
+!target/*.jar

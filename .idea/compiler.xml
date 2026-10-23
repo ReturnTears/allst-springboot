@@ -41,6 +41,25 @@
         </processorPath>
         <module name="allst-springboot-security" />
       </profile>
+      <profile name="Annotation profile for allst-springboot-redis" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$PROJECT_DIR$/../../ProgramData/.m2_sx_maven/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
+          <entry name="$PROJECT_DIR$/../../ProgramData/.m2_sx_maven/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
+        </processorPath>
+        <module name="allst-springboot-redis" />
+      </profile>
+      <profile name="Annotation profile for allst-springboot-canal" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$PROJECT_DIR$/../../ProgramData/.m2_sx_maven/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
+        </processorPath>
+        <module name="allst-springboot-canal" />
+      </profile>
       <profile name="Annotation profile for allst-boot" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -53,15 +72,6 @@
         </processorPath>
         <module name="allst-springboot-norm" />
       </profile>
-      <profile name="Annotation profile for allst-springboot-redis" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$PROJECT_DIR$/../../ProgramData/.m2_sx_maven/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
-        </processorPath>
-        <module name="allst-springboot-redis" />
-      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="11" />
   </component>
@@ -69,6 +79,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="allst-springboot-advs" options="-parameters" />
       <module name="allst-springboot-basic" options="-parameters" />
+      <module name="allst-springboot-canal" options="" />
       <module name="allst-springboot-demo" options="-parameters" />
       <module name="allst-springboot-dfs" options="-parameters" />
       <module name="allst-springboot-exercise" options="-parameters" />
