@@ -1,10 +1,18 @@
 # Graphql
 ```text
 环境介绍
-Java11 + SpringBoot2.7.4 + Graphql 14.0.0 + kotlin1.9.22 
+Java11 + SpringBoot2.7.4 + Graphql 14.0.0 + kotlin1.9.22 + Vue3
 
 Graphql Tool 地址：
 http://127.0.0.1:8088/graphiql
+
+订阅台（Vue3）：
+http://127.0.0.1:5173
+
+数据库：MySQL 8，库 demo，用户 root，密码为空。
+初始化：mysql -uroot --default-character-set=utf8mb4 --protocol=tcp --host=127.0.0.1 < src/main/resources/sql/bootstrap.sql
+
+用法记录：docs/README.md
 ```
 
 ## Query

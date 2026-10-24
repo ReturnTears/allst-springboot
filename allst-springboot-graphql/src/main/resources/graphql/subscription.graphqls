@@ -1,0 +1,193 @@
+"""ISO-8601 日期，例如 2026-10-24。"""
+scalar Date
+
+"""ISO-8601 本地日期时间，例如 2026-10-24T09:30:00。"""
+scalar DateTime
+
+enum ReaderStatus {
+    ACTIVE
+    DISABLED
+}
+
+enum MembershipPlan {
+    MONTHLY
+    QUARTERLY
+    YEARLY
+}
+
+enum MembershipStatus {
+    ACTIVE
+    PAUSED
+    CANCELLED
+    EXPIRED
+}
+
+enum SortDirection {
+    ASC
+    DESC
+}
+
+type Category {
+    id: Int!
+    name: String!
+    description: String
+    bookCount: Int!
+}
+
+type Reader {
+    id: Int!
+    username: String!
+    email: String!
+    phone: String
+    status: ReaderStatus!
+    createdAt: DateTime!
+    memberships: [Membership!]!
+}
+
+type Membership {
+    id: Int!
+    plan: MembershipPlan!
+    status: MembershipStatus!
+    startDate: Date!
+    endDate: Date!
+    price: Float!
+    remark: String
+    createdAt: DateTime!
+    reader: Reader!
+    book: Book!
+}
+
+type PlanQuote {
+    plan: MembershipPlan!
+    days: Int!
+    price: Float!
+}
+
+type DeskStats {
+    bookCount: Int!
+    authorCount: Int!
+    readerCount: Int!
+    categoryCount: Int!
+    activeMembershipCount: Int!
+}
+
+type PageInfo {
+    page: Int!
+    size: Int!
+    total: Int!
+    totalPages: Int!
+}
+
+type ReaderPage {
+    items: [Reader!]!
+    pageInfo: PageInfo!
+}
+
+type MembershipPage {
+    items: [Membership!]!
+    pageInfo: PageInfo!
+}
+
+input CategoryInput {
+    name: String!
+    description: String
+}
+
+input CategoryUpdateInput {
+    id: Int!
+    name: String
+    description: String
+}
+
+input ReaderInput {
+    username: String!
+    email: String!
+    phone: String
+}
+
+input ReaderUpdateInput {
+    id: Int!
+    email: String
+    phone: String
+    status: ReaderStatus
+}
+
+input ReaderFilter {
+    keyword: String
+    status: ReaderStatus
+}
+
+input MembershipInput {
+    readerId: Int!
+    bookId: Int!
+    plan: MembershipPlan!
+    startDate: Date
+    remark: String
+}
+
+input MembershipUpdateInput {
+    id: Int!
+    plan: MembershipPlan
+    status: MembershipStatus
+    remark: String
+}
+
+input MembershipFilter {
+    readerId: Int
+    bookId: Int
+    status: MembershipStatus
+    plan: MembershipPlan
+    keyword: String
+}
+
+input BookUpdateInput {
+    id: Int!
+    name: String
+    pageCount: String
+}
+
+input PageQuery {
+    page: Int
+    size: Int
+    sortBy: String
+    direction: SortDirection
+}
+
+extend type Book {
+    category: Category
+}
+
+extend type Query {
+    bookById(id: Int!): Book
+    searchBooks(keyword: String): [Book!]!
+    categories: [Category!]!
+    category(id: Int!): Category
+    readers(filter: ReaderFilter, page: PageQuery): ReaderPage!
+    reader(id: Int!): Reader
+    membership(id: Int!): Membership
+    memberships(filter: MembershipFilter, page: PageQuery): MembershipPage!
+    readerMemberships(readerId: Int!): [Membership!]!
+    planQuotes: [PlanQuote!]!
+    deskStats: DeskStats!
+}
+
+extend type Mutation {
+    updateBook(input: BookUpdateInput!): Book!
+    assignBookCategory(bookId: Int!, categoryId: Int!): Book!
+    clearBookCategory(bookId: Int!): Boolean!
+    createCategory(input: CategoryInput!): Category!
+    updateCategory(input: CategoryUpdateInput!): Category!
+    deleteCategory(id: Int!): Boolean!
+    createReader(input: ReaderInput!): Reader!
+    updateReader(input: ReaderUpdateInput!): Reader!
+    deleteReader(id: Int!): Boolean!
+    createMembership(input: MembershipInput!): Membership!
+    updateMembership(input: MembershipUpdateInput!): Membership!
+    cancelMembership(id: Int!): Membership!
+    deleteMembership(id: Int!): Boolean!
+}
+
+type Subscription {
+    """有订阅被创建、修改、退订或删除时推送。删除时推送删除前的记录。"""
+    membershipChanged: Membership!
+}
