@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: allst-springboot-state-machine
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/allst_state_machine?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+    username: root
+    password: ""
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        jdbc.time_zone: Asia/Shanghai
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+server:
+  port: 8129
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+statemachine:
+  trade:
+    high-risk-score: 80
+    pay-timeout-minutes: 30
+    scan-delay-ms: 60000
+
+logging:
+  level:
+    com.allst.springboot: INFO

@@ -1,0 +1,18 @@
+# 容器创建前执行的扩展点不能写成 @Component，只能从这里加载。
+# Spring Boot 2.3 使用 META-INF/spring.factories；2.7 之后的
+# META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports 在本项目不适用。
+
+org.springframework.boot.SpringApplicationRunListener=\
+com.allst.springboot.extension.bootstrap.AdvsSpringApplicationRunListener
+
+org.springframework.boot.env.EnvironmentPostProcessor=\
+com.allst.springboot.extension.bootstrap.AdvsEnvironmentPostProcessor
+
+org.springframework.context.ApplicationContextInitializer=\
+com.allst.springboot.extension.bootstrap.AdvsApplicationContextInitializer
+
+org.springframework.context.ApplicationListener=\
+com.allst.springboot.extension.bootstrap.AdvsEarlyApplicationListener
+
+org.springframework.boot.diagnostics.FailureAnalyzer=\
+com.allst.springboot.extension.bootstrap.AdvsStartupFailureAnalyzer
