@@ -1,0 +1,51 @@
+server:
+  port: 8121
+  shutdown: graceful
+
+spring:
+  application:
+    name: allst-springboot-netty
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
+  web:
+    resources:
+      cache:
+        cachecontrol:
+          no-cache: true
+
+logging:
+  pattern:
+    console: "%d{HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n"
+  level:
+    com.allst.netty: info
+    com.allst.springboot: info
+
+netty:
+  server:
+    enabled: true
+    host: 0.0.0.0
+    port: 9000
+    boss-threads: 1
+    worker-threads: 0
+    business-threads: 0
+    reader-idle-seconds: 90
+    max-frame-length: 65536
+    so-backlog: 1024
+  websocket:
+    enabled: true
+    host: 0.0.0.0
+    port: 9001
+    path: /ws/dashboard
+    boss-threads: 1
+    worker-threads: 0
+  client:
+    enabled: true
+    simulator-enabled: true
+    host: 127.0.0.1
+    port: 9000
+    device-count: 3
+    heartbeat-seconds: 15
+    reconnect-seconds: 5
+    scan-interval-seconds: 8
+    worker-threads: 0
+    max-frame-length: 65536

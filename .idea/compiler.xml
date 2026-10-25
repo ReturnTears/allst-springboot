@@ -28,6 +28,7 @@
         <module name="allst-springboot-basic" />
         <module name="allst-springboot-quartz" />
         <module name="allst-springboot-docker" />
+        <module name="allst-springboot-netty" />
       </profile>
       <profile name="Annotation profile for allst-springboot-advs" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -113,6 +114,7 @@
       <module name="allst-springboot-graphql" options="-parameters" />
       <module name="allst-springboot-minio" options="-parameters" />
       <module name="allst-springboot-mybatis-plus" options="-parameters" />
+      <module name="allst-springboot-netty" options="-parameters" />
       <module name="allst-springboot-norm" options="" />
       <module name="allst-springboot-redis" options="" />
       <module name="allst-springboot-security" options="" />

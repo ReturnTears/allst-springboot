@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>仓内接入台</title>
+    <style>
+        :root {
+            --concrete: #d7d2c8;
+            --ink: #1c211c;
+            --paper: #f6f3ea;
+            --yellow: #f2c200;
+            --stripe: #161616;
+            --steel: #243038;
+            --online: #1f6b45;
+            --offline: #8d342c;
+            --command: #c65a24;
+            --line: #c9c2b4;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--ink);
+            background: var(--concrete);
+            font-family: "Arial Narrow", "Franklin Gothic Medium", "Segoe UI", sans-serif;
+            font-size: 18px;
+            line-height: 1.45;
+        }
+
+        .stripe {
+            height: 16px;
+            background: repeating-linear-gradient(-45deg, var(--stripe) 0 14px, var(--yellow) 14px 28px);
+        }
+
+        header {
+            background: var(--paper);
+            border-bottom: 4px solid var(--ink);
+        }
+
+        .title-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 24px;
+            align-items: flex-end;
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 22px 24px 18px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 3rem;
+            line-height: 0.9;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
+
+        .sub {
+            margin: 8px 0 0;
+            max-width: 36rem;
+        }
+
+        #link-state {
+            margin: 0;
+            padding: 8px 12px;
+            background: var(--ink);
+            color: var(--paper);
+            white-space: nowrap;
+        }
+
+        main {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 22px 24px 120px;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 22px;
+            align-items: start;
+        }
+
+        h2 {
+            margin: 0 0 12px;
+            font-size: 1.35rem;
+        }
+
+        .rack {
+            display: grid;
+            grid-template-columns: 10px 1fr;
+            margin: 0 0 8px;
+            background: var(--paper);
+            border: 2px solid var(--ink);
+        }
+
+        .rack i {
+            display: block;
+            background: var(--offline);
+        }
+
+        .rack.online i { background: var(--online); }
+
+        .rack div { padding: 10px 12px 12px; }
+
+        .device-id {
+            display: block;
+            font-family: Consolas, "Cascadia Mono", monospace;
+            font-size: 1.05rem;
+        }
+
+        .rack p, .empty {
+            margin: 4px 0 0;
+        }
+
+        .tape {
+            background: var(--paper);
+            border: 2px solid var(--ink);
+            min-height: 420px;
+        }
+
+        .tape h2 { padding: 14px 16px 0; }
+
+        #events {
+            list-style: none;
+            margin: 0;
+            padding: 0 0 12px;
+        }
+
+        #events li {
+            display: grid;
+            grid-template-columns: 92px 92px 1fr;
+            gap: 12px;
+            padding: 9px 16px;
+            border-top: 1px dashed var(--line);
+        }
+
+        #events time,
+        #events b {
+            font-family: Consolas, "Cascadia Mono", monospace;
+            font-weight: 400;
+        }
+
+        .kind-scan { color: var(--online); }
+        .kind-command, .kind-command_failed { color: var(--command); }
+        .kind-offline { color: var(--offline); }
+
+        .bench {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px 28px;
+            padding: 14px 24px;
+            background: var(--steel);
+            color: var(--paper);
+        }
+
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: end;
+        }
+
+        label {
+            display: grid;
+            gap: 4px;
+            font-size: 0.95rem;
+        }
+
+        input, select, button {
+            font: inherit;
+            color: var(--ink);
+            background: var(--paper);
+            border: 2px solid var(--yellow);
+            border-radius: 0;
+            padding: 6px 8px;
+        }
+
+        button {
+            background: var(--yellow);
+            cursor: pointer;
+        }
+
+        #form-message {
+            flex: 1 1 220px;
+            margin: 0;
+            align-self: center;
+        }
+
+        :focus-visible {
+            outline: 3px solid var(--yellow);
+            outline-offset: 2px;
+        }
+
+        @media (max-width: 800px) {
+            .title-row, main { display: block; }
+            #link-state { display: inline-block; margin-top: 12px; }
+            h1 { font-size: 2.3rem; }
+            #events li { grid-template-columns: 1fr; gap: 2px; }
+            .bench { position: static; }
+            main { padding-bottom: 24px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * { transition: none !important; }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="stripe"></div>
+    <div class="title-row">
+        <div>
+            <h1>仓内接入台</h1>
+            <p class="sub">扫码枪保持长连接。这边能看见谁在线，也能把搬运动作下发到指定的那一台。</p>
+        </div>
+        <p id="link-state" role="status">正在连接看板</p>
+    </div>
+</header>
+<main>
+    <section aria-label="在线设备">
+        <h2>巷道设备</h2>
+        <div id="devices"></div>
+    </section>
+    <section class="tape" aria-label="现场流水">
+        <h2>现场流水</h2>
+        <ol id="events"></ol>
+    </section>
+</main>
+<div class="bench">
+    <form id="command-form">
+        <label>设备
+            <select id="command-device" required></select>
+        </label>
+        <label>动作
+            <select id="command-action">
+                <option value="MOVE">去库位</option>
+                <option value="LOCK">锁定库位</option>
+                <option value="COUNT">盘点</option>
+            </select>
+        </label>
+        <label>库位
+            <input id="command-aisle" value="A-03" required maxlength="32">
+        </label>
+        <button type="submit">下发动作</button>
+    </form>
+    <form id="scan-form">
+        <label>设备
+            <select id="scan-device" required></select>
+        </label>
+        <label>条码
+            <input id="scan-barcode" value="SKU-10086" required maxlength="64">
+        </label>
+        <label>库位
+            <input id="scan-location" value="A-01-03" required maxlength="32">
+        </label>
+        <button type="submit">记一笔扫码</button>
+    </form>
+    <p id="form-message" role="status"></p>
+</div>
+<script>
+    const devices = new Map();
+    const seen = new Set();
+    const state = document.getElementById("link-state");
+    const deviceRoot = document.getElementById("devices");
+    const eventRoot = document.getElementById("events");
+    const formMessage = document.getElementById("form-message");
+    const commandDevice = document.getElementById("command-device");
+    const scanDevice = document.getElementById("scan-device");
+
+    function clock(epoch) {
+        return new Intl.DateTimeFormat("zh-CN", {
+            hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false
+        }).format(new Date(epoch));
+    }
+
+    function remember(frame) {
+        const key = frame.requestId
+            ? frame.type + ":" + frame.requestId
+            : [frame.type, frame.deviceId, frame.timestamp].join("|");
+        if (seen.has(key)) {
+            return false;
+        }
+        seen.add(key);
+        return true;
+    }
+
+    function renderDevices() {
+        const previousCommand = commandDevice.value;
+        const previousScan = scanDevice.value;
+        deviceRoot.replaceChildren();
+        commandDevice.replaceChildren();
+        scanDevice.replaceChildren();
+        if (devices.size === 0) {
+            const empty = document.createElement("p");
+            empty.className = "empty";
+            empty.textContent = "还没有扫码枪接入。模拟器打开后，WH-SCANNER-01 会自己出现。";
+            deviceRoot.append(empty);
+            const option = document.createElement("option");
+            option.textContent = "等待设备";
+            option.value = "";
+            commandDevice.append(option);
+            scanDevice.append(option.cloneNode(true));
+            return;
+        }
+        const sorted = [...devices.values()].sort((a, b) => a.deviceId.localeCompare(b.deviceId));
+        for (const view of sorted) {
+            const row = document.createElement("article");
+            row.className = view.active ? "rack online" : "rack offline";
+            const mark = document.createElement("i");
+            const body = document.createElement("div");
+            const id = document.createElement("strong");
+            id.className = "device-id";
+            id.textContent = view.deviceId;
+            const meta = document.createElement("p");
+            meta.textContent = (view.active ? "在线" : "已断开") + "，最后上报 " + clock(view.lastSeenAt);
+            body.append(id, meta);
+            row.append(mark, body);
+            deviceRoot.append(row);
+
+            const option = document.createElement("option");
+            option.value = view.deviceId;
+            option.textContent = view.deviceId;
+            commandDevice.append(option);
+            scanDevice.append(option.cloneNode(true));
+        }
+        if ([...commandDevice.options].some(option => option.value === previousCommand)) {
+            commandDevice.value = previousCommand;
+        }
+        if ([...scanDevice.options].some(option => option.value === previousScan)) {
+            scanDevice.value = previousScan;
+        }
+    }
+
+    function appendFrame(frame) {
+        if (!frame || frame.type === "SNAPSHOT" || !remember(frame)) {
+            return;
+        }
+        const item = document.createElement("li");
+        const time = document.createElement("time");
+        time.dateTime = new Date(frame.timestamp).toISOString();
+        time.textContent = clock(frame.timestamp);
+        const kind = document.createElement("b");
+        kind.className = "kind-" + String(frame.type || "").toLowerCase();
+        kind.textContent = labelOf(frame.type);
+        const detail = document.createElement("span");
+        detail.textContent = detailOf(frame);
+        item.append(time, kind, detail);
+        eventRoot.prepend(item);
+        while (eventRoot.children.length > 80) {
+            eventRoot.removeChild(eventRoot.lastElementChild);
+        }
+    }
+
+    function labelOf(type) {
+        switch (type) {
+            case "SCAN": return "扫码";
+            case "ONLINE": return "接入";
+            case "OFFLINE": return "断开";
+            case "COMMAND": return "下发";
+            case "COMMAND_ACK": return "回执";
+            case "COMMAND_FAILED": return "失败";
+            default: return type || "消息";
+        }
+    }
+
+    function detailOf(frame) {
+        const payload = frame.payload || {};
+        const who = frame.deviceId || "";
+        if (frame.type === "SCAN") {
+            return who + "  " + (payload.barcode || "") + "  库位 " + (payload.location || "") + "  ×" + (payload.quantity ?? 1);
+        }
+        if (frame.type === "COMMAND" || frame.type === "COMMAND_ACK" || frame.type === "COMMAND_FAILED") {
+            return who + "  " + (payload.action || "") + (payload.params && payload.params.aisle ? "  " + payload.params.aisle : "");
+        }
+        return who;
+    }
+
+    function applySnapshot(frame) {
+        const payload = frame.payload || {};
+        if (Array.isArray(payload.devices)) {
+            devices.clear();
+            payload.devices.forEach(view => devices.set(view.deviceId, view));
+            renderDevices();
+        }
+        if (Array.isArray(payload.events)) {
+            payload.events.slice().reverse().forEach(event => appendFrame({
+                type: "SCAN",
+                deviceId: event.deviceId,
+                requestId: event.requestId,
+                timestamp: event.timestamp,
+                payload: event
+            }));
+        }
+    }
+
+    async function refreshDevices() {
+        const response = await fetch("/api/devices");
+        if (!response.ok) {
+            return;
+        }
+        const list = await response.json();
+        const liveIds = new Set(list.map(view => view.deviceId));
+        for (const id of devices.keys()) {
+            if (!liveIds.has(id)) {
+                devices.delete(id);
+            }
+        }
+        list.forEach(view => devices.set(view.deviceId, view));
+        renderDevices();
+    }
+
+    async function loadHistory() {
+        const response = await fetch("/api/events?limit=30");
+        if (!response.ok) {
+            return;
+        }
+        const list = await response.json();
+        list.slice().reverse().forEach(event => appendFrame({
+            type: "SCAN",
+            deviceId: event.deviceId,
+            requestId: event.requestId,
+            timestamp: event.timestamp,
+            payload: event
+        }));
+    }
+
+    async function readError(response) {
+        try {
+            const body = await response.json();
+            return body.message || ("请求失败 " + response.status);
+        } catch (ignore) {
+            return "请求失败 " + response.status;
+        }
+    }
+
+    function connect(meta) {
+        if (!meta.websocketPort || meta.websocketPort < 0) {
+            state.textContent = "看板通道没有开启";
+            return;
+        }
+        const socket = new WebSocket("ws://" + location.hostname + ":" + meta.websocketPort + meta.websocketPath);
+        socket.addEventListener("open", () => {
+            state.textContent = "看板已接上 " + meta.websocketPort;
+        });
+        socket.addEventListener("message", event => {
+            const frame = JSON.parse(event.data);
+            if (frame.type === "SNAPSHOT") {
+                applySnapshot(frame);
+                return;
+            }
+            if (frame.type === "ONLINE" && frame.payload && frame.payload.deviceId) {
+                devices.set(frame.payload.deviceId, frame.payload);
+                renderDevices();
+            }
+            if (frame.type === "OFFLINE") {
+                const current = devices.get(frame.deviceId);
+                if (current) {
+                    devices.set(frame.deviceId, Object.assign({}, current, {active: false, lastSeenAt: frame.timestamp}));
+                    renderDevices();
+                }
+            }
+            appendFrame(frame);
+        });
+        socket.addEventListener("close", () => {
+            state.textContent = "看板断开，3 秒后重连";
+            setTimeout(() => connect(meta), 3000);
+        });
+        socket.addEventListener("error", () => {
+            state.textContent = "看板连接失败";
+        });
+    }
+
+    document.getElementById("command-form").addEventListener("submit", async event => {
+        event.preventDefault();
+        const deviceId = commandDevice.value;
+        if (!deviceId) {
+            formMessage.textContent = "先等一台设备接入。";
+            return;
+        }
+        const response = await fetch("/api/devices/" + encodeURIComponent(deviceId) + "/commands", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                action: document.getElementById("command-action").value,
+                params: {aisle: document.getElementById("command-aisle").value}
+            })
+        });
+        formMessage.textContent = response.ok ? "动作已交给 " + deviceId : await readError(response);
+    });
+
+    document.getElementById("scan-form").addEventListener("submit", async event => {
+        event.preventDefault();
+        const response = await fetch("/api/simulator/scans", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                deviceId: scanDevice.value,
+                barcode: document.getElementById("scan-barcode").value,
+                location: document.getElementById("scan-location").value,
+                quantity: 1
+            })
+        });
+        formMessage.textContent = response.ok ? "扫码已从模拟枪发出" : await readError(response);
+    });
+
+    renderDevices();
+    loadHistory().then(refreshDevices).then(() => fetch("/api/meta")).then(response => response.json()).then(connect);
+    setInterval(refreshDevices, 3000);
+</script>
+</body>
+</html>
