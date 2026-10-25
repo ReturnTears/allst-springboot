@@ -16,6 +16,6 @@ public class AdvsWebMvcExtension implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new StartupTraceInterceptor()).addPathPatterns("/extension", "/extension/**");
         StartupTraceLog.record(StartupPhase.WEB_MVC_CONFIGURER,
-                "已为 /extension/** 注册拦截器，响应头 X-Advs-Extension=ready。");
+                "已为 /extension 和 /extension/** 注册拦截器，响应头 X-Advs-Extension=ready。");
     }
 }

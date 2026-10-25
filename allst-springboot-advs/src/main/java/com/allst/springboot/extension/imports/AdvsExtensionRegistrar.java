@@ -16,12 +16,15 @@ public class AdvsExtensionRegistrar implements ImportBeanDefinitionRegistrar {
 
     @Override
     public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
+        boolean registeredHere = false;
         if (!registry.containsBeanDefinition(NOTICE_BEAN_NAME)) {
             RootBeanDefinition beanDefinition = new RootBeanDefinition(AdvsDynamicNotice.class);
             beanDefinition.setDescription("由 ImportBeanDefinitionRegistrar 在启动期动态注册");
             registry.registerBeanDefinition(NOTICE_BEAN_NAME, beanDefinition);
+            registeredHere = true;
         }
         StartupTraceLog.record(StartupPhase.IMPORT_REGISTRAR,
-                "已注册 Bean 定义 " + NOTICE_BEAN_NAME + "，该类没有 @Component，不会被扫描重复创建。");
+                (registeredHere ? "注册器补上了 " : "组件扫描已提供 ")
+                        + NOTICE_BEAN_NAME + "。已有定义时不再重复注册。");
     }
 }

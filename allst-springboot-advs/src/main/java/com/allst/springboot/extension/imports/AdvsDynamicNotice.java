@@ -1,8 +1,12 @@
 package com.allst.springboot.extension.imports;
 
+import org.springframework.stereotype.Component;
+
 /**
- * 由注册器动态放入容器的说明对象，用来证明 ImportBeanDefinitionRegistrar 生效。
+ * 说明对象。标成组件后，IDE 能识别构造器注入。
+ * 若定义还不存在，ImportBeanDefinitionRegistrar 会再补注册一次。
  */
+@Component
 public class AdvsDynamicNotice {
 
     public String getMessage() {

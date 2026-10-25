@@ -8,20 +8,32 @@ import org.springframework.boot.context.event.ApplicationFailedEvent;
 import org.springframework.boot.context.event.ApplicationPreparedEvent;
 import org.springframework.boot.context.event.ApplicationStartingEvent;
 import org.springframework.context.ApplicationEvent;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.GenericApplicationListenerAdapter;
+import org.springframework.context.event.GenericApplicationListener;
 import org.springframework.core.Ordered;
 import org.springframework.core.ResolvableType;
 
 /**
  * 容器创建前就能工作的事件监听器。
- * 只处理早期事件和失败事件，避免和容器内的 {@code AdvsContextEventListener} 重复记录。
+ * 只声明早期事件和失败事件，避免和容器内的监听器重复记录刷新、就绪和关闭。
  */
-public class AdvsEarlyApplicationListener implements ApplicationListener<ApplicationEvent>, Ordered {
+public class AdvsEarlyApplicationListener implements GenericApplicationListener {
 
     @Override
     public int getOrder() {
         return Ordered.HIGHEST_PRECEDENCE;
+    }
+
+    @Override
+    public boolean supportsEventType(ResolvableType eventType) {
+        Class<?> rawClass = eventType.resolve();
+        if (rawClass == null) {
+            return false;
+        }
+        return ApplicationStartingEvent.class.isAssignableFrom(rawClass)
+                || ApplicationEnvironmentPreparedEvent.class.isAssignableFrom(rawClass)
+                || ApplicationContextInitializedEvent.class.isAssignableFrom(rawClass)
+                || ApplicationPreparedEvent.class.isAssignableFrom(rawClass)
+                || ApplicationFailedEvent.class.isAssignableFrom(rawClass);
     }
 
     @Override
@@ -44,14 +56,5 @@ public class AdvsEarlyApplicationListener implements ApplicationListener<Applica
                     "ApplicationFailedEvent，异常=" + exception.getClass().getName()
                             + "，消息=" + exception.getMessage());
         }
-    }
-
-    /**
-     * 早期事件多播器会优先识别 {@link org.springframework.context.event.GenericApplicationListener}。
-     * 显式声明支持的事件类型，避免泛型在环境未就绪时匹配失败。
-     */
-    @SuppressWarnings("unused")
-    public boolean supportsEventType(ResolvableType eventType) {
-        return new GenericApplicationListenerAdapter(this).supportsEventType(eventType);
     }
 }

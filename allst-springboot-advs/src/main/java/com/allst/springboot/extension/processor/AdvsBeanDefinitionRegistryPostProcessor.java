@@ -27,10 +27,12 @@ public class AdvsBeanDefinitionRegistryPostProcessor implements BeanDefinitionRe
 
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
+        boolean registeredHere = false;
         if (!registry.containsBeanDefinition(FEATURE_SWITCH_BEAN_NAME)) {
             RootBeanDefinition beanDefinition = new RootBeanDefinition(AdvsFeatureSwitch.class);
             beanDefinition.setDescription("启动期动态注册的扩展开关，属性由 BeanFactoryPostProcessor 写入");
             registry.registerBeanDefinition(FEATURE_SWITCH_BEAN_NAME, beanDefinition);
+            registeredHere = true;
         }
         int projectBeans = 0;
         for (String beanName : registry.getBeanDefinitionNames()) {
@@ -41,7 +43,8 @@ public class AdvsBeanDefinitionRegistryPostProcessor implements BeanDefinitionRe
             }
         }
         StartupTraceLog.record(StartupPhase.BEAN_DEFINITION_REGISTRY,
-                "注册 " + FEATURE_SWITCH_BEAN_NAME + "。工程 Bean 定义 " + projectBeans
+                (registeredHere ? "注册器补上了 " : "组件扫描已提供 ")
+                        + FEATURE_SWITCH_BEAN_NAME + "。工程 Bean 定义 " + projectBeans
                         + " 个，总定义 " + registry.getBeanDefinitionCount() + " 个。");
     }
 

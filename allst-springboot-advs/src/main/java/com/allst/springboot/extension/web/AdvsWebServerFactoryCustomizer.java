@@ -2,8 +2,8 @@ package com.allst.springboot.extension.web;
 
 import com.allst.springboot.extension.StartupPhase;
 import com.allst.springboot.extension.StartupTraceLog;
-import org.springframework.boot.web.server.ConfigurableServletWebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
+import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.stereotype.Component;
 
 /**

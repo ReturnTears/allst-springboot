@@ -132,13 +132,13 @@ public class ExtensionCatalog {
                 "@EnableAdvsExtension 上的 @Import",
                 "配置类解析完成后、普通 BeanFactoryPostProcessor 之前。",
                 "按条件向注册器写入 BeanDefinition，适合“有开关才装配”的模块。",
-                "注册没有 @Component 的 advsDynamicNotice，避免被组件扫描重复注册。"));
+                "advsDynamicNotice 由 @Component 提供，方便注入。定义缺失时 Registrar 再补注册，已有定义则跳过。"));
         docs.add(doc(StartupPhase.BEAN_DEFINITION_REGISTRY, "启动主路径",
                 "AdvsBeanDefinitionRegistryPostProcessor",
                 "@Component。它是 BeanDefinitionRegistryPostProcessor，会在配置类解析之后被回调",
                 "可以新增或删除 Bean 定义。这是批量改定义的正确位置。",
                 "按配置动态注册 Bean、统计定义数量。不要在这里 getBean。",
-                "注册 advsFeatureSwitch，并统计 com.allst.springboot 包下已有的 Bean 定义数量。"));
+                "advsFeatureSwitch 由 @Component 提供，方便注入。定义缺失时注册器再补上，并统计 com.allst.springboot 包下已有的 Bean 定义数量。"));
         docs.add(doc(StartupPhase.REGISTRY_AS_FACTORY_POST, "启动主路径",
                 "AdvsBeanDefinitionRegistryPostProcessor",
                 "同一个注册器的第二个方法，属于随后的工厂后处理阶段",
@@ -174,13 +174,13 @@ public class ExtensionCatalog {
                 "@Component",
                 "决定用哪个构造器。发生在实例化前短路之后、构造器执行之前。",
                 "为有多个构造器的类指定入口。返回 null 表示仍由 Spring 推断。",
-                "示例 Bean 返回 null，沿用无参构造器。不干预部门、员工相关 Bean。"));
+                "AdvsConstructorSample 由组件扫描创建，这里返回 null，让容器自己选构造器。@Bean 工厂方法创建的示例 Bean 不会进入这个回调。"));
         docs.add(doc(StartupPhase.CONSTRUCTOR, "启动主路径",
-                "AdvsLifecycleDemoBean 构造器",
+                "AdvsLifecycleDemoBean、AdvsConstructorSample 构造器",
                 "容器实例化行为，不是扩展接口",
                 "构造器执行时依赖注入尚未发生，Aware 也还没回调。",
                 "只做轻量赋值。不要在构造器里访问还没创建的 Bean。",
-                "用这条记录把“推断构造器”和“合并 Bean 定义”隔开，方便对照源码顺序。"));
+                "组件扫描的 AdvsConstructorSample 会紧跟构造器推断。AdvsLifecycleDemoBean 由 @Bean 方法创建，构造器记录会出现，但中间没有构造器推断。"));
         docs.add(doc(StartupPhase.MERGED_BEAN_DEFINITION, "启动主路径",
                 "AdvsMergedBeanDefinitionPostProcessor",
                 "@Component",
@@ -287,7 +287,7 @@ public class ExtensionCatalog {
                 "AdvsSmartLifecycle",
                 "@Component，phase = 0",
                 "finishRefresh 里、ContextRefreshedEvent 之前。phase 越小越早 start。",
-                "启动随应用关闭而停止的后台资源。Boot 2.3 的 Tomcat 在 onRefresh 里往往已经启动，所以这里不能当成“端口刚刚打开”。对外可接流量要以 ApplicationReadyEvent 为准。",
+                "启动随应用关闭而停止的后台资源。Boot 2.3 的 Tomcat 在 onRefresh 里往往已经启动，所以这里不能当成“端口刚刚打开”。对外可接流量要等 ReadinessState.ACCEPTING_TRAFFIC，而不是看 start()。",
                 "只把扩展模块标记为 running，不新开线程，避免干扰已有 @Async 和 @Scheduled。"));
         docs.add(doc(StartupPhase.EVENT_CONTEXT_REFRESHED, "启动主路径",
                 "AdvsContextEventListener",
@@ -307,6 +307,12 @@ public class ExtensionCatalog {
                 "与 RunListener.started 同一时段，由 EventPublishingRunListener 发布。",
                 "多个业务模块可以各自听这个事件。",
                 "和 RunListener.started 分开记录，便于区分“一个监听器”和“一组事件监听器”。"));
+        docs.add(doc(StartupPhase.LIVENESS_CHANGED, "启动主路径",
+                "AdvsContextEventListener",
+                "@Component，监听 AvailabilityChangeEvent",
+                "ApplicationStartedEvent 的监听器全部返回之后，Boot 才把存活状态发布为 CORRECT，然后才执行 Runner。",
+                "存活探针看这个状态。不要在 ApplicationStartedEvent 的监听器里认为存活已经切换完成。",
+                "记录存活状态变为 CORRECT 的真实时刻。"));
         docs.add(doc(StartupPhase.APPLICATION_RUNNER, "启动主路径",
                 "AdvsCacheWarmupRunner",
                 "@Component，@Order(10)",
@@ -328,9 +334,15 @@ public class ExtensionCatalog {
         docs.add(doc(StartupPhase.EVENT_READY, "启动主路径",
                 "AdvsContextEventListener",
                 "@Component，监听 ApplicationReadyEvent",
-                "应用就绪。Boot 2.3 会把 Readiness 切到 ACCEPTING_TRAFFIC。",
-                "对外流量、注册发现、就绪探针放这里，而不是放在 SmartLifecycle.start。",
-                "读取 ApplicationAvailability 的存活和就绪状态，写入轨迹。"));
+                "Runner 已经结束。此时发布 ApplicationReadyEvent，但就绪状态还没改。",
+                "适合做就绪前的最后通知。监听器返回之后，Boot 才会把 Readiness 改为 ACCEPTING_TRAFFIC。在这个事件里读到的 readiness 仍是 REFUSING_TRAFFIC。",
+                "读出切换前的可用性，避免把“事件已发布”误写成“已经可以接流量”。"));
+        docs.add(doc(StartupPhase.READINESS_CHANGED, "启动主路径",
+                "AdvsContextEventListener",
+                "@Component，监听 AvailabilityChangeEvent",
+                "启动成功时，位于 ApplicationReadyEvent 监听器全部返回之后。关闭时，位于 ContextClosedEvent 之前。",
+                "对外接流量、注册发现、就绪探针以 ACCEPTING_TRAFFIC 为准。关闭前 Boot 会先改回 REFUSING_TRAFFIC。",
+                "两条轨迹都会留下：先是 ACCEPTING_TRAFFIC，进程关闭时再是 REFUSING_TRAFFIC。"));
         docs.add(doc(StartupPhase.EVENT_CONTEXT_CLOSED, "关闭路径",
                 "AdvsContextEventListener",
                 "@Component，监听 ContextClosedEvent",

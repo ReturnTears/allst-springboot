@@ -1,11 +1,11 @@
 spring:
   datasource:
     # JDBC 驱动支持一种称为 "KeepAlive" 的功能，它会定期向数据库发送心跳包，以保持连接活跃
-    url: jdbc:mysql://localhost:3306/sb?useServerPrepStmts=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=UTC&autoReconnect=true&useKeepAlive=true&keepAliveCycle=30
+    url: jdbc:mysql://localhost:3306/allst?useServerPrepStmts=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=UTC&autoReconnect=true&useKeepAlive=true&keepAliveCycle=30
     # url: jdbc:mysql://localhost:3306/sb?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: 123456
+    password: ""
     type: com.alibaba.druid.pool.DruidDataSource
     initialSize: 5
     minIdle: 5
@@ -26,3 +26,12 @@ spring:
     host: 127.0.0.1
     port: 6379
     password: 123456
+
+# 启动扩展点开关。不写这些项时，由 AdvsEnvironmentPostProcessor 按最低优先级补默认值。
+advs:
+  extension:
+    # true 时 ApplicationRunner 只列出 CacheManager，读取失败不中断启动
+    cache-warmup: false
+    # true 且未配置 required-token 时，启动会在 EnvironmentPostProcessor 阶段失败
+    fail-fast: false
+    banner: ALLST Spring Extension Points

@@ -29,6 +29,7 @@
     <module>allst-springboot-security</module>
     <module>allst-springboot-redis</module>
     <module>allst-springboot-canal</module>
+    <module>allst-springboot-state-machine</module>
   </modules>
   <packaging>pom</packaging>
 

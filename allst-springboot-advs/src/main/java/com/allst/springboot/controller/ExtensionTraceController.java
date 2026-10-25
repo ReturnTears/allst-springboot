@@ -58,24 +58,23 @@ public class ExtensionTraceController {
                     + view.getPhase() + " | " + view.getAction());
         }
         String prefix = environment.getProperty("server.servlet.context-path", "");
-        ExtensionSummary summary = ExtensionSummary.builder()
-                .springBootVersion(catalog.getSpringBootVersion())
-                .banner(featureSwitch.getBanner())
-                .cacheWarmup(featureSwitch.isCacheWarmup())
-                .dynamicNotice(dynamicNotice.getMessage())
-                .importedModule(importedMarker.getMessage())
-                .startedAtMillis(startupClock.getEpochMillis())
-                .elapsedMillis(startupClock.elapsedMillis())
-                .traceSize(views.size())
-                .catalogSize(catalog.getPoints().size())
-                .cachePointCount(StartupTraceLog.cachePoints().size())
-                .revisit(List.of(
+        ExtensionSummary summary = new ExtensionSummary(
+                catalog.getSpringBootVersion(),
+                featureSwitch.getBanner(),
+                featureSwitch.isCacheWarmup(),
+                dynamicNotice.getMessage(),
+                importedMarker.getMessage(),
+                startupClock.getEpochMillis(),
+                startupClock.elapsedMillis(),
+                views.size(),
+                catalog.getPoints().size(),
+                StartupTraceLog.cachePoints().size(),
+                List.of(
                         prefix + "/extension",
                         prefix + "/extension/catalog",
                         prefix + "/extension/trace",
-                        prefix + "/extension/cache-points"))
-                .latestActions(latest)
-                .build();
+                        prefix + "/extension/cache-points"),
+                latest);
         return new Result<>(200, "ok", summary);
     }
 

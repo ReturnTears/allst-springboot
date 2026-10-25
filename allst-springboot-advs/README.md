@@ -1,4 +1,20 @@
 # Spring Boot Advs
+
+## Spring 扩展接口（按启动顺序）
+
+当前版本是 Spring Boot 2.3.5。扩展点的时机、能做的事，以及在本项目里的用法写在 [docs/spring-extension-startup-order.md](docs/spring-extension-startup-order.md)。
+
+启动成功后可以对照真实顺序：
+
+```text
+http://localhost:8030/advs/extension
+http://localhost:8030/advs/extension/catalog
+http://localhost:8030/advs/extension/trace
+http://localhost:8030/advs/extension/cache-points
+```
+
+日志关键字是 `[启动扩展点]`。可选参数 `--advs.job=extension-report` 会在 CommandLineRunner 里记一条轨迹。`advs.extension.cache-warmup` 和 `advs.extension.fail-fast` 写在 `application-beta.yml`。
+
 ## advs调用basic服务
 ```text
 User栗子

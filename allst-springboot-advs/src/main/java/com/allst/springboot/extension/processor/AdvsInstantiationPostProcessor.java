@@ -5,6 +5,7 @@ import com.allst.springboot.extension.StartupPhase;
 import com.allst.springboot.extension.StartupTraceLog;
 import com.allst.springboot.extension.lifecycle.AdvsLifecycleDemoBean;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessor;
 import org.springframework.core.annotation.AnnotatedElementUtils;
@@ -39,11 +40,11 @@ public class AdvsInstantiationPostProcessor implements InstantiationAwareBeanPos
     @Override
     public PropertyValues postProcessProperties(PropertyValues pvs, Object bean, String beanName) throws BeansException {
         if (participant(ClassUtils.getUserClass(bean))) {
-            int propertyCount = pvs == null ? 0 : pvs.size(); // PropertyValues may not have size()
             StartupTraceLog.record(StartupPhase.PROPERTY_POST_PROCESS,
-                    "属性填充前保持原值。bean=" + beanName + "，属性是否存在=" + (pvs != null));
+                    "属性填充前保持原值。bean=" + beanName + "，存在待填充属性=" + (pvs != null && !pvs.isEmpty()));
         }
-        return pvs;
+        // 接口默认实现返回 null，容器会把它当成“跳过属性填充”。这里必须把 null 变成空集合再交回去。
+        return pvs == null ? new MutablePropertyValues() : pvs;
     }
 
     private boolean participant(Class<?> type) {

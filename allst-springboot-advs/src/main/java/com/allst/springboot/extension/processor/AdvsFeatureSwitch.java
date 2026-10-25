@@ -1,8 +1,12 @@
 package com.allst.springboot.extension.processor;
 
+import org.springframework.stereotype.Component;
+
 /**
- * 由 BeanDefinitionRegistryPostProcessor 注册、再由 BeanFactoryPostProcessor 填入属性的开关对象。
+ * 扩展开关。标成组件后，IDE 能识别构造器注入。
+ * BeanFactoryPostProcessor 仍会在实例化前改写 banner 和 cacheWarmup。
  */
+@Component
 public class AdvsFeatureSwitch {
 
     private String banner;

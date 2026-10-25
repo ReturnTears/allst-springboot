@@ -114,6 +114,9 @@ public class AdvsMergedBeanDefinitionPostProcessor implements MergedBeanDefiniti
                 cacheNames,
                 key,
                 condition));
+        StartupTraceLog.record(StartupPhase.MERGED_BEAN_DEFINITION,
+                "缓存切点 " + beanName + "#" + method.getName() + " @" + annotation
+                        + " cacheNames=" + cacheNames + " key=" + key);
     }
 
     private String join(String[] values) {

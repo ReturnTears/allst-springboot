@@ -18,7 +18,7 @@ public class AdvsSmartLifecycle implements SmartLifecycle {
     public void start() {
         running = true;
         StartupTraceLog.record(StartupPhase.LIFECYCLE_START,
-                "SmartLifecycle.start，phase=0。模块标记为运行中；是否对外接流量仍以 ApplicationReadyEvent 为准。");
+                "SmartLifecycle.start，phase=0。模块标记为运行中；是否对外接流量要等 ReadinessState.ACCEPTING_TRAFFIC。");
     }
 
     @Override

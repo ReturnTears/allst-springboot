@@ -1,8 +1,6 @@
 package com.allst.springboot.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
@@ -10,17 +8,23 @@ import lombok.experimental.Accessors;
  * @since 2021年06月
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Accessors(chain = true)
 public class Result<T> {
     private Integer code;
     private String message;
     private T data;
 
+    public Result() {}
+
     public Result(Integer code, String message) {
         this.code = code;
         this.message = message;
+    }
+
+    public Result(Integer code, String message, T data) {
+        this.code = code;
+        this.message = message;
+        this.data = data;
     }
 
     @Override

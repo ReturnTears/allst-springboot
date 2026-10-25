@@ -1,5 +1,6 @@
 package com.allst.springboot;
 
+import com.allst.springboot.extension.imports.EnableAdvsExtension;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,6 +10,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
+@EnableAdvsExtension
 @ServletComponentScan
 @EnableCaching  // 开启基于注解的缓存
 @EnableAsync    // 开启异步注解

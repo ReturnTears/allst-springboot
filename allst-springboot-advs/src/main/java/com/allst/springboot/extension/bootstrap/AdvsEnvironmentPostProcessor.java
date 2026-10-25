@@ -32,14 +32,6 @@ public class AdvsEnvironmentPostProcessor implements EnvironmentPostProcessor, O
         defaults.put("advs.extension.banner", "ALLST Spring Extension Points");
         environment.getPropertySources().addLast(new MapPropertySource(PROPERTY_SOURCE, defaults));
 
-        if (environment.getProperty("advs.extension.fail-fast", Boolean.class, Boolean.FALSE)) {
-            String token = environment.getProperty("advs.extension.required-token");
-            if (token == null || token.isBlank()) {
-                throw new AdvsStartupException(
-                        "已开启 advs.extension.fail-fast，但未配置 advs.extension.required-token");
-            }
-        }
-
         String profiles = environment.getActiveProfiles().length == 0
                 ? "(无)"
                 : String.join(",", environment.getActiveProfiles());
@@ -49,5 +41,13 @@ public class AdvsEnvironmentPostProcessor implements EnvironmentPostProcessor, O
                         + ", contextPath=" + environment.getProperty("server.servlet.context-path")
                         + ", cacheWarmup=" + environment.getProperty("advs.extension.cache-warmup")
                         + ", banner=" + environment.getProperty("advs.extension.banner"));
+
+        if (environment.getProperty("advs.extension.fail-fast", Boolean.class, Boolean.FALSE)) {
+            String token = environment.getProperty("advs.extension.required-token");
+            if (token == null || token.isBlank()) {
+                throw new AdvsStartupException(
+                        "已开启 advs.extension.fail-fast，但未配置 advs.extension.required-token");
+            }
+        }
     }
 }

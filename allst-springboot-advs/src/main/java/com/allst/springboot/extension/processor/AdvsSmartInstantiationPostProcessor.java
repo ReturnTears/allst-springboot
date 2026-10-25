@@ -4,6 +4,8 @@ import com.allst.springboot.extension.StartupPhase;
 import com.allst.springboot.extension.StartupTraceLog;
 import com.allst.springboot.extension.lifecycle.AdvsConstructorSample;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.MutablePropertyValues;
+import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.config.SmartInstantiationAwareBeanPostProcessor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ClassUtils;
@@ -20,6 +22,11 @@ public class AdvsSmartInstantiationPostProcessor implements SmartInstantiationAw
     @Override
     public Class<?> predictBeanType(Class<?> beanClass, String beanName) throws BeansException {
         return null;
+    }
+
+    @Override
+    public PropertyValues postProcessProperties(PropertyValues pvs, Object bean, String beanName) throws BeansException {
+        return pvs == null ? new MutablePropertyValues() : pvs;
     }
 
     @Override

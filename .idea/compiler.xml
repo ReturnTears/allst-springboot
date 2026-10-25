@@ -16,7 +16,6 @@
         <module name="allst-springboot-doc" />
         <module name="allst-springboot-demo" />
         <module name="allst-springboot-minio" />
-        <module name="allst-springboot-advs" />
         <module name="allst-springboot-satoken" />
         <module name="allst-springboot-mybatis-plus" />
         <module name="allst-springboot-mysql2es" />
@@ -25,11 +24,19 @@
         <module name="allst-springboot-drools" />
         <module name="allst-springboot-k8s" />
         <module name="allst-springboot-webflux" />
-        <module name="allst-springboot-state-machine" />
         <module name="allst-springboot-dfs" />
         <module name="allst-springboot-basic" />
         <module name="allst-springboot-quartz" />
         <module name="allst-springboot-docker" />
+      </profile>
+      <profile name="Annotation profile for allst-springboot-advs" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$PROJECT_DIR$/../../ProgramData/.m2_sx_maven/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
+        </processorPath>
+        <module name="allst-springboot-advs" />
       </profile>
       <profile name="Annotation profile for allst-springboot-security" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -57,6 +64,7 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$PROJECT_DIR$/../../ProgramData/.m2_sx_maven/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
+          <entry name="$PROJECT_DIR$/../../ProgramData/.m2_sx_maven/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
         </processorPath>
         <module name="allst-springboot-canal" />
       </profile>
@@ -66,8 +74,18 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$PROJECT_DIR$/../../ProgramData/.m2_sx_maven/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar" />
+          <entry name="$PROJECT_DIR$/../../ProgramData/.m2_sx_maven/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar" />
         </processorPath>
         <module name="allst-springboot-graphql" />
+      </profile>
+      <profile name="Annotation profile for allst-springboot-state-machine" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$PROJECT_DIR$/../../ProgramData/.m2_sx_maven/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
+        </processorPath>
+        <module name="allst-springboot-state-machine" />
       </profile>
       <profile name="Annotation profile for allst-boot" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
