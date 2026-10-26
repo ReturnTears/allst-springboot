@@ -3,6 +3,7 @@ package com.allst.springboot.security.protocol;
 import com.allst.springboot.config.SecurityProperties;
 import org.springframework.stereotype.Component;
 
+/** 目录项：授权码登录。过滤链是否存在取决于 {@code security.oauth2.enabled}，这个类只反映开关状态。 */
 @Component
 public class OAuth2LoginProtocol implements SecurityProtocol {
 

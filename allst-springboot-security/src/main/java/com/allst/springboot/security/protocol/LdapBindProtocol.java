@@ -3,6 +3,7 @@ package com.allst.springboot.security.protocol;
 import com.allst.springboot.config.SecurityProperties;
 import org.springframework.stereotype.Component;
 
+/** 目录项：LDAP。开关跟着 {@code security.ldap.enabled}，关闭时目录里显示未启用，登录地址也不会去连目录。 */
 @Component
 public class LdapBindProtocol implements SecurityProtocol {
 

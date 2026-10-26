@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 已登录但权限不够时返回 JSON 403。
+ * 已经登录但权限不够。例如 alice 访问 {@code GET /api/audit/logins}，过滤链匹配到 audit:read 失败后进这里，返回 403。
+ * 和 401 分开：401 表示「你是谁还不知道」，403 表示「我知道你是谁，但这件事不让你做」。
  */
 public class RestAccessDeniedHandler implements AccessDeniedHandler {
 

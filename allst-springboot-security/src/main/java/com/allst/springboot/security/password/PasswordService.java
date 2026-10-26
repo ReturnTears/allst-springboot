@@ -15,7 +15,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * 改密、重置和历史口令。比较时用 PasswordEncoder.matches，不能把摘要当明文比。
+ * 改密、重置和历史口令。
+ * <p>
+ * {@code POST /api/password/change} 的调用链：
+ * JwtAuthenticationFilter → PasswordExpiryFilter（这个地址在放行名单里）
+ * → PasswordController.change → 本类 changeOwn → 通过后作废旧令牌并签发新的一对。
+ * <p>
+ * 历史表存的是「被换下来的旧摘要」。比对时用编码器的 matches，因为 BCrypt 每次摘要都不同，不能做字符串比较。
  */
 @Service
 public class PasswordService {
@@ -41,6 +47,7 @@ public class PasswordService {
         return user.getPasswordChangedAt().plusDays(maxAgeDays).isBefore(LocalDateTime.now());
     }
 
+    /** 已登录用户改自己的密码。旧口令不对时明确说「原密码不正确」，因为调用方已经证明过身份。 */
     @Transactional
     public void changeOwn(Long userId, String oldPassword, String newPassword) {
         SecUser user = required(userId);
@@ -55,6 +62,9 @@ public class PasswordService {
         replace(required(userId), newPassword);
     }
 
+    /**
+     * 密码过期、还没有令牌时走这里。用户名不存在和旧口令错误返回同一句话，避免这个免登录口子被用来探测账号。
+     */
     @Transactional
     public void changeWithOldPassword(String username, String oldPassword, String newPassword) {
         SecUser user = users.findByUsername(username)

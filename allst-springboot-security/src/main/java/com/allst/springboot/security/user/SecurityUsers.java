@@ -11,7 +11,9 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * 把角色码和权限码展开成 GrantedAuthority。必须在事务里调用，这样懒加载的集合才读得到。
+ * 把「用户 → 角色 → 权限」摊平成一串 {@code GrantedAuthority}。
+ * {@code hasRole('ADMIN')} 认的是 {@code ROLE_ADMIN}，{@code hasAuthority('user:read')} 认的是权限码，两边都放进同一个列表。
+ * 必须在事务里调用：角色和权限是懒加载的，事务结束后再遍历会抛 LazyInitializationException。
  */
 public final class SecurityUsers {
 

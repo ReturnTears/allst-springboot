@@ -6,7 +6,8 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 /**
- * 把密码是否过期放进访问令牌，前端不用再猜。过期与否仍以数据库为准，这个声明只是提示。
+ * 把 {@code passwordExpired} 写进访问令牌，登录页可以直接提示去改密。
+ * 过滤器拦截时仍读数据库里的 {@code SecurityUser}，改了这个声明并不能绕过 {@code PasswordExpiryFilter}。
  */
 @Component
 public class PasswordExpiredClaimCustomizer implements TokenCustomizer {

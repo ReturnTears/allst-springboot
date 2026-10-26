@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * 口令复杂度。BCrypt 只取前 72 个字符，所以上限也卡在 72。见 docs/05-password-management.md。
+ * 口令复杂度。上限 72 是因为 BCrypt 只取前 72 个字符，更长的部分不会参与计算，等于没有保护。
+ * 禁止包含用户名，是为了挡住 {@code alice} / {@code Alice@123} 这种一眼就能猜到的组合。
  */
 public final class PasswordPolicy {
 

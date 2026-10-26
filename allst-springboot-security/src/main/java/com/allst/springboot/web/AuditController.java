@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 登录审计。需要 audit:read。见 docs/01-authentication.md。
+ * 登录审计。链上要求 audit:read，方法上再写一次。alice 没有这个权限，请求在过滤链就被 403，进不了这个方法。
  */
 @RestController
 @RequestMapping("/api/audit")

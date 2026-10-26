@@ -13,7 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 会话登录成功后写 JSON，而不是重定向到页面。见 docs/04-session-management.md。
+ * {@code POST /session/login} 成功后的出口。默认的成功处理器会 302 到某个页面，接口调用方拿不到 JSON，所以换成直接写用户信息。
+ * 会话号已经由 {@code LoginSessionStrategy} 换过并写进 Cookie，这里只负责响应体。
  */
 public class JsonLoginSuccessHandler implements AuthenticationSuccessHandler {
 

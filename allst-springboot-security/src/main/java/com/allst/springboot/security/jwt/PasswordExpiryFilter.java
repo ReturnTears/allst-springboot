@@ -17,7 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 密码过期后只放行查看自己、退出和修改密码。见 docs/05-password-management.md。
+ * 密码过期后的第二道门，挂在 JWT 过滤器后面。
+ * 用户还能登录，是为了让他调用改密接口；其余业务接口在这里被挡下，返回 40310。
+ * 放行名单只有查看自己、退出、修改密码和查看口令规则。
  */
 public class PasswordExpiryFilter extends OncePerRequestFilter {
 

@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * 方法级安全演示。URL 只要求登录，细粒度判断在服务方法上。见 docs/07-method-security.md。
+ * 方法级安全的入口。链上只要求已登录，细粒度全在 {@code MethodDemoService}。
+ * 控制器自己不要写权限判断，否则和注解各说各的，以后会改漏一处。
  */
 @RestController
 @RequestMapping("/api/method")

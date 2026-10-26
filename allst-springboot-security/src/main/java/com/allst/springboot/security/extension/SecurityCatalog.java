@@ -11,7 +11,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 运行时能看到哪些协议和扩展点已经被装进来。见 docs/08-extensible-architecture.md。
+ * 把容器里的协议、登录守卫、令牌扩展收成一份清单，给 {@code GET /api/security/modules} 用。
+ * 这里不决定放行或拒绝。新增一种协议时，实现 {@code SecurityProtocol} 并注册成 Bean，这个接口就会多一行；
+ * 真正生效还要另写一条 {@code SecurityFilterChain}，只加目录项不会打开登录入口。
  */
 @Component
 public class SecurityCatalog {

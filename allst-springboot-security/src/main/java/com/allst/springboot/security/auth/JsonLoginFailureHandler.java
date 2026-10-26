@@ -14,7 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 会话登录失败时返回统一错误码。口令错误不区分“用户不存在”，避免靠这个接口探测账号。
+ * {@code POST /session/login} 失败后的出口。锁定和停用给出不同业务码，其余失败都说「用户名或密码错误」。
+ * 不区分用户不存在，是为了不让别人用这个接口试出哪些用户名是真的。
  */
 public class JsonLoginFailureHandler implements AuthenticationFailureHandler {
 

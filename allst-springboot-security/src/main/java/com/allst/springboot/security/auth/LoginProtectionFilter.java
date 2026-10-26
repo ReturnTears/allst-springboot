@@ -18,7 +18,9 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * 挡在登录入口前面：先走 LoginGuard，再按 IP 做滑动窗口。不读取请求体，避免把表单体消费掉。
+ * 挡在四个登录地址最前面的 Servlet 过滤器，比 Security 过滤链更早。
+ * 先问每一个 {@link LoginGuard}（现在只有维护开关），再按「IP + 路径」做一分钟滑动窗口。
+ * 不读取 body：表单登录的用户名口令还要留给后面的认证过滤器。
  */
 public class LoginProtectionFilter extends OncePerRequestFilter {
 

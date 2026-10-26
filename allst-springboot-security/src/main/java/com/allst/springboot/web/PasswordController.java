@@ -21,7 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 /**
- * 查看口令规则、本人改密。改密后旧访问令牌作废，并返回新的一对令牌。见 docs/05-password-management.md。
+ * 口令接口。{@code GET /api/password/policy} 在链上是放行的，登录页也能看到规则。
+ * {@code POST /api/password/change} 必须带访问令牌。改密成功后旧访问令牌作废，响应里是新的一对，前端要换成新的。
  */
 @RestController
 @RequestMapping("/api/password")

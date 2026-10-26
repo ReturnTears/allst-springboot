@@ -9,7 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 
 /**
- * 清掉已经过期的刷新令牌和注销名单，避免两张表只增不减。
+ * 每小时删掉已经过期的刷新令牌和注销名单。过期记录留着也验不过，只是占空间。
+ * 没过期的注销记录不能删：访问令牌在过期前仍要靠这张表判断「已经退出」。
  */
 @Component
 public class TokenCleanupJob {

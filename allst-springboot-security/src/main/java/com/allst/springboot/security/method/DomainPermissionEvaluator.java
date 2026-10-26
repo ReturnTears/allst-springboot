@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 import java.io.Serializable;
 
 /**
- * hasPermission 的判断。未知资源类型一律拒绝。本人访问自己的用户编号时放行。见 docs/07-method-security.md。
+ * {@code hasPermission} 的判断。URL 上的 hasAuthority 不走这里。
+ * 本人访问自己的用户编号时放行，这样没有 user:read 的人仍能看自己的资料。
+ * 未知资源类型一律拒绝，避免新写的类型因为没人处理而被默认允许。
  */
 @Component
 public class DomainPermissionEvaluator implements PermissionEvaluator {

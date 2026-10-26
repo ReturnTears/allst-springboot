@@ -25,7 +25,14 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * 用户管理。URL 已经按权限码拦过一次，这里的注解挡住绕过控制器的内部调用。见 docs/02-authorization.md。
+ * 用户管理。调用链以 {@code GET /api/users} 为例：
+ * <pre>
+ * JwtAuthenticationFilter     确认令牌，把权限放进上下文
+ *   → apiChain                要求 user:read，没有就 403，到不了控制器
+ *   → UserController.list
+ *   → UserAdminService.list   方法上再写一次 @PreAuthorize
+ * </pre>
+ * URL 和方法各写一次，是因为以后如果有别的服务在进程内调用 list，URL 规则拦不住它。
  */
 @Service
 public class UserAdminService {

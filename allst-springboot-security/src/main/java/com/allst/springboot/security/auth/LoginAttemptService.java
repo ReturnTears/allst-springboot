@@ -9,7 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 
 /**
- * 连续口令错误达到阈值后锁定一段时间。锁定窗口内继续失败不会把时间往后推。见 docs/03-attack-protection.md。
+ * 连续口令错误的计数器。只在「用户名存在且口令错误」时加一，锁定期间再失败不会把锁定期往后推。
+ * 用户不存在时什么都不做，避免用这个接口给不存在的用户名制造记录。
  */
 @Service
 public class LoginAttemptService {

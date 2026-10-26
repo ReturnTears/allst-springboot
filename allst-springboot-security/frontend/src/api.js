@@ -1,3 +1,7 @@
+// 访问令牌只放内存：刷新页面就没了，但页面脚本被注入时也不在 localStorage 里长期躺着。
+// 刷新令牌放 sessionStorage，关掉标签页就消失。这是演示取舍，生产环境更稳妥的是把刷新令牌放 HttpOnly Cookie。
+// 业务请求走 api()：带 Bearer，401 时先 POST /api/auth/refresh，再用新访问令牌重试一次。
+// 会话请求走 sessionApi()：credentials 带上 Cookie，并把 XSRF-TOKEN 抄到请求头 X-XSRF-TOKEN。
 const refreshKey = 'allst.refresh'
 let accessToken = ''
 let restored = false

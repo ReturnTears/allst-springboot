@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/allst-springboot-exercise/allst-exercise-first.iml" filepath="$PROJECT_DIR$/allst-springboot-exercise/allst-exercise-first.iml" />
       <module fileurl="file://$PROJECT_DIR$/allst-springboot-graphql.iml" filepath="$PROJECT_DIR$/allst-springboot-graphql.iml" />
+      <module fileurl="file://$PROJECT_DIR$/allst-springboot-security/allst-springboot-security.iml" filepath="$PROJECT_DIR$/allst-springboot-security/allst-springboot-security.iml" />
       <module fileurl="file://$PROJECT_DIR$/allst-springboot-webflux.iml" filepath="$PROJECT_DIR$/allst-springboot-webflux.iml" />
     </modules>
   </component>

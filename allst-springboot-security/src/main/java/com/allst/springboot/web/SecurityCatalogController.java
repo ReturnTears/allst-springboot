@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 /**
- * 当前装载的协议和扩展点。见 docs/08-extensible-architecture.md。
+ * 运行时目录。{@code GET /api/security/modules} 需要登录。
+ * 它不做授权判断，只是把容器里已经装好的协议、登录守卫和令牌扩展列出来，方便对照源码。
  */
 @RestController
 @RequestMapping("/api/security")

@@ -18,7 +18,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 
 /**
- * 认证成败写审计，并驱动锁定计数。监听器自己吞掉异常，避免审计故障把一次合法登录变成 500。
+ * 监听认证框架发出的事件，而不是在每个登录接口里各写一遍审计。
+ * 用户名口令登录、会话登录、HTTP Basic 都会经过 {@code AuthenticationManager}，所以都会到这里。
+ * <p>
+ * 监听器自己吞掉异常：审计库出问题不应该把一次已经成功的登录变成 500。
+ * 只处理口令错误的失败事件来累计锁定；账号已锁定时不再加次数。
  */
 @Slf4j
 @Component

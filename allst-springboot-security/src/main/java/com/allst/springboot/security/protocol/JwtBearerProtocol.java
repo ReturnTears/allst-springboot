@@ -2,6 +2,7 @@ package com.allst.springboot.security.protocol;
 
 import org.springframework.stereotype.Component;
 
+/** 目录项：访问令牌。校验发生在 {@code JwtAuthenticationFilter}，这条记录本身不参与验签。 */
 @Component
 public class JwtBearerProtocol implements SecurityProtocol {
 

@@ -21,7 +21,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 会话查询。登录和退出由过滤链处理，不经过这个控制器。见 docs/04-session-management.md。
+ * 会话查询。登录和退出不经过这个类，它们由过滤链里的表单过滤器和退出过滤器处理。
+ * <p>
+ * {@code GET /session/csrf} 放行，用来把 CSRF 令牌发给前端。
+ * {@code GET /session/me} 要求已经有会话。
+ * {@code GET /session/active} 在链上要求 ROLE_ADMIN，只返回会话号前 8 位，避免把完整会话号交给浏览器。
  */
 @RestController
 @RequestMapping("/session")

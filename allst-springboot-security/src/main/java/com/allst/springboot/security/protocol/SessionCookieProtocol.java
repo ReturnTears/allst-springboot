@@ -2,6 +2,7 @@ package com.allst.springboot.security.protocol;
 
 import org.springframework.stereotype.Component;
 
+/** 目录项：Cookie 会话。登录由过滤链里的表单过滤器处理，{@code SessionController} 只负责登录之后的查询。 */
 @Component
 public class SessionCookieProtocol implements SecurityProtocol {
 

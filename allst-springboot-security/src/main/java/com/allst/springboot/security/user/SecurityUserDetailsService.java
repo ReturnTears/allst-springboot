@@ -12,7 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 
 /**
- * 认证时按用户名加载账号，并在锁定时间已过时自动解锁。见 docs/01-authentication.md。
+ * 认证时按用户名加载账号。方法上有事务，是因为角色和权限是懒加载的，
+ * 必须在这次查询还没结束时把它们拷贝进 {@link SecurityUser}，事务外再碰集合会报错。
+ * <p>
+ * 锁定时间到了就在这里解开，而不是另写定时任务：用户下次登录自然会走到这个方法。
  */
 @Service
 public class SecurityUserDetailsService implements UserDetailsService {

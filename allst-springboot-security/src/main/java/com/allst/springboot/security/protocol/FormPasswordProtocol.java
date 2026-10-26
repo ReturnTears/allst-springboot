@@ -2,6 +2,7 @@ package com.allst.springboot.security.protocol;
 
 import org.springframework.stereotype.Component;
 
+/** 目录项：用户名口令换 JWT，真正的入口是 {@code AuthController} 的 {@code /api/auth/login}。 */
 @Component
 public class FormPasswordProtocol implements SecurityProtocol {
 

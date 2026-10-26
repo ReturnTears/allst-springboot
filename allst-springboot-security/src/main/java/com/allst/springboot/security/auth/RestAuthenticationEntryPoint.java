@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 未登录时返回 JSON，不跳转 HTML 登录页。basic 为 true 时附带 WWW-Authenticate，方便 HTTP Basic 客户端。
+ * 未登录时的统一出口。过滤链发现匿名用户访问了需要登录的地址，就会进这里，返回 JSON 401。
+ * 不跳转 HTML 登录页，因为调用方是接口而不是浏览器页面。
+ * basic 为 true 时额外写 WWW-Authenticate，HTTP Basic 客户端才知道该弹出用户名口令，而不是只看到 401。
  */
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 

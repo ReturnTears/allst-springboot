@@ -1,8 +1,8 @@
 package com.allst.springboot.security.protocol;
 
 /**
- * 一种登录协议。新增协议时实现本接口并注册成 Bean，目录接口会把它列出来。
- * 真正的过滤链仍要单独加一条 SecurityFilterChain。见 docs/06-protocol-integration.md、docs/08-extensible-architecture.md。
+ * 一种登录方式的说明，只给目录接口展示。实现并注册成 Bean 后，{@code GET /api/security/modules} 会多一项。
+ * 这不会自动打开入口：还要在配置里增加匹配该路径的 {@code SecurityFilterChain}。
  */
 public interface SecurityProtocol {
 

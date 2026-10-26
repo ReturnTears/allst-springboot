@@ -1,7 +1,8 @@
 package com.allst.springboot.common.api;
 
 /**
- * 业务码。HTTP 状态表达传输结果，这里的数字给调用方区分原因。
+ * 业务码。HTTP 状态只说明「成功、要登录、没权限」这一层，同是 401 时调用方还要知道是口令错了、账号锁了，还是令牌过期。
+ * 前端按这里的数字分支，不要去解析中文提示。
  */
 public final class ResultCode {
 

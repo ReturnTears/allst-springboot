@@ -8,8 +8,11 @@ import java.util.Collection;
 import java.util.Objects;
 
 /**
- * 放进 SecurityContext 的主体。权限在构造时已经从角色展开，避免会话结束后再碰懒加载。
- * equals/hashCode 按用户名，会话注册表用它识别同一个人的多次登录。
+ * 放进 SecurityContext 的当前用户。权限在构造时已经从角色展开成字符串，后面不再碰数据库实体。
+ * <p>
+ * {@code equals}/{@code hashCode} 只看用户名。会话注册表用它们判断「这两次登录是不是同一个人」。
+ * {@code isCredentialsNonExpired} 固定返回 true：密码过期仍允许登录，改密限制交给 {@code PasswordExpiryFilter}。
+ * 如果这里返回 false，用户会直接登录失败，连改密接口都进不去。
  */
 @Getter
 public class SecurityUser implements UserDetails {

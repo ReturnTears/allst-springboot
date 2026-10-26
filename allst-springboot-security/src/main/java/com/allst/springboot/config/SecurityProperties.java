@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 安全示例的可调参数，前缀 {@code security}。各项含义见 docs 目录对应文章。
+ * 安全相关的可调参数，对应 application.yml 里的 security 节点。
+ * 放在配置文件而不是写死在代码里，是为了换环境时只改配置：密钥、锁定次数、密码有效期、要不要开 OAuth2。
  */
 @Getter
 @Setter

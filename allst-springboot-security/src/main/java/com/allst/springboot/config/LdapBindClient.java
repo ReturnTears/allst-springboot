@@ -8,7 +8,9 @@ import org.springframework.security.ldap.authentication.LdapAuthenticationProvid
 import org.springframework.stereotype.Component;
 
 /**
- * LDAP 绑定不注册成全局 AuthenticationProvider，避免口令登录失败后落到目录上再试一次。
+ * 只在 {@code POST /api/auth/ldap} 里被调用。不注册成全局 {@code AuthenticationProvider}：
+ * 如果挂进 {@code AuthenticationManager}，普通登录口令错误后框架还会再去目录上试一次，本地账号和目录账号会搅在一起。
+ * 绑定只回答「目录里的口令对不对」，通过后仍用同名本地用户签发 JWT。
  */
 @Component
 @ConditionalOnProperty(prefix = "security.ldap", name = "enabled", havingValue = "true")

@@ -18,7 +18,9 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
- * 用户管理。读需要 user:read，写需要 user:write。见 docs/02-authorization.md。
+ * 用户接口。真正的允许或拒绝不写在方法体里：
+ * GET 由过滤链要求 user:read，POST 和 PUT 要求 user:write，服务方法上还有同样的注解。
+ * 控制器保持很薄，是为了让「谁能调用」集中在链和注解两处，读代码时不用在业务逻辑里找 if。
  */
 @RestController
 @RequestMapping("/api/users")

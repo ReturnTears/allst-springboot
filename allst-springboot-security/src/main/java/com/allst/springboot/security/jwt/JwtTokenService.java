@@ -32,7 +32,11 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
- * 签发和校验 HS256 JWT。访问令牌无状态，刷新令牌靠数据库里的 jti 轮换和作废。见 docs/09-jwt.md。
+ * 签发和校验 JWT。签名算法是 HS256，密钥在服务端，调用方改任何一个字段都会验签失败。
+ * <p>
+ * 访问令牌不落库，靠签名和过期时间。这样校验时不必每次查签发记录。
+ * 刷新令牌只把编号 jti 存进 {@code sec_refresh_token}，原始字符串不落库；轮换或退出时把 revoked 设为 true。
+ * 退出的访问令牌 jti 写入 {@code sec_token_blacklist}，过滤器每次都会查这张表。
  */
 @Service
 public class JwtTokenService {
@@ -57,6 +61,7 @@ public class JwtTokenService {
         this.customizers = customizers;
     }
 
+    /** HS256 要求密钥至少 32 字节。启动时就失败，避免带着过短的密钥跑起来后所有令牌都能被伪造。 */
     @PostConstruct
     public void init() {
         byte[] secret = properties.getJwt().getSecret().getBytes(StandardCharsets.UTF_8);
@@ -66,6 +71,11 @@ public class JwtTokenService {
         this.key = Keys.hmacShaKeyFor(secret);
     }
 
+    /**
+     * 同时发两张令牌。访问令牌给业务接口，刷新令牌只给 {@code /api/auth/refresh}。
+     * 角色写进访问令牌只是给前端展示；授权时过滤器仍会再查数据库。
+     * {@link TokenCustomizer} 在签名前被调用，新增声明时实现这个接口即可，不用改本方法。
+     */
     @Transactional
     public TokenView issue(SecurityUser user) {
         String accessJti = UUID.randomUUID().toString();
@@ -99,6 +109,7 @@ public class JwtTokenService {
                 user.isPasswordExpired());
     }
 
+    /** 验签、核对签发者，并允许 30 秒时钟偏差，避免两台机器时间略有差别时把合法令牌判过期。 */
     public Claims parse(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -109,6 +120,10 @@ public class JwtTokenService {
                 .getBody();
     }
 
+    /**
+     * 刷新时先作废旧的 jti，再签发新的一对。中途失败的话用户需要重新登录，这是为了不让一张刷新令牌被重复使用。
+     * 签发前再读一次账号，停用或锁定的用户不能靠旧刷新令牌继续换新证。
+     */
     @Transactional
     public TokenView refresh(String refreshToken) {
         Claims claims = parseOrUnauthorized(refreshToken);
@@ -164,6 +179,7 @@ public class JwtTokenService {
         }
     }
 
+    /** 改密时调用。该用户名下尚未作废的刷新令牌全部失效，只保留这次改密新签发的那一张。 */
     @Transactional
     public void revokeAllRefresh(Long userId) {
         refreshTokens.revokeByUserId(userId);

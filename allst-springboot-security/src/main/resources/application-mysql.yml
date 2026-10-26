@@ -3,7 +3,7 @@
 # 表结构可由 JPA ddl-auto=update 生成，也可改成 validate 后执行 db/schema-mysql.sql。
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/allst_security?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://127.0.0.1:3306/allst?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password:
     driver-class-name: com.mysql.cj.jdbc.Driver

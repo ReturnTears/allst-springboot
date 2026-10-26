@@ -20,8 +20,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 读取 Authorization: Bearer，校验签名、类型、注销名单和账号状态，再写入 SecurityContext。
- * 权限每次从数据库展开，所以改角色后下一次请求就生效，不必等访问令牌过期。见 docs/09-jwt.md。
+ * 每个进入 {@code /api/**} 的请求都会经过这里，但没有 Bearer 头时直接放行。
+ * <p>
+ * 有令牌时的顺序：验签和签发者 → 必须是 access 类型 → jti 不在注销名单 → 再按用户名读数据库。
+ * 最后一步是故意的：令牌里虽然也写了角色，但权限以数据库为准，停用账号或改角色后下一次请求就会生效。
+ * 校验通过后把 {@link SecurityUser} 放进 {@code SecurityContextHolder}，后面的 URL 规则和方法注解都从这里取当前用户。
  */
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -40,12 +43,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         String header = request.getHeader("Authorization");
         if (header == null || !header.startsWith("Bearer ")) {
+            // 登录、刷新这些还没有令牌的请求会走到这里，后面的 permitAll 规则决定放不放行。
             filterChain.doFilter(request, response);
             return;
         }
         try {
             Claims claims = tokens.parse(tokens.stripBearer(header));
             if (!JwtTokenService.TYPE_ACCESS.equals(claims.get("typ", String.class))) {
+                // 刷新令牌有效期更长，不能拿它直接当访问令牌用。
                 reject(response, "请使用访问令牌");
                 return;
             }
@@ -60,6 +65,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                     user, null, user.getAuthorities());
+            // 第三个参数是权限。credentials 传 null，避免把口令摘要再放进安全上下文。
             SecurityContextHolder.getContext().setAuthentication(authentication);
             filterChain.doFilter(request, response);
         } catch (JwtException | UsernameNotFoundException ex) {

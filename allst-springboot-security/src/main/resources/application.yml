@@ -1,6 +1,8 @@
 spring:
   application:
     name: allst-springboot-security
+  profiles:
+    active: mysql
   jackson:
     time-zone: Asia/Shanghai
     serialization:
@@ -12,6 +14,7 @@ spring:
     username: sa
     password:
   jpa:
+    # 关掉后，控制器返回时事务已经结束。安全代码里需要角色、权限的地方都显式加了事务，避免视图层偷偷查库。
     open-in-view: false
     hibernate:
       ddl-auto: update
@@ -34,7 +37,9 @@ server:
     session:
       timeout: 30m
       cookie:
+        # 脚本读不到会话 Cookie，减轻页面被注入脚本后直接把会话偷走的风险。
         http-only: true
+        # 跨站请求不带这个 Cookie。CSRF 令牌另有一套，不靠放开 SameSite 来凑。
         same-site: lax
   error:
     include-message: never
@@ -45,21 +50,29 @@ server:
     max-swallow-size: 2MB
 
 security:
+  # true 时 LoginProtectionFilter 在四个登录地址上直接拒绝，已发出的访问令牌仍可用。
   maintenance: false
   jwt:
+    # 写进令牌的签发者。验签时必须一致，防止把别的系统签发的令牌拿来用。
     issuer: allst-security
-    # HS256 至少 32 字节。生产环境换成随机密钥，并只放在环境变量里。
+    # HS256 至少 32 字节。生产环境换成随机密钥，并只放在环境变量里。谁拿到这段字符串就能伪造令牌。
     secret: allst-security-demo-key-change-in-prod-32b
+    # 访问令牌短一些：它不落库，退出之前只能靠注销名单作废已经发出的那一张。
     access-token-minutes: 30
+    # 刷新令牌更长，但每次使用都会作废旧的 jti，不能拿同一张反复换。
     refresh-token-days: 7
   login:
+    # 连续口令错误达到这个次数后锁定。锁定窗口内再失败不会把时间往后推。
     max-failures: 5
     lock-minutes: 15
+    # 同一 IP 对同一个登录地址，一分钟内最多这么多次。这是挡在认证之前的，不看用户名。
     ip-limit-per-minute: 20
+    # 保持 false。打开后才读取 X-Forwarded-For，调用方可以自己改这个头来换计数桶。
     trust-forwarded: false
   password:
+    # 最近这么多次旧摘要不能再用。比对用 BCrypt 的 matches，不能做字符串相等。
     history-size: 5
-    # 0 表示不检查密码有效期。
+    # 0 表示不检查密码有效期。过期后仍能登录，但业务接口会被 PasswordExpiryFilter 挡住。
     max-age-days: 90
     denylist:
       - password
@@ -70,10 +83,13 @@ security:
       - 12345678
       - abc12345
   session:
+    # 同一账号只留 1 个会话。新登录会踢掉更早的那个，而不是拒绝新登录。
     maximum: 1
   oauth2:
+    # false 时不注册 /oauth2/** 那条链，也没有客户端配置，应用可以正常启动。
     enabled: false
   ldap:
+    # false 时不创建 LdapBindClient。/api/auth/ldap 会返回协议未启用，不会去连目录。
     enabled: false
 
 logging:

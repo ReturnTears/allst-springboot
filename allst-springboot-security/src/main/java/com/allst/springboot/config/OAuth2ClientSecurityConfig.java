@@ -19,8 +19,11 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 /**
- * 授权码登录。只有 security.oauth2.enabled=true 且配置了客户端注册信息时才应启用。
- * 见 docs/06-protocol-integration.md。
+ * 授权码登录，默认不加载。{@code security.oauth2.enabled=true} 时才注册这条链，避免没配客户端时启动失败。
+ * <p>
+ * 调用链：浏览器打开身份提供方 → 回调 {@code /login/oauth2/code/*} → 成功处理器按返回的用户名查本地账号 →
+ * 本地有这个人就签发 JWT，没有就返回 40106。角色仍以本地库为准，不直接采用外部系统给的角色。
+ * 这条链的 Order 是 0，比 {@code /api/**} 更靠前，所以回调地址不会被 JWT 链抢走。
  */
 @Configuration
 @ConditionalOnProperty(prefix = "security.oauth2", name = "enabled", havingValue = "true")

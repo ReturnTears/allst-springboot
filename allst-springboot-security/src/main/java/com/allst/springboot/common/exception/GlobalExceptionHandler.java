@@ -18,7 +18,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.stream.Collectors;
 
 /**
- * 控制器里抛出的异常统一成 JSON。过滤器里的 401/403 由安全入口自己写，不经过这里。
+ * 控制器里抛出的异常统一成 JSON。
+ * <p>
+ * 过滤器里的 401/403 由 {@code RestAuthenticationEntryPoint} 和 {@code RestAccessDeniedHandler} 直接写响应，
+ * 到不了这里。这里主要接住 {@code AuthController.login} 里 {@code AuthenticationManager.authenticate} 抛出的异常：
+ * 不写这个方法的话，口令错误会变成 500，调用方无法区分「密码错了」和「服务器坏了」。
+ * 用户不存在和口令错误都返回同一个文案，避免靠错误信息探测账号是否存在。
  */
 @Slf4j
 @RestControllerAdvice
@@ -42,6 +47,9 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(403).body(ApiResult.fail(ResultCode.FORBIDDEN, "没有权限"));
     }
 
+    /**
+     * 锁定、停用、过期分开返回，方便前端提示。其余认证失败一律当成口令错误，不把内部异常类型透出去。
+     */
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<ApiResult<Void>> authentication(AuthenticationException ex) {
         if (ex instanceof LockedException) {
