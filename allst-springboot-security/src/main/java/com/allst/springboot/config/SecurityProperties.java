@@ -25,6 +25,8 @@ public class SecurityProperties {
     private final Session session = new Session();
     private final OAuth2 oauth2 = new OAuth2();
     private final Ldap ldap = new Ldap();
+    private final Sms sms = new Sms();
+    private final Qr qr = new Qr();
 
     @Getter
     @Setter
@@ -68,5 +70,31 @@ public class SecurityProperties {
     @Setter
     public static class Ldap {
         private boolean enabled;
+    }
+
+    /** 短信验证码登录。provider=log 仅打印验证码供本机演示，aliyun 才真正调用阿里云。 */
+    @Getter
+    @Setter
+    public static class Sms {
+        private boolean enabled;
+        private String provider = "log";
+        private String accessKeyId;
+        private String accessKeySecret;
+        private String signName;
+        private String templateCode;
+        private String endpoint = "dysmsapi.aliyuncs.com";
+        private int codeLength = 6;
+        private int codeTtlSeconds = 300;
+        private int maxVerifyAttempts = 5;
+        private int sendIntervalSeconds = 60;
+        private int dailyLimitPerPhone = 10;
+    }
+
+    /** 扫码登录。单实例内存存储，多实例需换共享存储。 */
+    @Getter
+    @Setter
+    public static class Qr {
+        private boolean enabled = true;
+        private int ttlSeconds = 120;
     }
 }

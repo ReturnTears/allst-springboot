@@ -19,6 +19,8 @@ public final class ResultCode {
     public static final int FORBIDDEN = 40300;
     public static final int PASSWORD_EXPIRED = 40310;
     public static final int NOT_ENABLED = 40400;
+    public static final int QR_INVALID = 40401;
+    public static final int SMS_CODE_INVALID = 40107;
     public static final int RATE_LIMIT = 42900;
     public static final int SERVER = 50000;
     public static final int MAINTENANCE = 50301;

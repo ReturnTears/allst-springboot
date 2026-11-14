@@ -30,6 +30,7 @@
     <module>allst-springboot-redis</module>
     <module>allst-springboot-canal</module>
     <module>allst-springboot-state-machine</module>
+    <module>allst-springboot-dm</module>
   </modules>
   <packaging>pom</packaging>
 

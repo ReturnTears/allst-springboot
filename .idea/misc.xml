@@ -20,6 +20,7 @@
         <option value="$PROJECT_DIR$/allst-springboot-canal/pom.xml" />
         <option value="$PROJECT_DIR$/allst-springboot-state-machine/pom.xml" />
         <option value="$PROJECT_DIR$/allst-springboot-netty/pom.xml" />
+        <option value="$PROJECT_DIR$/allst-springboot-dm/pom.xml" />
       </list>
     </option>
   </component>

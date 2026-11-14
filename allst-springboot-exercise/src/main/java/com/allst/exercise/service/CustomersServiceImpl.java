@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -71,7 +72,7 @@ public class CustomersServiceImpl implements CustomersService {
     @Transactional(readOnly = true)
     public List<Customers> selectCursorList() {
         QueryWrapper qw = QueryWrapper.create().where(Customers::getId).ge(0);
-        List<Customers> result = List.of();
+        List<Customers> result = new ArrayList<>();
         Db.tx(() -> {
             Cursor<Customers> customers = customersMapper.selectCursorByQuery(qw);
             int currentIndex = customers.getCurrentIndex();
