@@ -6,10 +6,10 @@ package com.allst.boot.word;
  */
 @lombok.Getter
 public enum WordConstants {
-    fileName("E:\\TestData\\other\\WordDocument.docx"),
+    fileName("D:\\TestData\\other\\WordDocument.docx"),
 
-    fileName_2("E:\\TestData\\other\\WordDocument2.docx"),
-    fileName_3("E:\\TestData\\other\\Docx4jWord1.docx");
+    fileName_2("D:\\TestData\\other\\WordDocument2.docx"),
+    fileName_3("D:\\TestData\\other\\Docx4jWord1.docx");
 
     private final String path;
 

@@ -96,6 +96,13 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- 阿里云短信 V2.0 SDK，用于短信验证码登录。见 security/sms/AliyunSmsSender。 -->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>dysmsapi20170525</artifactId>
+            <version>4.6.0</version>
+        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

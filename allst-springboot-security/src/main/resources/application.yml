@@ -91,6 +91,24 @@ security:
   ldap:
     # false 时不创建 LdapBindClient。/api/auth/ldap 会返回协议未启用，不会去连目录。
     enabled: false
+  sms:
+    # 短信验证码登录。默认关闭；打开后 provider=log 仅打印验证码供本机演示。
+    enabled: false
+    # log=演示（打印验证码，响应回显）；aliyun=真正调用阿里云短信。
+    provider: log
+    # 阿里云签名与模板，provider=aliyun 时必填。AccessKey 走环境变量，不写在这里。
+    sign-name:
+    template-code:
+    endpoint: dysmsapi.aliyuncs.com
+    code-length: 6
+    code-ttl-seconds: 300
+    max-verify-attempts: 5
+    send-interval-seconds: 60
+    daily-limit-per-phone: 10
+  qr:
+    # 扫码登录。单实例内存存储，多实例需换共享存储。
+    enabled: true
+    ttl-seconds: 120
 
 logging:
   level:

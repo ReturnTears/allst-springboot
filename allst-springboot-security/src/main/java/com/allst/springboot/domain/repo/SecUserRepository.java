@@ -10,4 +10,8 @@ public interface SecUserRepository extends JpaRepository<SecUser, Long> {
     Optional<SecUser> findByUsername(String username);
 
     boolean existsByUsername(String username);
+
+    Optional<SecUser> findByPhone(String phone);
+
+    boolean existsByPhone(String phone);
 }

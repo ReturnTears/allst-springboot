@@ -41,6 +41,10 @@ public class SecUser {
     @Column(name = "display_name", nullable = false, length = 64)
     private String displayName;
 
+    /** 手机号，短信登录用。可空：老账号与种子账号没有手机号。 */
+    @Column(length = 20, unique = true)
+    private String phone;
+
     @Column(nullable = false)
     private boolean enabled = true;
 

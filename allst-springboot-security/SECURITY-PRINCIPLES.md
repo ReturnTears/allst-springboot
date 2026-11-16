@@ -24,6 +24,8 @@
 - [6. 会话管理：会话固定、并发控制、注册表](#6-会话管理会话固定并发控制注册表)
 - [7. 密码管理：BCrypt、策略、历史、过期](#7-密码管理bcrypt策略历史过期)
 - [8. 协议集成：Basic / OAuth2 / LDAP / SAML2](#8-协议集成basic--oauth2--ldap--saml2)
+- [8.5 短信验证码登录（阿里云 + 自动注册）](#85-短信验证码登录阿里云--自动注册)
+- [8.6 扫码登录（跨设备授权 + 轮询）](#86-扫码登录跨设备授权--轮询)
 - [9. 可扩展架构：三个扩展点与运行时目录](#9-可扩展架构三个扩展点与运行时目录)
 - [10. 统一异常与响应：401 / 403 / 业务码](#10-统一异常与响应401--403--业务码)
 - [11. 关键设计取舍与常见疑问](#11-关键设计取舍与常见疑问)
@@ -943,6 +945,111 @@ this.provider = new LdapAuthenticationProvider(authenticator);
 - 多协议系统按"一协议一链"组织，目录项只用于展示/自检，不参与放行。
 - 外部身份（OAuth2/LDAP）登录后**映射到本地账号**再授权，角色以本地为准，避免外部角色直接透传。
 - 条件装配（`@ConditionalOnProperty`）让可选协议默认关闭，不配也能启动。
+
+---
+
+## 8.5 短信验证码登录（阿里云 + 自动注册）
+
+### 8.5.1 知识点：换一种凭证，而非新建过滤链
+
+短信登录本质是把"用户名+口令"换成"手机号+验证码"，仍是一次同步身份校验。
+它**不需要新过滤链**，和 LDAP 一样是挂在 `apiChain`（`/api/**`）上的新端点 + 新服务，
+复用 `JwtTokenService.issue`、`SecurityUserDetailsService`、`LoginProtectionFilter`。
+
+实现采用**路线 B（控制器编排）**：不挂全局 `AuthenticationManager`，由控制器显式调用服务，
+与模块现有 LDAP/OAuth2 风格一致。失败时手动补发认证失败事件，复用审计与锁定。
+
+### 8.5.2 对应代码
+
+| 组件 | 类 | 位置 |
+| --- | --- | --- |
+| 验证码状态机 | `SmsCodeService` | `security/sms/SmsCodeService.java` |
+| 发送扩展点 | `SmsSender` | `security/sms/SmsSender.java` |
+| 演示发送（打印） | `LogSmsSender` | `security/sms/LogSmsSender.java` |
+| 阿里云发送 | `AliyunSmsSender` | `security/sms/AliyunSmsSender.java` |
+| 登录编排+自动注册 | `SmsLoginService` | `security/sms/SmsLoginService.java` |
+| 入口 | `SmsLoginController` | `web/SmsLoginController.java` |
+| 目录项 | `SmsLoginProtocol` | `security/protocol/SmsLoginProtocol.java` |
+| 手机号字段 | `SecUser.phone` / `SecUserRepository.findByPhone` | `domain/` |
+
+### 8.5.3 代码在做什么
+
+**(1) 验证码状态机**（`SmsCodeService`）：`SecureRandom` 生成 6 位码，内存存储（多实例需换 Redis）。
+四道防护：发送间隔限流（默认 60 秒，防轰炸）、试错上限（默认 5 次，超限作废）、
+成功立即作废（防重放）、TTL（默认 300 秒）。
+
+**(2) 发送通道可替换**：`SmsSender` 接口 + `@ConditionalOnProperty(security.sms.provider)`。
+`log`（默认）只打印验证码供本机演示；`aliyun` 用官方 SDK `com.aliyun:dysmsapi20170525:4.6.0`
+调 `SendSms`，AccessKey 从环境变量 `ALIBABA_CLOUD_ACCESS_KEY_ID/SECRET` 读取，不硬编码。
+
+**(3) 自动注册**（`SmsLoginService.register`）：未注册手机号自动建账号，用户名即手机号，
+挂默认 `ROLE_USER`，密码为随机不可登录值（短信登录不靠密码）。
+
+**(4) 调用链**：
+
+```
+POST /api/auth/sms/send
+  LoginProtectionFilter（IP 限流）→ 按手机号限流 → 生成码 → SmsSender.send
+POST /api/auth/sms/login
+  LoginProtectionFilter → apiChain(permitAll)
+  → SmsCodeService.verify → findByPhone（无则自动注册）
+  → 检查账号状态 → SecurityUserDetailsService 加载 → JwtTokenService.issue
+```
+
+### 8.5.4 现实项目中的用法
+
+- 验证码必须放共享存储（Redis）才能多实例部署；本模块单实例用内存。
+- 生产切 `provider=aliyun`，配好签名/模板，AccessKey 走环境变量或密钥管理。
+- 演示模式回显验证码仅限本机，生产严禁回显或打印验证码。
+
+---
+
+## 8.6 扫码登录（跨设备授权 + 轮询）
+
+### 8.6.1 知识点：不是校验凭证，而是异步状态机
+
+扫码登录是**跨设备授权**：PC 展示二维码、已登录的手机扫码确认、PC 轮询拿令牌。
+概念上等同 OAuth 2.0 设备授权流程。它没有"一次性 authenticate(token)"的时刻，
+所以**不做成 AuthenticationProvider**，而是控制器编排 + 状态存储。
+
+扫码**不认证手机**，而是把手机已有的 JWT 身份**委托**给 PC：scan/confirm 都由已登录手机调用。
+
+### 8.6.2 对应代码
+
+| 组件 | 类 | 位置 |
+| --- | --- | --- |
+| 状态机 | `QrLoginService` | `security/qr/QrLoginService.java` |
+| 入口 | `QrLoginController` | `web/QrLoginController.java` |
+| 请求体 | `QrRequest` | `web/dto/QrRequest.java` |
+| 目录项 | `QrLoginProtocol` | `security/protocol/QrLoginProtocol.java` |
+
+### 8.6.3 代码在做什么
+
+**(1) 状态机**：`WAITING → SCANNED → CONFIRMED →（PC 取走）EXPIRED`，另有 `CANCELED`。
+qrId 用 UUID 防猜测，短 TTL（默认 120 秒）。
+
+**(2) 鉴权差异**：`create`/`status` 是 permitAll（qrId 即凭证）；`scan`/`confirm`/`cancel`
+不在放行名单，落到 `apiChain` 末尾的 `anyRequest().authenticated()`，由 JWT 过滤器校验手机令牌。
+
+**(3) 一次性取令牌**：只有 PC 轮询 `/status` 才消费令牌（取走即转 EXPIRED，防重放）；
+手机 scan/confirm 回显用 `peek`（不消费），避免提前把 PC 还没取的令牌消费掉。
+
+**(4) 防替他人确认**：`confirm` 校验二维码绑定的就是当前手机用户。
+
+**(5) 调用链**：
+
+```
+PC: GET /qr/create → 拿 qrId 渲染二维码 → 轮询 GET /qr/status
+手机: POST /qr/scan(带手机JWT) → 置 SCANNED 绑定用户
+      POST /qr/confirm → 校验绑定 → 为该用户 issue JWT 暂存 → 置 CONFIRMED
+PC: 轮询 status → CONFIRMED + 取走 JWT → qrId 作废
+```
+
+### 8.6.4 现实项目中的用法
+
+- 单实例用内存 Map；多实例必须换 Redis（PC 轮询和手机确认可能打到不同机器）。
+- 轮询最省事、零新增依赖；要实时可换 WebSocket/SSE（需另加依赖）。
+- 令牌一次性取走 + 短 TTL + 绑定校验，是扫码安全的三个关键点。
 
 ---
 

@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS sec_user (
     username                VARCHAR(64)  NOT NULL,
     password                VARCHAR(100) NOT NULL,
     display_name            VARCHAR(64)  NOT NULL,
+    phone                   VARCHAR(20)  NULL,
     enabled                 BIT(1)       NOT NULL,
     account_non_locked      BIT(1)       NOT NULL,
     account_non_expired     BIT(1)       NOT NULL,
@@ -15,7 +16,8 @@ CREATE TABLE IF NOT EXISTS sec_user (
     created_at              DATETIME(6)  NULL,
     updated_at              DATETIME(6)  NULL,
     PRIMARY KEY (id),
-    UNIQUE KEY uk_sec_user_username (username)
+    UNIQUE KEY uk_sec_user_username (username),
+    UNIQUE KEY uk_sec_user_phone (phone)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS sec_role (

@@ -26,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class QrLoginService {
 
-    /** 二维码状态。CONFIRMED 后 PC 取走令牌即转 EXPIRED，保证一次性。 */
+    /** 二维码状态。CONFIRMED 被 PC 取走令牌后即转 EXPIRED，保证一次性。 */
     public enum QrState {
         WAITING, SCANNED, CONFIRMED, CANCELED, EXPIRED
     }
@@ -52,8 +52,8 @@ public class QrLoginService {
     }
 
     /**
-     * PC 轮询状态。只有 CONFIRMED 才返回令牌，且取走后立即作废二维码（一次性，防重放）。
-     * 未确认时只暴露状态，不泄露任何用户信息。
+     * PC 轮询状态。只有 CONFIRMED 才返回令牌，且取走后立即把状态置为 EXPIRED（一次性，防重放）。
+     * 未确认时只暴露状态，不泄露任何用户信息。取走后再次轮询返回 EXPIRED 而非报错，方便前端收尾。
      */
     public QrStatus status(String qrId) {
         QrEntry entry = entries.get(qrId);
@@ -61,16 +61,31 @@ public class QrLoginService {
             throw new BizException(ResultCode.QR_INVALID, 404, "二维码不存在或已失效");
         }
         synchronized (entry) {
-            if (isExpired(entry)) {
-                entries.remove(qrId);
+            if (entry.expiresAt.isBefore(LocalDateTime.now())) {
                 return new QrStatus(QrState.EXPIRED, null);
             }
             if (entry.state == QrState.CONFIRMED) {
                 TokenView token = entry.token;
                 entry.token = null;
                 entry.state = QrState.EXPIRED;
-                entries.remove(qrId);
                 return new QrStatus(QrState.CONFIRMED, token);
+            }
+            return new QrStatus(entry.state, null);
+        }
+    }
+
+    /**
+     * 读取状态快照，不消费令牌。供手机 scan/confirm 后回显当前状态用，
+     * 避免提前把 PC 还没取走的一次性令牌消费掉。
+     */
+    public QrStatus peek(String qrId) {
+        QrEntry entry = entries.get(qrId);
+        if (entry == null) {
+            throw new BizException(ResultCode.QR_INVALID, 404, "二维码不存在或已失效");
+        }
+        synchronized (entry) {
+            if (entry.expiresAt.isBefore(LocalDateTime.now())) {
+                return new QrStatus(QrState.EXPIRED, null);
             }
             return new QrStatus(entry.state, null);
         }
@@ -90,7 +105,7 @@ public class QrLoginService {
 
     /**
      * 手机确认：校验二维码绑定的就是当前手机用户，再为该用户签发 JWT 暂存。
-     * 绑定校验防止替别人确认。
+     * 绑定校验防止替别人确认。用户名由控制器从安全上下文传入，避免再查一次库。
      */
     public void confirm(String qrId, Long userId, String username) {
         QrEntry entry = active(qrId);
@@ -118,7 +133,6 @@ public class QrLoginService {
                 throw new BizException(ResultCode.FORBIDDEN, 403, "不能取消他人的二维码");
             }
             entry.state = QrState.CANCELED;
-            entries.remove(qrId);
         }
     }
 
@@ -128,21 +142,21 @@ public class QrLoginService {
             throw new BizException(ResultCode.QR_INVALID, 404, "二维码不存在或已失效");
         }
         synchronized (entry) {
-            if (isExpired(entry)) {
-                entries.remove(qrId);
+            if (entry.expiresAt.isBefore(LocalDateTime.now()) || entry.state == QrState.EXPIRED) {
                 throw new BizException(ResultCode.QR_INVALID, 404, "二维码已过期");
             }
         }
         return entry;
     }
 
-    private boolean isExpired(QrEntry entry) {
-        return entry.state == QrState.EXPIRED || entry.expiresAt.isBefore(LocalDateTime.now());
-    }
-
     private void purgeExpired() {
         LocalDateTime now = LocalDateTime.now();
-        entries.entrySet().removeIf(e -> e.getValue().expiresAt.isBefore(now));
+        entries.entrySet().removeIf(e -> {
+            QrEntry entry = e.getValue();
+            return entry.expiresAt.isBefore(now)
+                    || entry.state == QrState.EXPIRED
+                    || entry.state == QrState.CANCELED;
+        });
     }
 
     /** 建码返回给 PC 的票据。 */

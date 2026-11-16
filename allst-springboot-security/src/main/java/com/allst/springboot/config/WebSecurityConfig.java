@@ -179,7 +179,8 @@ public class WebSecurityConfig {
     public FilterRegistrationBean<LoginProtectionFilter> loginProtection(List<LoginGuard> guards) {
         FilterRegistrationBean<LoginProtectionFilter> registration = new FilterRegistrationBean<>();
         registration.setFilter(new LoginProtectionFilter(properties, objectMapper, guards));
-        registration.addUrlPatterns("/api/auth/login", "/api/auth/password-expired", "/api/auth/ldap", "/session/login");
+        registration.addUrlPatterns("/api/auth/login", "/api/auth/password-expired", "/api/auth/ldap", "/session/login",
+                "/api/auth/sms/login");
         registration.setOrder(Ordered.HIGHEST_PRECEDENCE + 20);
         return registration;
     }
@@ -220,6 +221,10 @@ public class WebSecurityConfig {
                 .expressionHandler(webExpressionHandler)
                 // 这几个地址是「拿身份」用的，此时调用方还没有令牌，必须放行。
                 .antMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/refresh", "/api/auth/password-expired", "/api/auth/ldap").permitAll()
+                // 短信登录：发送验证码与验证码登录此时都没有令牌，放行。
+                .antMatchers(HttpMethod.POST, "/api/auth/sms/send", "/api/auth/sms/login").permitAll()
+                // 扫码登录：建码与轮询用 qrId 作凭证，放行；scan/confirm/cancel 不在名单里，落到末尾的 authenticated。
+                .antMatchers(HttpMethod.GET, "/api/auth/qr/create", "/api/auth/qr/status").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/password/policy").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/users", "/api/users/**").hasAuthority("user:read")
                 .antMatchers(HttpMethod.POST, "/api/users", "/api/users/**").hasAuthority("user:write")
@@ -315,8 +320,10 @@ public class WebSecurityConfig {
                 .deleteCookies("JSESSIONID")
                 .logoutSuccessHandler((request, response, authentication) ->
                         JsonResponses.write(response, objectMapper, 200, ApiResult.ok("已退出")));
-        // 不用默认的 /login 跳转页。自己放一个表单过滤器，成功和失败都写 JSON。
-        // 这条过滤器不会自动套用上面的 sessionManagement 策略，所以下面又单独设了 LoginSessionStrategy。
+        /*
+         * 不用默认的 /login 跳转页。自己放一个表单过滤器，成功和失败都写 JSON。
+         * 这条过滤器不会自动套用上面的 sessionManagement 策略，所以下面又单独设了 LoginSessionStrategy。
+         */
         UsernamePasswordAuthenticationFilter loginFilter = new UsernamePasswordAuthenticationFilter();
         loginFilter.setFilterProcessesUrl("/session/login");
         loginFilter.setAuthenticationManager(authenticationManager);
