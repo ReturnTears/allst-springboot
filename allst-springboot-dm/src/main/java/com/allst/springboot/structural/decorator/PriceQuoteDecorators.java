@@ -10,11 +10,11 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * 装饰器（Decorator）——给报价服务叠加缓存和耗时统计，不改原实现。
- *
+ * <Pre>
  * 场景：商品价格来自一次较慢的远程/DB 查询，后来要加缓存，再后来要加监控。
  * 每次都去改 BaseQuote，会让它同时承担定价、缓存、埋点三件事；
  * 装饰器可以按需一层层套，且顺序可调（先缓存还是先计时，结果不同）。
- *
+ * <Pre>
  * Spring 里的 @Cacheable、@Transactional、AOP 日志切面本质都是代理/装饰；
  * MyBatis 的 CachingExecutor 也是给 Executor 套了一层缓存装饰器。
  */

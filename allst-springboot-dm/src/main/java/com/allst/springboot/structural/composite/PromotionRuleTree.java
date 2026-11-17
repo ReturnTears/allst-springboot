@@ -11,11 +11,11 @@ import java.util.stream.Collectors;
 
 /**
  * 组合（Composite）——把「单个条件」和「条件组」当成同一种东西。
- *
+ * <pre>
  * 场景：优惠券可用规则是棵树：「满 100 且（会员 或 新人）且 非跨境单」。
  * 如果按过程写，每加一层括号就要改一次 if 嵌套；组合模式让叶子和组合节点
  * 实现同一个 RuleNode 接口，调用方永远只写 node.evaluate(ctx)。
- *
+ * </pre>
  * 对应开源项目里常见的商品类目树、组织权限树、规则树。真正复杂的规则应交给
  * 规则引擎或 SpEL（见 behavioral.interpreter），组合模式适合层级结构本身。
  */

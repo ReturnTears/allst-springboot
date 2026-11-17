@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * Spring AOP 版本的代理：同一个「不改业务代码、横切加逻辑」的诉求，
  * 在容器里用切面表达，不需要手写 Proxy.newProxyInstance。
- *
+ * <Pre>
  * 切点只对下单外观生效，避免把整个模块的调用都拦下来。
  */
 @Aspect

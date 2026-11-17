@@ -12,7 +12,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * 命令执行器：幂等去重 + 有限重试 + 撤销栈 + 执行流水。
- *
+ * <Pre>
  * 幂等用 KeyValueStore.putIfAbsent（SETNX 语义）：默认内存实现，
  * 打开 dm.redis.enabled 后换成 Redis，同一个命令在多实例部署下也只执行一次。
  * 执行失败会释放幂等键，允许下一次重试真正重跑；这点在生产里很容易写错。

@@ -15,16 +15,16 @@ import java.util.Map;
 
 /**
  * 策略（Strategy）——同一笔订单按会员/满减/新人券算不同的价。
- *
+ * <Pre>
  * 场景：促销规则每周都变，价格计算里如果堆 if (vip) ... else if (coupon) ...，
  * 每次上新活动都要改主流程，也难以单独测试某条规则。
  * 策略把「怎么算」封进各自的实现，路由只负责选一个。
- *
+ * <Pre>
  * Spring 里最实用的写法：每个策略是一个 @Component，并约定 type()；
  * 服务注入 Map&lt;String, DiscountStrategy&gt; 或 List 后按 type 建索引，
  * 新增策略只加一个 bean，路由代码一行不改。本例策略实现收在类内部，
  * 是为了让四种算法能在一屏里对着看，索引/查找方式与注入版一致。
- *
+ * <Pre>
  * 阈值不写死在读单例规则缓存 RuleRegistry，改配置不用改算法。
  */
 @Component

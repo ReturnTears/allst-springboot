@@ -56,11 +56,11 @@ import java.util.Optional;
 
 /**
  * 外观（Facade）——一次下单把 20 多个模式串起来，Controller 只调这一个方法。
- *
+ * <pre>
  * 这个类的价值不是「代码多」，而是展示真实业务里模式很少单独出现：
  * 一条下单链路会同时需要校验链、策略、规则树、表达式、创建类模式、状态、
  * 命令、事件、持久化、审计、代理。外观把这些编排细节挡在 HTTP 层之外。
- *
+ * </pre>
  * 事务边界也在这里：命令落库和状态回写在同一个事务，事务提交后才发仓库通知
  * （见 OrderEventListeners 的 AFTER_COMMIT）。AOP 计时切面挂在showcase.PlaceOrderFacade 上。
  */

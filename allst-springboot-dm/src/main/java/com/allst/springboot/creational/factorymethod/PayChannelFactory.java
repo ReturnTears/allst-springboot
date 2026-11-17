@@ -15,15 +15,15 @@ import java.util.UUID;
 
 /**
  * 工厂方法（Factory Method）——按支付渠道创建「支付命令」。
- *
+ * <Pre>
  * 场景：支付宝、微信、余额各有自己的签名、流水号规则和限额。把「创建哪种命令」
  * 下放给各自的 Creator，支付的主流程（取流水号、执行、拼回执）只写一份。
- *
+ * <Pre>
  * 注意这里同时出现了模板方法：PayCreator.pay() 固定骨架，createCommand() 是工厂方法。
  * 新接一个渠道时，新增一个 Creator + 一个 Command，不用改 pay() 和调用方。
- *
+ * <Pre>
  * Spring 项目里更常见的写法是把每个 Creator/Handler 做成 @Component，再用
- * Map&lt;String, Handler&gt; 注入（见 behavioral.strategy.DiscountStrategyRouter）。
+ * Map<String, Handler> 注入（见 behavioral.strategy.DiscountStrategyRouter）。
  * 这里保留教科书结构，是为了能看清「创建」这一步被推迟到了子类。
  */
 @Component

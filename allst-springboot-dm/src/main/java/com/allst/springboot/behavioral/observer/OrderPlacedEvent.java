@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 @Getter
 @AllArgsConstructor
 public class OrderPlacedEvent {
-
     private final String orderNo;
     private final String buyer;
     private final BigDecimal amount;

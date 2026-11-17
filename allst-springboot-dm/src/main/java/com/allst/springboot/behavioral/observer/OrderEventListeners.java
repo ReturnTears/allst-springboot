@@ -12,16 +12,16 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * 观察者（Observer）——订单支付成功后要发积分、发短信、写审计、通知仓库。
- *
+ * <Pre>
  * 场景：如果都写在下单方法里，每加一个后续动作就要改一次主流程，而且
  * 「通知仓库」这类外部调用不该拖住或回滚主事务。Spring 的事件机制让发布者
  * 只 publish 一次，订阅者各自挂上，互不知道对方存在。
- *
+ * <Pre>
  * 两种时机要分清：
  *  - @EventListener：同步执行、和发布者在同一事务里，适合积分/审计这类要一起回滚的；
  *  - @TransactionalEventListener(AFTER_COMMIT)：事务提交后才执行，适合短信/仓库通知，
  *    否则事务回滚了消息已经发出去。没有事务上下文时它默认不触发。
- *
+ * <Pre>
  * 再挂一个订阅者不用改 PlaceOrderFacade；要异步再加 @Async（本模块没开异步，
  * 避免示例引入线程池和事务边界的额外变量）。
  */

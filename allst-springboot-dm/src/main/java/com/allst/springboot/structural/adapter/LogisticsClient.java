@@ -5,10 +5,10 @@ import lombok.Getter;
 
 /**
  * 适配器（Adapter）——统一多家物流/支付 SDK 的调用形状。
- *
+ * <Pre>
  * 场景：顺丰、京东物流各自的 SDK，方法名、参数顺序、返回类型都不同，而且源码不在我们手里。
  * 业务层只认 LogisticsClient，适配器负责把第三方 API 翻译成统一语义。
- *
+ * <Pre>
  * 什么时候不用：如果第三方 SDK 本来就是自己设计、能直接改接口，加一层适配器只是多余跳转。
  */
 public interface LogisticsClient {

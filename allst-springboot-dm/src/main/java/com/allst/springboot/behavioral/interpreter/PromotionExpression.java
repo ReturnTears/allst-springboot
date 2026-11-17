@@ -11,10 +11,10 @@ import java.util.List;
 
 /**
  * 解释器（Interpreter）——把「满 100 且（VIP 或 新人）」这类规则变成可求值对象。
- *
+ * <Pre>
  * 场景：运营要能配置促销门槛，而不是每次改规则都发版。定义一种小语言后，
  * 每个语法节点都是一个表达式对象，组合出语法树，对同一个上下文求值。
- *
+ * <Pre>
  * 这里给两种落地：
  *  1) 手写 AST：TerminalExpression（金额、VIP）、NonTerminalExpression（AND/OR/NOT），
  *     用来讲清模式结构；

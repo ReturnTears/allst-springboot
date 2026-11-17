@@ -9,10 +9,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 代理（Proxy）——在不改目标类的前提下，给库存服务加审计和异常记录。
- *
+ * <Pre>
  * 场景：外部库存服务接口已经定好，调用方要在每次扣减前后留痕、统一记录失败原因。
  * JDK 动态代理要求目标有接口；没有接口时 Spring AOP 会用 CGLIB 生成子类代理。
- *
+ * <Pre>
  * Spring 里的 @Transactional、@Async、@Cacheable、@FeignClient、MyBatis 的 Mapper
  * 都是代理。共同的坑是「自调用」：同一个类内部 this.method() 不走代理，注解不生效。
  */

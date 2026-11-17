@@ -12,11 +12,11 @@ import java.util.NoSuchElementException;
 
 /**
  * 迭代器（Iterator）——把「分页查库」藏在一个 Iterator 后面。
- *
+ * <Pre>
  * 场景：对账、导出、批量补发券要遍历几十万笔订单，一次性 findAll() 会打爆内存，
  * 而每个批处理任务又都要复制一遍「page++ / hasNext / 边界」的分页样板代码。
  * 迭代器让调用方写 while(cursor.hasNext())，按批拉数据，内存里始终只有一批。
- *
+ * <Pre>
  * 对应的成熟实现：MyBatis Cursor、Spring Batch 的 ItemReader、JPA 的 Stream 结果。
  * 注意分页要固定排序字段，否则翻页时可能出现重复或漏行。
  */

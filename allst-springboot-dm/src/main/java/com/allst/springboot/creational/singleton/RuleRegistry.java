@@ -12,10 +12,10 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * 单例（Singleton）——促销/风控阈值字典的进程内缓存。
- *
+ * <pre>
  * 场景：一次大促里，折扣门槛、风控金额线这类规则被上百个下单请求反复读取，
  * 但不该每个请求都查一次库。真实项目里对应配置中心客户端的规则缓存。
- *
+ * </pre>
  * 在 Spring 里不要手写 static getInstance()：@Component 默认就是容器级单例，
  * 手写单例会绕过依赖注入，还会让测试无法替换。真正要处理的是两件事：
  *   1) 单例对象里的可变状态必须线程安全（这里用 ConcurrentHashMap + 不可变快照）；
