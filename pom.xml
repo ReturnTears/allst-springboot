@@ -31,6 +31,8 @@
     <module>allst-springboot-canal</module>
     <module>allst-springboot-state-machine</module>
     <module>allst-springboot-dm</module>
+    <module>allst-springboot-netty</module>
+    <module>allst-springboot-stream</module>
   </modules>
   <packaging>pom</packaging>
 

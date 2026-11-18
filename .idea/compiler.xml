@@ -84,6 +84,15 @@
         </processorPath>
         <module name="allst-springboot-state-machine" />
       </profile>
+      <profile name="Annotation profile for allst-springboot-dm" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$PROJECT_DIR$/../../ProgramData/.m2_sx_maven/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
+        </processorPath>
+        <module name="allst-springboot-dm" />
+      </profile>
       <profile name="Annotation profile for allst-boot" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -94,14 +103,14 @@
         </processorPath>
         <module name="allst-springboot-norm" />
       </profile>
-      <profile name="Annotation profile for allst-springboot-dm" enabled="true">
+      <profile name="Annotation profile for allst-springboot-stream" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$PROJECT_DIR$/../../ProgramData/.m2_sx_maven/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
         </processorPath>
-        <module name="allst-springboot-dm" />
+        <module name="allst-springboot-stream" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="11" />
@@ -123,6 +132,7 @@
       <module name="allst-springboot-redis" options="" />
       <module name="allst-springboot-security" options="" />
       <module name="allst-springboot-state-machine" options="" />
+      <module name="allst-springboot-stream" options="" />
     </option>
   </component>
 </project>
