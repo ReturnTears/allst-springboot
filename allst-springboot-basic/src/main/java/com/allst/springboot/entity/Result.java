@@ -23,6 +23,26 @@ public class Result<T> {
         this.message = message;
     }
 
+    public Result<T> of(Integer code, String message, T data) {
+        return new Result<T>(code, message, data);
+    }
+
+    public static <T> Result<T> ok(T data) {
+        Result<T> result = new Result<>();
+        result.code = 200;
+        result.message = "OK";
+        result.data = data;
+        return result;
+    }
+
+    public static <T> Result<T> ok(String message, T data) {
+        Result<T> result = new Result<>();
+        result.code = 200;
+        result.message = message;
+        result.data = data;
+        return result;
+    }
+
     @Override
     public String toString() {
         return "Result{" +

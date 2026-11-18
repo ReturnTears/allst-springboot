@@ -3,8 +3,9 @@ package com.allst.springboot.controller;
 import com.allst.springboot.entity.Result;
 import com.allst.springboot.entity.User;
 import com.allst.springboot.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author June
@@ -14,8 +15,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/{id}")
     public Result<User> getUser(@PathVariable("id") Integer id) {
@@ -34,20 +38,20 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public Result<User> addUser(@RequestBody User user) {
+    public Result<Object> addUser(@RequestBody User user) {
         userService.add(user);
-        return new Result(200, "添加成功", userService.getAllUsers());
+        return Result.ok("添加成功", userService.getAllUsers());
     }
 
     @PutMapping("/update")
-    public Result<User> updateUser(@RequestBody User user) {
+    public Result<List<User>> updateUser(@RequestBody User user) {
         userService.update(user);
-        return new Result(200, "修改成功", userService.getAllUsers());
+        return Result.ok("修改成功", userService.getAllUsers());
     }
 
     @DeleteMapping("/{id}")
-    public Result<User> delUser(@PathVariable("id") Integer id) {
+    public Result<Object> delUser(@PathVariable("id") Integer id) {
         userService.delete(id);
-        return new Result(200, "删除成功", userService.getAllUsers());
+        return Result.ok("删除成功", userService.getAllUsers());
     }
 }

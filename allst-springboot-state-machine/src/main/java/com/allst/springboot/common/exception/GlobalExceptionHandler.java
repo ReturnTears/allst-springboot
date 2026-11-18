@@ -45,19 +45,19 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result<Void> handleUnreadable(HttpMessageNotReadableException exception) {
-        return Result.fail(400, "请求体无法解析");
+        return Result.fail(400, "请求体无法解析:" + exception.getMessage());
     }
 
     @ExceptionHandler(ObjectOptimisticLockingFailureException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public Result<Void> handleOptimistic(ObjectOptimisticLockingFailureException exception) {
-        return Result.fail(409, "数据已被其他请求更新，请重试");
+        return Result.fail(409, "数据已被其他请求更新，请重试:" + exception.getMessage());
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public Result<Void> handleConflict(DataIntegrityViolationException exception) {
-        return Result.fail(409, "数据冲突，请检查事件号是否重复");
+        return Result.fail(409, "数据冲突，请检查事件号是否重复:" + exception.getMessage());
     }
 
     @ExceptionHandler(Exception.class)
