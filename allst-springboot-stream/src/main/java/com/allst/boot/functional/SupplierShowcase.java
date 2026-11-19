@@ -20,8 +20,8 @@ import java.util.stream.Stream;
  * <ol>
  *   <li>{@link #firstNonEmpty} 多级数据源兜底——命中缓存就不查库（省一次 IO）</li>
  *   <li>{@link #memoize} 把昂贵计算包成「只算一次」的供应者</li>
- *   <li>{@link #computeIfAbsent} 分组容器按需创建，替代 containsKey + put</li>
- *   <li>{@link #generate} 造测试数据 / 流水号，无限流 + limit</li>
+ *   <li>{@link #amountByCity} computeIfAbsent分组容器按需创建，替代 containsKey + put</li>
+ *   <li>{@link #generateSerials} generate造测试数据 / 流水号，无限流 + limit</li>
  * </ol>
  */
 @Component
