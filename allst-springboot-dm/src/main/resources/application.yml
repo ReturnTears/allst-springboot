@@ -29,6 +29,9 @@ server:
   port: 8367
 
 dm:
+  # DDL 生成结果的导出目录（相对工作目录）
+  ddl:
+    output-dir: ./generated-ddl
   # false：缓存装饰器/幂等命令走内存实现，启动不依赖 Redis
   # true ：走 Redis 实现（StringRedisTemplate），需要本机 6379 可连
   redis:

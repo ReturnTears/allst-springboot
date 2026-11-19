@@ -22,6 +22,7 @@
 | [08-anti-patterns.md](docs/08-anti-patterns.md) | 什么时候不要用、常见滥用与选型决策 |
 | [09-api-and-run.md](docs/09-api-and-run.md) | 启动、接口清单、curl 演练、测试验收 |
 | [10-references.md](docs/10-references.md) | 参考的 GitHub 开源项目与场景对照，标注核实程度 |
+| [11-ddl-generation.md](docs/11-ddl-generation.md) | **新实战**：元数据驱动的多方言 DDL 生成（策略+能力模型+模板方法+Stream，10 方言导出 SQL） |
 
 ## 快速开始
 
@@ -62,7 +63,12 @@ src/main/java/com/allst/springboot
 ├── creational/      创建型 5 种
 ├── structural/      结构型 6 种（外观在 showcase）
 ├── behavioral/      行为型 11 种
-└── showcase/        下单外观、模式目录、演示接口
+├── showcase/        下单外观、模式目录、演示接口
+└── ddl/             元数据驱动的多方言 DDL 生成（见 11-ddl-generation.md）
+    ├── meta/        TableMeta / ColumnMeta（建造者+JPA）、仓储、种子
+    ├── dialect/     DdlDialect 策略 + 能力模型 + 模板基类 + 路由 + 10 方言
+    ├── generation/  DdlGenerator 门面（Stream 编排）+ 文件导出
+    └── api/         DdlController（能力矩阵/生成/导出/下载）
 ```
 
 `showcase.PlaceOrderFacade` 是主线，`showcase.PatternCatalog` 是速查表的代码版本，`showcase.DemoRunner` 让每个模式都能单独调用。

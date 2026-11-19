@@ -14,6 +14,7 @@
 | 8 | 反模式与选型 | [08-anti-patterns.md](08-anti-patterns.md) | 见该篇表格 |
 | 9 | 运行与接口 | [09-api-and-run.md](09-api-and-run.md) | `showcase.DmShowcaseController` |
 | 10 | 开源项目参考 | [10-references.md](10-references.md) | — |
+| 11 | 元数据驱动的多方言 DDL 生成 | [11-ddl-generation.md](11-ddl-generation.md) | `ddl.*` |
 
 总览和启动方式见模块根目录 [README.md](../README.md)。
 
