@@ -1,17 +1,7 @@
 package com.allst.springboot.ddl;
 
 import com.allst.springboot.common.BizException;
-import com.allst.springboot.ddl.dialect.ClickHouseDialect;
-import com.allst.springboot.ddl.dialect.DialectRouter;
-import com.allst.springboot.ddl.dialect.DorisDialect;
-import com.allst.springboot.ddl.dialect.GenericDialect;
-import com.allst.springboot.ddl.dialect.HiveDialect;
-import com.allst.springboot.ddl.dialect.ImpalaDialect;
-import com.allst.springboot.ddl.dialect.MySqlDialect;
-import com.allst.springboot.ddl.dialect.OracleDialect;
-import com.allst.springboot.ddl.dialect.PostgreSqlDialect;
-import com.allst.springboot.ddl.dialect.SqlServerDialect;
-import com.allst.springboot.ddl.dialect.SqliteDialect;
+import com.allst.springboot.ddl.dialect.*;
 import com.allst.springboot.ddl.meta.ColumnMeta;
 import com.allst.springboot.ddl.meta.TableMeta;
 import org.junit.jupiter.api.DisplayName;
@@ -60,7 +50,7 @@ class DdlDialectTest {
     @Test
     @DisplayName("PostgreSQL：BIGSERIAL + 独立 COMMENT ON，无内联注释")
     void postgreSql() {
-        com.allst.springboot.ddl.dialect.DdlOutput out = new PostgreSqlDialect().generate(table("POSTGRESQL"));
+        DdlOutput out = new PostgreSqlDialect().generate(table("POSTGRESQL"));
         String sql = out.getSql();
         assertThat(sql).contains("CREATE TABLE IF NOT EXISTS \"demo\".\"sample\"");
         assertThat(sql).contains("\"id\" bigserial NOT NULL");
@@ -128,7 +118,7 @@ class DdlDialectTest {
     @Test
     @DisplayName("ClickHouse：强类型 + PARTITION BY + 不支持表注释时降级告警")
     void clickHouse() {
-        com.allst.springboot.ddl.dialect.DdlOutput out = new ClickHouseDialect().generate(table("CLICKHOUSE"));
+        DdlOutput out = new ClickHouseDialect().generate(table("CLICKHOUSE"));
         assertThat(out.getSql()).contains("`id` Int64 NOT NULL COMMENT '主键'");
         assertThat(out.getSql()).contains("`amount` Decimal(12,2)");
         assertThat(out.getSql()).contains("PARTITION BY (`dt`)");
@@ -147,7 +137,7 @@ class DdlDialectTest {
     @Test
     @DisplayName("GENERIC 兜底：ANSI 近似写法 + 能力缺失告警")
     void generic() {
-        com.allst.springboot.ddl.dialect.DdlOutput out = new GenericDialect().generate(table("UNKNOWN_DB"));
+        DdlOutput out = new GenericDialect().generate(table("UNKNOWN_DB"));
         assertThat(out.getSql()).contains("CREATE TABLE \"demo\".\"sample\"");
         assertThat(out.getSql()).contains("\"name\" varchar(64) NOT NULL");
         assertThat(out.getWarnings()).anyMatch(w -> w.contains("不支持表注释"));

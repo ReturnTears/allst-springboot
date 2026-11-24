@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.EnumSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.allst.springboot.ddl.meta.LogicalTypes.*;

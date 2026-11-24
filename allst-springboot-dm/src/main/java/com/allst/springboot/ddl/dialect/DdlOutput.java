@@ -1,6 +1,5 @@
 package com.allst.springboot.ddl.dialect;
 
-import com.allst.springboot.ddl.meta.TableMeta;
 import lombok.Getter;
 
 import java.util.ArrayList;
