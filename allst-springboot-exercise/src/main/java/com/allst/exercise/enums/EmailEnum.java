@@ -1,14 +1,9 @@
 package com.allst.exercise.enums;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 /**
  * @author Hutu
  * @since 2024-07-28 上午 09:36
  */
-@Getter
-@AllArgsConstructor
 public enum EmailEnum {
     QQ(1, "@qq.com"),
     Net(2, "@163.com"),
@@ -19,6 +14,19 @@ public enum EmailEnum {
 
     private final Integer code;
     private final String suffix;
+
+    EmailEnum(Integer code, String suffix) {
+        this.code = code;
+        this.suffix = suffix;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public String getSuffix() {
+        return suffix;
+    }
 
     public static String getSuffixByCode(Integer code) {
         for (EmailEnum value : EmailEnum.values()) {

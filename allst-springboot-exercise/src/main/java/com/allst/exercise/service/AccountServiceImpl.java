@@ -14,10 +14,13 @@ import static com.allst.exercise.model.table.AccountTableDef.ACCOUNT;
  * @since 2024-07-27 下午 10:23
  */
 @Service
-@RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
 
     private final AccountMapper accountMapper;
+
+    public AccountServiceImpl(AccountMapper accountMapper) {
+        this.accountMapper = accountMapper;
+    }
 
     @Override
     public Account getAccountOne(Long id) {

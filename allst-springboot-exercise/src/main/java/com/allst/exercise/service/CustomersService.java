@@ -10,7 +10,7 @@ import java.util.List;
  * @since 2024-07-28 上午 12:00
  */
 public interface CustomersService {
-    String save(Customers customers);
+    void save(Customers customers);
 
     String queryOne(Long id);
 

@@ -1,5 +1,6 @@
 package com.allst.exercise.controller;
 
+import com.allst.exercise.common.Result;
 import com.allst.exercise.model.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -18,12 +19,12 @@ public class Swagger3Controller {
     @RequestMapping("/hello")
     @ApiOperation(value="获取Swagger消息", notes="根据XXX对象获取YYY信息")
     @ApiImplicitParam(name = "user", value = "XXX实体YYY", required = true, dataType = "User")
-    public User hello() {
+    public Result<User> hello() {
         System.out.println("hello swagger3");
         User user = new User();
         user.setId(1L);
         user.setName("kang");
         user.setAge(18);
-        return user;
+        return Result.ok(user);
     }
 }

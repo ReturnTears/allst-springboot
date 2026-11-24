@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.core.row.Db;
-import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.cursor.Cursor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,15 +21,19 @@ import java.util.List;
  * @since 2024-07-28 上午 12:01
  */
 @Service
-@RequiredArgsConstructor
 public class CustomersServiceImpl implements CustomersService {
 
     private final TransactionTemplate transactionTemplate;
 
     private final CustomersMapper customersMapper;
 
+    public CustomersServiceImpl(TransactionTemplate transactionTemplate, CustomersMapper customersMapper) {
+        this.transactionTemplate = transactionTemplate;
+        this.customersMapper = customersMapper;
+    }
+
     @Override
-    public String save(Customers customers) {
+    public void save(Customers customers) {
         transactionTemplate.execute((TransactionCallback<Customers>) status -> {
             try {
                 int insert = customersMapper.insert(customers);
@@ -40,7 +43,8 @@ public class CustomersServiceImpl implements CustomersService {
             }
             return null ;
         });
-        return new Gson().toJson(customers);
+        String json = new Gson().toJson(customers);
+        System.out.println("json = " + json);
     }
 
     @Override
