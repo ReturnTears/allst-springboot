@@ -15,6 +15,7 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -87,7 +88,7 @@ public class JwtTokenService {
         Map<String, Object> claims = new LinkedHashMap<>();
         claims.put("uid", user.getId());
         claims.put("roles", user.getAuthorities().stream()
-                .map(authority -> authority.getAuthority())
+                .map(GrantedAuthority::getAuthority) // authority -> authority.getAuthority()
                 .filter(code -> code.startsWith("ROLE_"))
                 .collect(Collectors.toList()));
         for (TokenCustomizer customizer : customizers) {
