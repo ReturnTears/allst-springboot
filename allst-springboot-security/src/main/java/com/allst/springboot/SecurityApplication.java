@@ -9,8 +9,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @SpringBootApplication
 @EnableScheduling
-public class AllstSpringbootSecurityApplication {
+public class SecurityApplication {
     public static void main(String[] args) {
-        SpringApplication.run(AllstSpringbootSecurityApplication.class, args);
+        SpringApplication.run(SecurityApplication.class, args);
     }
 }

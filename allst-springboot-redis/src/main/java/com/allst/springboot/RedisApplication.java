@@ -10,8 +10,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @MapperScan("com.allst.springboot.redis.persistence")
 @EnableScheduling
 @EnableCaching
-public class AllstSpringbootRedisApplication {
+public class RedisApplication {
     public static void main(String[] args) {
-        SpringApplication.run(AllstSpringbootRedisApplication.class, args);
+        SpringApplication.run(RedisApplication.class, args);
     }
 }

@@ -10,9 +10,9 @@ import java.sql.SQLException;
 
 @SpringBootApplication
 @EnableAspectJAutoProxy(exposeProxy = true) // 启用AOP
-public class AllstSpringbootDemoApplication {
+public class DemoApplication {
 	public static void main(String[] args) throws IOException, SQLException {
-		var ctx = SpringApplication.run(AllstSpringbootDemoApplication.class, args);
+		var ctx = SpringApplication.run(DemoApplication.class, args);
 		WriterTemplate writerTemplate = ctx.getBean(WriterTemplate.class);
 		writerTemplate.write("自动配置其实很简单!");
 	}

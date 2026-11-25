@@ -12,8 +12,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @SpringBootApplication
 @EnableAsync
 @EnableConfigurationProperties(NormProperties.class)
-public class AllstSpringbootNormApplication {
+public class NormApplication {
     public static void main(String[] args) {
-        SpringApplication.run(AllstSpringbootNormApplication.class, args);
+        SpringApplication.run(NormApplication.class, args);
     }
 }

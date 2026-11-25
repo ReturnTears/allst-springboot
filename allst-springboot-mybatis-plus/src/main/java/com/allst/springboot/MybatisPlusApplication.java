@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AllstSpringbootMinioApplication {
-	public static void main(String[] args) {
-		SpringApplication.run(AllstSpringbootMinioApplication.class, args);
-	}
+public class MybatisPlusApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(MybatisPlusApplication.class, args);
+    }
 }

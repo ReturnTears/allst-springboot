@@ -16,11 +16,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableAsync    // 开启异步注解
 @EnableScheduling   // 开启基于注解的定时任务
 @MapperScan("com.allst.springboot.mapper")
-public class AllstSpringbootAdvsApplication {
-
+public class AdvsApplication {
     public static void main(String[] args) {
-        System.out.println("AllstSpringbootAdvsApplication.main");
-        SpringApplication.run(AllstSpringbootAdvsApplication.class, args);
+        System.out.println("AdvsApplication.main");
+        SpringApplication.run(AdvsApplication.class, args);
     }
-
 }

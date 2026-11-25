@@ -9,8 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * 阅读顺序从 README.md 进入 docs。
  */
 @SpringBootApplication
-public class AllstSpringbootNettyApplication {
+public class NettyApplication {
     public static void main(String[] args) {
-        SpringApplication.run(AllstSpringbootNettyApplication.class, args);
+        SpringApplication.run(NettyApplication.class, args);
     }
 }

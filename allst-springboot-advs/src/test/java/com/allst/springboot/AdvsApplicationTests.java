@@ -18,7 +18,7 @@ import java.io.File;
 import java.util.Date;
 
 @SpringBootTest
-class AllstSpringbootAdvsApplicationTests {
+class AdvsApplicationTests {
 
     @Resource
     StringRedisTemplate stringRedisTemplate;
