@@ -1,7 +1,6 @@
 package com.allst.springboot.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
-import lombok.Getter;
 
 /**
  * 1-上架，2-在管，3-借出，4-损坏，5-丢失，6-下架
@@ -9,7 +8,6 @@ import lombok.Getter;
  * @author Hutu
  * @since 2024-09-06 下午 11:18
  */
-@Getter
 public enum BookStatusEnum {
     up_shelf(1, "上架"),
     on_history(2, "在馆"),
@@ -25,5 +23,13 @@ public enum BookStatusEnum {
     BookStatusEnum(Integer status, String message) {
         this.status = status;
         this.message = message;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

@@ -13,6 +13,20 @@ create table `book` (
     update_time datetime default current_timestamp on update current_timestamp
 ) engine=innodb default charset=utf8mb4 comment='图书表';
 select * from book;
+
+-- 对应 pojo/User.java（@TableName("user")）
+create table `user` (
+    id bigint primary key auto_increment comment '主键，IdType.AUTO 自增',
+    name varchar(50) default null comment '姓名',
+    age int default null comment '年龄',
+    email varchar(100) default null comment '邮箱',
+    create_time datetime default current_timestamp comment '创建时间，FieldFill.INSERT 自动填充',
+    update_time datetime default current_timestamp on update current_timestamp comment '更新时间，FieldFill.INSERT_UPDATE 自动填充',
+    version int default 1 comment '乐观锁版本号，@Version',
+    deleted int default 0 comment '逻辑删除标识，@TableLogic，0-未删除 1-已删除'
+) engine=innodb default charset=utf8mb4 comment='用户表';
+select * from `user`;
+
 ```
 
 # 配置文件敏感信息加密

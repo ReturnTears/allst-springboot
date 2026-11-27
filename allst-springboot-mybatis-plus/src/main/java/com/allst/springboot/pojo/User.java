@@ -1,16 +1,13 @@
 package com.allst.springboot.pojo;
 
 import com.baomidou.mybatisplus.annotation.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 /**
  * 对应数据库中主键的常用生成策略：
  * uuid、自增id、雪花算法、redis、zookeeper、
- *
+ * <p>
  * 注解TableId(type = IdType.ID_WORKER)
  * IdType:auto、none、input、id_worker、uuid、id_worker_str
  * 数据库id自增
@@ -23,9 +20,6 @@ import java.util.Date;
  * @author YiYa
  * @since 2020-09-15 上午 12:53
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @TableName("user")
 public class User {
     @TableId(type = IdType.AUTO)
@@ -48,4 +42,68 @@ public class User {
      */
     @TableLogic
     private Integer deleted;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
+    public Integer getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Integer deleted) {
+        this.deleted = deleted;
+    }
 }

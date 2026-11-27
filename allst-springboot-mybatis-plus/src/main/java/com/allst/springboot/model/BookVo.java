@@ -1,7 +1,5 @@
 package com.allst.springboot.model;
 
-import lombok.Data;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -9,7 +7,6 @@ import java.util.Date;
  * @author Hutu
  * @since 2024-09-08 下午 09:40
  */
-@Data
 public class BookVo implements Serializable {
     private static final long serialVersionUID = 1L;
     private Long id;
@@ -25,4 +22,52 @@ public class BookVo implements Serializable {
     private Date createTime;
 
     private Date updateTime;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
 }

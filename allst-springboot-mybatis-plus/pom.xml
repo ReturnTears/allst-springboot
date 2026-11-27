@@ -3,12 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.5.RELEASE</version>
-        <relativePath/>
+        <groupId>com.allst.springboot</groupId>
+        <artifactId>allst-springboot</artifactId>
+        <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>com.allst.springboot</groupId>
     <artifactId>allst-springboot-mybatis-plus</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>allst-springboot-mybatis-plus</name>
@@ -16,6 +14,9 @@
 
     <properties>
         <java.version>11</java.version>
+        <!-- 父工程 Boot 2.3.5 管理的 Lombok 1.18.12 不支持 JDK16+，
+             在 JDK17 下注解处理器失效导致 @Slf4j 的 log 找不到符号，覆盖为 1.18.30 -->
+        <lombok.version>1.18.30</lombok.version>
     </properties>
 
     <dependencies>
@@ -38,11 +39,6 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
         </dependency>
         <!--    mybatis-plus    -->
         <dependency>
@@ -90,6 +86,14 @@
                 <groupId>com.github.ulisesbocchio</groupId>
                 <artifactId>jasypt-maven-plugin</artifactId>
                 <version>3.0.5</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>11</source>
+                    <target>11</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>

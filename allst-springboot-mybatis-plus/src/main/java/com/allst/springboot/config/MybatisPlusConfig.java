@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 
 @EnableTransactionManagement    // 开启事务管理(默认是自动开启的， 不添加该注解也可以)
-@MapperScan("com.allst.springboot") // 扫描mapper文件
+@MapperScan("com.allst.springboot.mapper") // 扫描mapper文件
 @Configuration  // 配置类
 public class MybatisPlusConfig {
 

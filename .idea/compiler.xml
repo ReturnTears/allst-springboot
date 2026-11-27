@@ -126,7 +126,7 @@
       <module name="allst-springboot-exercise" options="-parameters" />
       <module name="allst-springboot-graphql" options="-parameters" />
       <module name="allst-springboot-minio" options="-parameters" />
-      <module name="allst-springboot-mybatis-plus" options="-parameters" />
+      <module name="allst-springboot-mybatis-plus" options="" />
       <module name="allst-springboot-netty" options="-parameters" />
       <module name="allst-springboot-norm" options="" />
       <module name="allst-springboot-redis" options="" />
