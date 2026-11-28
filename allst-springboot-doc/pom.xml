@@ -30,11 +30,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>e-iceblue</groupId>
             <artifactId>spire.doc</artifactId>
             <version>12.7.6</version>
@@ -72,21 +67,77 @@
             <artifactId>jaxb-impl</artifactId>
             <version>4.0.5</version>
         </dependency>
-        <!--<dependency>
-            <groupId>jakarta.activation</groupId>
-            <artifactId>jakarta.activation-api</artifactId>
-            <version>2.1.3</version>
-        </dependency>
+
+        <!-- poi-tl：Word 模板渲染（{{占位符}}），依赖 POI 5.2.x，与本模块一致 -->
         <dependency>
-            <groupId>jakarta.xml.bind</groupId>
-            <artifactId>jakarta.xml.bind-api</artifactId>
-            <version>4.0.2</version>
+            <groupId>com.deepoove</groupId>
+            <artifactId>poi-tl</artifactId>
+            <version>1.12.2</version>
         </dependency>
+
+        <!-- EasyExcel：SAX 流式读写，大文件低内存。4.0.3 为最后稳定版 -->
         <dependency>
-            <groupId>jakarta.xml.bind</groupId>
-            <artifactId>jakarta.xml.bind-api</artifactId>
-            <version>4.0.2</version>
-        </dependency>-->
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+            <version>4.0.3</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.poi</groupId>
+                    <artifactId>poi</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.poi</groupId>
+                    <artifactId>poi-ooxml</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.poi</groupId>
+                    <artifactId>poi-ooxml-schemas</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- Apache Fesod（孵化中）：EasyExcel→FastExcel→Fesod 的社区演进版。
+             自带 POI 5.5.1，此处排除以复用本模块统一的 POI 5.2.5，避免版本冲突。 -->
+        <dependency>
+            <groupId>org.apache.fesod</groupId>
+            <artifactId>fesod-sheet</artifactId>
+            <version>2.1.0-incubating</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.poi</groupId>
+                    <artifactId>poi</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.poi</groupId>
+                    <artifactId>poi-ooxml</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.poi</groupId>
+                    <artifactId>poi-ooxml-lite</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- PDFBox：PDF 文本提取、合并拆分、基础处理 -->
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>3.0.8</version>
+        </dependency>
+
+        <!-- OpenPDF：PDF 读写一体（iText 4 分支）。
+             注意 2.x 起要求 JDK17，本模块 Java 11 故锁 1.3.x 线 -->
+        <dependency>
+            <groupId>com.github.librepdf</groupId>
+            <artifactId>openpdf</artifactId>
+            <version>1.3.43</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <repositories>

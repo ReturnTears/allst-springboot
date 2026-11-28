@@ -4,7 +4,6 @@ package com.allst.boot.word;
  * @author Hutu
  * @since 2024-07-27 上午 09:37
  */
-@lombok.Getter
 public enum WordConstants {
     fileName("D:\\TestData\\other\\WordDocument.docx"),
 

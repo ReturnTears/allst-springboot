@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class DocApplication {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
         SpringApplication.run(DocApplication.class, args);
+        System.out.println("DocApplication Start Success");
     }
 }
